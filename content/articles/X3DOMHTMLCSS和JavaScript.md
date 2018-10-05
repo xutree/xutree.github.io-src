@@ -1,6 +1,7 @@
 Title: X3DOM，HTML，CSS 和 JavaScript
 Category: X3DOM
 Date: 2018-10-05 11:22
+Modified: 2018-10-05 21:41:39
 Tags: X3DOM
 
 本节，你将学习关于X3DOM,HTML和CSS的更多知识，以及怎么利用HTML和CSS技术构建出强大的3D应用。在本节最后，你讲学习怎么在你的应用中使用JavaScript。我们将继续使用前一节的例子。拷贝HelloX3DOM.html文件并重命名为HTMLEventsCSS.html。
