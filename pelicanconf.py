@@ -20,7 +20,7 @@ DEFAULT_LANG = 'zh'
 
 FILENAME_METADATA = '(?P<slug>.*)'
 
-THEME = 'elegant'
+THEME = "/Users/xususu/pelican-themes/my-elegant"
 TYPOGRIFY = False
 STATIC_PATHS = ['images','pdfs']
 # Feed generation is usually not desired when developing
@@ -45,3 +45,8 @@ USE_FOLDER_AS_CATEGORY = False
 DISPLAY_PAGES_ON_MENU = False
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+ARTICLE_URL = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
+ARTICLE_SAVE_AS = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
+PAGE_URL = 'pages/{slug}/'
+PAGE_SAVE_AS = 'pages/{slug}/index.html'
