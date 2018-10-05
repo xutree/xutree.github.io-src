@@ -1,5 +1,6 @@
 Title: X3DOM 第一课
-Category: 教程
+Category: X3DOM
+Date: 2018-10-04 11:31
 Tags: X3DOM
 
 下面的指南可以作为X3DOM使用者和开发者的入门资料。本指南包括许多重要的内容，例如怎么配置你的环境去运行X3DOM的示例。如果你没有足够的时间阅读这篇入门文章，又或许你已经熟悉一点关于X3D的知识，你可以迅速的浏览下第3部分和第4部分的一些内容去设置你的环境，然后根据[tutorials](https://doc.x3dom.org/tutorials/index.html)的指导去完成你的第一个X3DOM应用。

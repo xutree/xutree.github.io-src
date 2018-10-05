@@ -1,5 +1,6 @@
 Title: Hello，X3DOM！
-Category: 教程
+Category: X3DOM
+Date: 2018-10-04 18:29
 Tags: X3DOM
 
 本教程将教会你怎么配置和运行你的第一个X3DOM应用。你只需要一个相容于WebGL的浏览器和一个文本编辑器。整个X3DOM应用是常规网页的一部分，并且编写方式也与HTML很相似，所以如果你的编辑器支持HTML或者XML的语法高亮那将更好，像[WebStorm](http://www.jetbrains.com/webstorm/)这种Web编程IDE也是可以的。如果你手头有一个网页浏览器和一个文本编辑器，并且你知道怎么在浏览器中打开网页(参考[这里](https://doc.x3dom.org/gettingStarted/index.html))，那么你可以开始你的第一个X3DOM应用了。
