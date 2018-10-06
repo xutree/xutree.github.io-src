@@ -22,8 +22,34 @@ UNIX 时间，或称 POSIX 时间是 UNIX 或类 UNIX 系统使用的时间表�
 ![转化为普通时间]({filename}/images/fig9.png)
 
 以下为脚本：
+```
+#! /bin/bash
 
-![脚本]({filename}/images/fig10.png)
+# 输入：需要修改的文件
+filename=$1
+
+# 提取创建时间
+create_time=$(date  -r$(stat -f "%B" $filename) "+%Y-%m-%d %H:%M:%S")
+# 提取修改时间
+modify_time=$(date  -r$(stat -f "%m" $filename) "+%Y-%m-%d %H:%M:%S")
+# 查找Date标签的行号
+num1=$(head -5 $filename | grep -n 'Date' | cut -d ":" -f 1)
+# 查找Modified标签的行号
+num2=$(head -5 $filename | grep -n 'Modified'| cut -d ":" -f 1)
+
+# 如果Date标签行号为空，说明不存在Date标签，则插入Date
+if [ -z "$num1" ]; then
+    sed -i '' -e "2s/^//p; 2s/^.*/Date: $create_time/" $filename   
+fi
+# 如果Modified标签行号为空，插入Modified
+if [ -z "$num2" ]; then
+    sed -i '' -e "3s/^//p; 3s/^.*/Modified: $modify_time/" $filename
+else
+    # 否则，替换Modified标签到最新时间
+    sed -i '' ${num2}d $filename
+    sed -i '' -e "3s/^//p; 3s/^.*/Modified: $modify_time/" $filename
+fi
+```
 
 ## 附：stat 命令详情
 
