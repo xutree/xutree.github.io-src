@@ -1,7 +1,7 @@
-Title: 利用 Mac stat 命令自动添加文件创建时间、最后修改时间
+Title: 利用 Mac stat 添加文件创建时间、最后修改时间
 Category: Mac
 Date: 2018-10-06 19:07:36
-Modified: 2018-10-06 21:17:26
+Modified: 2018-10-06 21:34:20
 Tags: Mac, UNIX
 
 Pelican 根据 **.md** 文件生成网页的时候需要 metadata，所以写个命令行自动添加文件创建时间、最后修改时间，这样写博客的时候只需要把 title、category 和 tags 标签填上就行了，其中用了 `stat`命令。
