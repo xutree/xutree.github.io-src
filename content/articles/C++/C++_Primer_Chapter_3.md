@@ -1,7 +1,7 @@
-Title: 【读书笔记】C++ Primer 第三章
+Title: C++ Primer 第三章 字符串、向量和数组
 Category: 读书笔记
 Date: 2018-10-06 22:31:16
-Modified: 2018-10-07 08:38:15
+Modified: 2018-10-07 10:48:54
 Tags: C++
 
 `string`表示可变长的字符数组。

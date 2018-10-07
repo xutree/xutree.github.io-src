@@ -31,7 +31,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 PLUGIN_PATHS = ["/Users/xususu/pelican-plugins"]
-PLUGINS = ['multi_neighbors', 'cjk-auto-spacing', 'readtime', 'tag_cloud']
+PLUGINS = ['multi_neighbors', 'readtime']
 DISQUS_SITENAME = "xutree"
 
 # Blogroll
@@ -54,6 +54,3 @@ ARTICLE_URL = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 PAGE_URL = 'pages/{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
-
-# 自动插入空格
-CJK_AUTO_SPACING_TITLE = True
