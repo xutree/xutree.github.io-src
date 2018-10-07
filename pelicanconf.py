@@ -34,7 +34,8 @@ AUTHOR_FEED_RSS = None
 
 PLUGIN_PATHS = ["/Users/xususu/pelican-plugins"]
 PLUGINS = ['multi_neighbors', 'readtime', 'tipue_search', 'sitemap']
-DISQUS_SITENAME = "xutree"
+
+# DISQUS_SITENAME = "xutree"
 
 # Blogroll
 LINKS = (('Pelican', 'http://getpelican.com/'),
