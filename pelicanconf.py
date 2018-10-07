@@ -20,6 +20,8 @@ DEFAULT_LANG = 'zh'
 
 FILENAME_METADATA = '(?P<slug>.*)'
 
+TEMPLATE_PAGES = {"/Users/xususu/pelican-themes/my-elegant/templates/search.html" : "search.html", "/Users/xususu/pelican-themes/my-elegant/templates/404.html" : "404.html"}
+
 THEME = "/Users/xususu/pelican-themes/my-elegant"
 TYPOGRIFY = False
 STATIC_PATHS = ['images','pdfs']
@@ -31,7 +33,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 PLUGIN_PATHS = ["/Users/xususu/pelican-plugins"]
-PLUGINS = ['multi_neighbors', 'readtime']
+PLUGINS = ['multi_neighbors', 'readtime', 'tipue_search', 'sitemap']
 DISQUS_SITENAME = "xutree"
 
 # Blogroll
@@ -54,3 +56,18 @@ ARTICLE_URL = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = 'pages/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 PAGE_URL = 'pages/{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
+
+## 配置sitemap 插件
+SITEMAP = {
+    "format": "xml",
+    "priorities": {
+        "articles": 0.7,
+        "indexes": 0.5,
+        "pages": 0.3,
+    },
+    "changefreqs": {
+        "articles": "monthly",
+        "indexes": "daily",
+        "pages": "monthly",
+    }
+}
