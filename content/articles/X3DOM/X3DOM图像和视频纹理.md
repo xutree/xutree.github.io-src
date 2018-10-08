@@ -1,5 +1,5 @@
 Title: X3DOM 图像和视频纹理
-Category: X3DOM
+Category: 教程
 Date: 2018-10-05 17:14
 Modified: 2018-10-06 21:02:53
 Tags: X3DOM
