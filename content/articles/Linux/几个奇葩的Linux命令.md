@@ -1,7 +1,7 @@
 Title: 几个奇葩的 Linux 命令
 Category: 趣闻
 Date: 2018-10-08 22:58:12
-Modified: 2018-10-09 11:37:10
+Modified: 2018-10-09 11:39:49
 Tags: Linux
 
 Linux 中有一些很奇葩的命令，可能你的发行版默认没有安装，你可以自己安装：
@@ -10,7 +10,7 @@ Linux 中有一些很奇葩的命令，可能你的发行版默认没有安装�
 [me@linuxbox ~]$ yum install 命令              (Red Hat）
 [me@linuxbox ~]$ brew install 命令            （Mac）
 ```
-## 1 rev
+## rev
 
 `rev`命令反转输入的内容（来自文件或者标准输入或者管道）：
 ```
@@ -18,11 +18,11 @@ Linux 中有一些很奇葩的命令，可能你的发行版默认没有安装�
 !dlroW ,olleH
 ```
 
-## 2 tac
+## tac
 
 `cat`命令的反写，执行效果也和`cat`相反，即，将文件列表中的每一个文件输出到标准输出，行号大的优先。
 
-## 3 sl
+## sl
 
 你可能知道命令`ls`,并经常使用它来查看文件夹的内容。但是由于错误输入有时会导致`sl`，如何在终端获得一点乐趣而不是“command not found”？`sl`命令！
 
@@ -30,7 +30,7 @@ Linux 中有一些很奇葩的命令，可能你的发行版默认没有安装�
 
 ![图1 一辆蒸汽机车（steam locomotive）会在屏幕上驶过]({filename}/images/linux_1.png)
 
-## 4 yes
+## yes
 
 yes命令将进入一个循环，一遍又一遍地重复相同的字符串。默认重复“y”，你可以指定其他字符串。
 
@@ -47,31 +47,31 @@ yes命令将进入一个循环，一遍又一遍地重复相同的字符串。�
 
 利用`Ctrl C`终止。
 
-## 5 cowsay
+## cowsay
 
 屏幕上会出现一只 ASCII 码拼成的奶牛。。。你可以指定奶牛要说的话。这个命令还有其他版本，如`xcowsay`，`cowthink`。
 
 ![图2 一只 ASCII 码拼成的奶牛]({filename}/images/linux_2.png)
 
-## 6 figlet
+## figlet
 
 这个算不上奇葩，他它利用 ASCII 码拼成你输出字符串的横幅，而且有许多参数可以定制。还有个`toilet`命令和`figlet`很类似。比如，`figlet good`：
 
 ![图3 利用 ASCII 码拼成你输出字符串的横幅]({filename}/images/linux_3.png)
 
-## 7 fortune
+## fortune
 
 会显示你的未来（ 😆 )。可以试试：`[me@linuxbox ~]$ fortune | cowsay`
 
 ![图4 显示未来的奶牛]({filename}/images/linux_4.png)
 
-## 8 cmatrix
+## cmatrix
 
 会像《黑客帝国》里那样显示。
 
 ![图5 黑客帝国]({filename}/images/linux_5.png)
 
-## 9 Fork 炸弹
+## Fork 炸弹
 
 ```
 [me@linuxbox ~]$ :(){ :|:& }:
@@ -79,11 +79,11 @@ yes命令将进入一个循环，一遍又一遍地重复相同的字符串。�
 
 不要尝试不要尝试不要尝试...
 
-## 10 asciiquarium 水族馆
+## asciiquarium 水族馆
 
 ![图6 水族馆]({filename}/images/linux_6.png)
 
-## 11 lolcat
+## lolcat
 
 `lolcat`可以在终端产生彩虹。
 
