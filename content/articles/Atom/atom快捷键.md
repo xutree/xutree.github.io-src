@@ -1,7 +1,7 @@
 Title: Atom 快捷键
 Category: 教程
 Date: 2018-10-16 14:47:35
-Modified: 2018-10-16 14:47:35
+Modified: 2018-10-16 14:56:47
 Tags: Atom
 
 转载自：[https://www.jianshu.com/p/e33f864981bb](https://www.jianshu.com/p/e33f864981bb)
@@ -160,7 +160,7 @@ Tags: Atom
 
 |快捷键|快捷键的功能|
 |:----|:---------|
-|`cmd-alt-z`|checkout HEAD`|版本|
+|`cmd-alt-z`|checkout HEAD 版本|
 |`cmd-shift-B`|弹出 untracked 和 modified 文件列表|
 |`alt-g down alt-g up`|在修改处跳转|
 |`alt-G D`|弹出diff列表|
