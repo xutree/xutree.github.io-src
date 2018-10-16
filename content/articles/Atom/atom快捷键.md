@@ -4,6 +4,8 @@ Date: 2018-10-16 14:47:35
 Modified: 2018-10-16 14:47:35
 Tags: Atom
 
+转载自：[https://www.jianshu.com/p/e33f864981bb](https://www.jianshu.com/p/e33f864981bb)
+
 ## 文件切换
 
 |快捷键|快捷键的功能|
