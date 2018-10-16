@@ -191,8 +191,8 @@ Tags: Atom, Mac
 |`alt-g d`|弹出diff列表|
 |`alt-g o`|在 github 上打开文件|
 |`alt-g g`|在 github 上打开项目地址|
-|`alt-g b`|在 github 上打开文件 blame`|
-|`alt-g h`|在 github 上打开文件 history`|
-|`alt-g i`|在 github 上打开 issues`|
+|`alt-g b`|在 github 上打开文件 blame|
+|`alt-g h`|在 github 上打开文件 history|
+|`alt-g i`|在 github 上打开 issues|
 |`alt-g r`|在 github 打开分支比较|
 |`alt-g c`|拷贝当前文件在 gihub 上的网址|
