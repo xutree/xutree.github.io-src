@@ -38,11 +38,11 @@ Tags: Atom
 
 |快捷键|快捷键的功能|
 |:----|:---------|
-|`cmd-\\|显示(隐藏)目录树|
+|`cmd-\\`|显示(隐藏)目录树|
 |`ctrl-0`|焦点切换到目录树(再按一次或者Esc退出目录树)|
 |`alt-right 和 alt-left`|展开(隐藏)所有目录|
-|`ctrl-alt-] 和 ctrl-alt-[|同上|
-|`ctrl-[ 和 ctrl-]|展开(隐藏)当前目录|
+|`ctrl-alt-] 和 ctrl-alt-[`|同上|
+|`ctrl-[ 和 ctrl-]`|展开(隐藏)当前目录|
 |`ctrl-shift-c`|复制当前文件绝对路径|
 |`cmd-k h 或 cmd-k left`|在左半视图中打开文件|
 |`cmd-k j 或 cmd-k down`|在下半视图中打开文件|
@@ -150,10 +150,10 @@ Tags: Atom
 
 |快捷键|快捷键的功能|
 |:----|:---------|
-|`alt-cmd-[|折叠|
-|`alt-cmd-]|展开|
-|`alt-cmd-shift-{|折叠全部|
-|`alt-cmd-shift-}|展开全部|
+|`alt-cmd-[`|折叠|
+|`alt-cmd-]`|展开|
+|`alt-cmd-shift-{`|折叠全部|
+|`alt-cmd-shift-}`|展开全部|
 |`cmd-k cmd-N`|指定折叠层级 N为层级数|
 
 ## git 操作
