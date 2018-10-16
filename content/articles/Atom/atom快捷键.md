@@ -1,7 +1,7 @@
 Title: Atom 快捷键
 Category: 教程
 Date: 2018-10-16 14:47:35
-Modified: 2018-10-16 15:49:44
+Modified: 2018-10-16 15:55:00
 Tags: Atom, Mac
 
 参考：[https://www.jianshu.com/p/e33f864981bb](https://www.jianshu.com/p/e33f864981bb)、[https://github.com/nwinkler/atom-keyboard-shortcuts](https://github.com/nwinkler/atom-keyboard-shortcuts)
@@ -65,8 +65,8 @@ Tags: Atom, Mac
 
 |快捷键|快捷键的功能|
 |:----|:---------|
-|`cmd-\\`|显示(隐藏)目录树|
-|`ctrl-0`|焦点切换到目录树(再按一次或者Esc退出目录树)|
+|`cmd-\`|显示(隐藏)目录树|
+|`ctrl-0`|焦点切换到目录树(再按一次或者 Esc 退出目录树)|
 |`alt-right 和 alt-left`|展开(隐藏)所有目录|
 |`ctrl-alt-] 和 ctrl-alt-[`|同上|
 |`ctrl-[ 和 ctrl-]`|展开(隐藏)当前目录|
@@ -138,7 +138,7 @@ Tags: Atom, Mac
 |快捷键|快捷键的功能|
 |:----|:---------|
 |`cmd-click`|增加新光标|
-|`cmd-shift-L`|将多行选取改为多行光标|
+|`cmd-shift-l`|将多行选取改为多行光标|
 |`ctrl-shift-up, ctrl-shift-down`|增加上（下）一行光标|
 |`cmd-d`|选取文档中和当前单词相同的下一处|
 |`cmd-u`|取消选择|
@@ -179,20 +179,20 @@ Tags: Atom, Mac
 |`alt-cmd-]`|展开|
 |`alt-cmd-shift-{`|折叠全部|
 |`alt-cmd-shift-}`|展开全部|
-|`cmd-k cmd-N`|指定折叠层级 N为层级数|
+|`cmd-k cmd-n`|指定折叠层级 N为层级数|
 
 ## git 操作
 
 |快捷键|快捷键的功能|
 |:----|:---------|
 |`cmd-alt-z`|checkout HEAD 版本|
-|`cmd-shift-B`|弹出 untracked 和 modified 文件列表|
+|`cmd-shift-b`|弹出 untracked 和 modified 文件列表|
 |`alt-g down alt-g up`|在修改处跳转|
-|`alt-G D`|弹出diff列表|
-|`alt-G O`|在 github 上打开文件|
-|`alt-G G`|在 github 上打开项目地址|
-|`alt-G B`|在 github 上打开文件 blame`|
-|`alt-G H`|在 github 上打开文件 history`|
-|`alt-G I`|在 github 上打开 issues`|
-|`alt-G R`|在 github 打开分支比较|
-|`alt-G C`|拷贝当前文件在 gihub 上的网址|
+|`alt-g d`|弹出diff列表|
+|`alt-g o`|在 github 上打开文件|
+|`alt-g g`|在 github 上打开项目地址|
+|`alt-g b`|在 github 上打开文件 blame`|
+|`alt-g h`|在 github 上打开文件 history`|
+|`alt-g i`|在 github 上打开 issues`|
+|`alt-g r`|在 github 打开分支比较|
+|`alt-g c`|拷贝当前文件在 gihub 上的网址|
