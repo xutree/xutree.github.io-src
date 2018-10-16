@@ -179,7 +179,7 @@ Tags: Atom, Mac
 |`alt-cmd-]`|展开|
 |`alt-cmd-shift-{`|折叠全部|
 |`alt-cmd-shift-}`|展开全部|
-|`cmd-k cmd-n`|指定折叠层级 N为层级数|
+|`cmd-k cmd-n`|指定折叠层级，n为层级数|
 
 ## git 操作
 
