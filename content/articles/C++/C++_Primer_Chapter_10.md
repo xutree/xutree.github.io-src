@@ -620,7 +620,7 @@ cout << accumulatre(in, eof, 0) << endl;
 | ostream_iterator<T> out(os); | out 将类型为 T 的值写到输出流 os 中 |
 | ostream_iterator<T> out(os,d);| out 将类型为T的值写到输出流 os 中，每个值后面都输出一个 d。d 指向一个空字符串结尾的字符数组 |
 | out = val |　用 << 运算符将 val 写入到 out 所绑定的 ostream 中。val 的类型必须与 out 可写的类型兼容 |
-| *out,++out,out++　| 这些运算符是存在的，但不对 out 做任何事情。每个运算符都返回 out |
+| *out, ++out, out++　| 这些运算符是存在的，但不对 out 做任何事情。每个运算符都返回 out |
 
 我们可以使用`ostream_iterator`来输出值的序列：
 
