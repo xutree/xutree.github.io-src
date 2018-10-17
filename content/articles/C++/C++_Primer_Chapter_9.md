@@ -1,7 +1,7 @@
 Title: C++ Primer 第九章 顺序容器
 Category: 读书笔记
 Date: 2018-10-16 22:43:16
-Modified: 2018-10-16 22:43:16
+Modified: 2018-10-17 11:12:28
 Tags: C++
 
 一个容器就是一些特定类型对象的集合。顺序容器（sequential container）为程序员提供了控制元素存储和访问顺序的能力。这种顺序不依赖于元素的值，而是与元素加入容器时的位置相对应。
@@ -236,25 +236,25 @@ Tags: C++
 
 ### 其他修改 string 的操作
 
-[修改 string 的操作]({filename}/images/c++9-1.jpg)
+![修改 string 的操作]({filename}/images/c++9-1.jpg)
 
-[repalce 和 insert参数类型]({filename}/images/c++9-2.jpg)
+![repalce 和 insert参数类型]({filename}/images/c++9-2.jpg)
 
 ### string 搜索操作
 
 `string`类提供了6个不同的搜索函数，每个函数有4个重载版本。每个搜索操作都返回`string::size_type`值，表示匹配发生的下标。如果搜索失败，则返回`string::npos`的`static`成员。标准库将`string::npos`定义成一个`const string::size_type`，并初始化为-1。由于 npos 是一个无符号数，此初始值意味着 npos 等于任何`string`最大的可能大小。
 
-[string 搜索操作]({filename}/images/c++9-3.jpg)
+![string 搜索操作]({filename}/images/c++9-3.jpg)
 
-[string 搜索操作参数]({filename}/images/c++9-4.jpg)
+![string 搜索操作参数]({filename}/images/c++9-4.jpg)
 
 ### compare 函数
 
-[compare 函数]({filename}/images/c++9-5.jpg)
+![compare 函数]({filename}/images/c++9-5.jpg)
 
 ### 数值转换
 
-[string 数值转换]({filename}/images/c++9-6.jpg)
+![string 数值转换]({filename}/images/c++9-6.jpg)
 
 ```
 string s2 = "pi = 3.14";
