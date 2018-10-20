@@ -1,7 +1,7 @@
 Title: C++ Primer 第十三章 拷贝控制
 Category: 读书笔记
 Date: 2018-10-20 16:41:10
-Modified: 2018-10-20 16:41:10
+Modified: 2018-10-20 17:35:11
 Tags: C++
 
 当定义一个类时，我们显示地或隐式地指定在此类型的对象拷贝、移动、赋值和销毁时做什么。一个类通过定义五种特殊的成员函数来控制这些操作，包括：拷贝构造函数（copy constructor）、拷贝赋值运算符（copy-assignment operator）、移动构造函数（move constructor）、移动赋值运算符（move-assignment operator）和析构函数（destructor）。
@@ -373,4 +373,131 @@ HasPtr& HasPtr::operator=(const HasPtr &rhs)
 
 ### 定义行为像指针的类
 
-待续 ...
+对于行为类似指针的类，我们需要为其定义拷贝构造函数和拷贝赋值运算符，来拷贝指针成员本身而不是它指向的`string`。我们的类仍然需要自己的析构函数来释放接受`string`参数的构造函数分配的内存。但是，析构函数不能单方面地释放关联的`string`，只有当最后一个指向`string`的对象销毁时，才可以释放`string`。
+
+令一个类展现类似指针的行为最好的方法是使用`shared_ptr`来管理类中的资源。如果我们希望直接管理资源，可以使用引用计数（reference count）。下面我们不使用`shared_ptr`而是使用引用计数来实现行为像指针的类。
+
+#### 引用计数
+
+引用计数的工作方式如下：
+
+- 除了初始化对象之外，每个构造函数(拷贝构造函数除外)都要创建一个引用计数，用来记录有多少对象共享正在创建的对象共享状态，当创建一个对象时，引用计数为1，因为此时只有一个对象共享
+- 拷贝构造函数不分配新得引用计数器，拷贝给定对象的数据成员，包括引用计数器，拷贝构造函数递增共享的计数器，表示给定对象更的状态又被一个新用户所共享
+- 拷贝赋值运算符递减左侧运算对象的引用计数器，递增右侧对象的引用计数器，如果左侧对象的引用计数器为0，则销毁左侧对象
+- 析构函数判断引用计数是否为0，如果为0，则销毁左侧对象
+
+引用计数的实现：我们假设有下面的情况：
+
+```
+HasPtr h1;
+HasPtr h2(h1);
+HasPtr h3(h1);
+```
+
+HasPtr 是一个行为像指针的类，新创建的 h1的引用计数为1，创建 h2，用 h1 初始化 h2，会递增 h1 的引用计数值，此时 h2 保存了 h1 中的引用计数，在创建 h3 的时候，递增了 h1 的引用计数值，而且我们必须做的是要更新 h2 中的引用计数值，此时无法更新 h2 中的引用计数值。因此，我们需要将引用计数保存在动态内存中，这样原对象和其他副本对象都会指向相同的计数器，这样就可以自动更新引用计数在每个共享对象中的状态。
+
+```
+class HasPtr {
+public:
+	//构造函数分配新的 string 和新的计数器，将计数器置为1
+	HasPtr(const std::string& s = std::string()) : ps(new std::string(s)), i(0), use(new size_t(1)) {}
+	//拷贝构造函数拷贝所以三个数据成员，并递增计数器
+	HasPtr(const HasPtr &p) :  ps(p.ps), i(p.i), use(p.use) { ++*use; }
+	HasPtr& operator = (const HasPtr&);
+	~HasPtr();
+private:
+	std::string *ps;
+	int	i;
+	std::size_t *use; // 引用计数
+};
+
+HasPtr::HasPtr& operator = (const HasPtr& has) {
+	++*has.use;	//递增右侧运算对象的引用计数
+	if (0 == --*use) { //然后递减本对象的引用计数
+		delete ps;
+		delete use;
+	}
+	ps = has.ps;
+	i = has.i;
+	use = has.use;
+	return *this;
+}
+
+HasPtr::~HasPtr() {
+	if (--*use == 0) {
+		delete ps;
+		delete use;
+	}
+}
+```
+
+## 交换操作
+
+通常，管理资源的类除了定义拷贝控制成员之外，还会定义交换操作的函数`swap`。
+
+如果一个类定义了自己的`swap`，那么算法将使用类自定义版本，否则，将使用标准库定义的`swap`。
+
+理论上来说，我们的`swap`函数应该是这样的：
+
+```
+//交换两个类值 HasPtr 对象的代码可能像下面这样：
+HasPtr temp = v1;	//创建 v1 的值的一个临时副本
+v1 = v2;	//将 v2 的值赋予 v1
+v2 = temp;	//将保存的 v1 的值赋予 v2
+```
+
+这样的代码将 v1 中`string`拷贝了两次，但是这样做是没有必要的，我们希望`swap`交换指针，而不是分配`string`的副本：
+
+```
+string *temp = v1.ps;	//为 v1.ps 中的指针创建一个副本
+v1.ps = v2.ps;	//将 v2.ps 中的指针赋予 v1.ps1
+v2.ps = temp;	//将保存的 v1.ps 中原来的指针赋予 v2.ps
+```
+
+### 编写我们自己的 swap 函数
+
+```
+class HasPtr {
+	friend void swap (HasPtr&, HasPtr&);
+	//其他成员定义
+};
+inline void swap (HasPtr &lhs, HasPtr &rhs)
+{
+	using std::swap;
+	swap(lhs.ps, rhs.ps);	//交换指针，而不是string数据
+	swap(lhs.i, rhs.i);	//交换 int 成员
+}
+```
+
+我们首先将`swap`定义为`friend`以便能访问 HasPtr 的（private的）数据成员。由于`swap`的存在就是为了优化代码，我们将其声明为`inline`函数。
+
+与拷贝控制成员不同，`swap`并不是必要的。但是，对于分配了资源的类，定义`swap`可能是一种很重要的优化手段。
+
+### swap 函数应该调用 swap，而不是 std::swap
+
+在`swap`函数中，使用了`using std::swap`，如果这个类有自己的`swap`函数，匹配程度会高于标准库`swap`，会优先使用类自己的`swap`，如果没有，则使用标准库的`swap`。
+
+`swap`里交换类的指针和`int`成员，并不会发生递归循环，HasPtr 的数据成员是内置类型的，这时候会调用标准库版本的`swap`。
+
+### 在赋值运算符中使用 swap
+
+定义`swap`的类通常用`swap`来定义它们的赋值运算符。这些运算符使用了一种名为拷贝并交换（copy and swap）的技术。这种技术将左侧运算对象与右侧运算对象的一个副本进行交换：
+
+```
+//注意 rhs 是按值传递的，意味着 HasPtr 的拷贝构造函数将
+//右侧运算对象中的 string 拷贝到 rhs
+HasPtr& HasPtr::operator=(HasPtr rhs)
+{
+	//交换左侧运算对象和局部变量 rhs 的内容
+	swap(*this, rhs);	//rhs 现在指向本对象曾经使用的内存
+	return *this;	//rhs 被销毁，从而 delete 了 rhs 中的指针
+}
+```
+
+在进行 HasPtr 类的赋值运算中，先将右侧对象拷贝到拷贝赋值运算符函数里，然后交换左侧对象的指针和右侧对象的指针，交换后，右侧对象赋值给了左侧对象，左侧对象相应的`string`指针也指向了右侧对象副本的对应成员，而右侧对象的`string`指针则指向了左侧对象的相应成员。在这个函数结束后，右侧对象的副本被销毁，于是原来左侧对象的资源被释放，而左侧对象现在保存的是右侧对象的成员。
+
+拷贝并交换的操作，和之前的拷贝赋值运算符的实现原理是相同的， 在改变左侧对象之前拷贝右侧对象。保证了这样的操作异常的安全。
+
+## 对象移动
+
+待续...
