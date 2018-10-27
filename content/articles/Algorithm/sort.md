@@ -16,17 +16,9 @@ Tags: 算法
 
 
 ```
-#include <functional>
-#include <iostream>
-#include <iterator>
-#include <string>
-#include <vector>
-
-template <typename Iterator,
-          typename CompareType =
-              std::less<typename std::iterator_traits<Iterator>::value_type>>
-void insert_sort(Iterator begin, Iterator end,
-                 CompareType compare = CompareType()) {
+template <typename Iterator, typename CompareType = std::less<typename std::iterator_traits<Iterator>::value_type>>
+void insert_sort(Iterator begin, Iterator end, CompareType compare = CompareType())
+{
   auto size = std::distance(begin, end);
   if (size <= 1)
     return;
@@ -46,21 +38,6 @@ void insert_sort(Iterator begin, Iterator end,
     *iter = key;
   }
 }
-
-template <typename Iterator> void print(Iterator begin, Iterator end) {
-  while (begin != end) {
-    std::cout << *begin << '\t';
-    begin++;
-  }
-}
-
-int main(int argc, char *argv[]) {
-  std::istream_iterator<double> inc(std::cin), eof;
-  std::vector<double> vec(inc, eof);
-  insert_sort(vec.begin(), vec.end());
-  print(vec.begin(), vec.end());
-  return 0;
-}
 ```
 
 ## 分治排序
@@ -73,11 +50,8 @@ int main(int argc, char *argv[]) {
 - 归并时需要额外的空间 $O(n)$
 
 ```
-template <typename Iterator,
-          typename CompareType =
-              std::less<typename std::iterator_traits<Iterator>::value_type>>
-void merge(Iterator begin, Iterator middle, Iterator end,
-           CompareType compare = CompareType()) {
+template <typename Iterator, typename CompareType = std::less<typename std::iterator_traits<Iterator>::value_type>> void merge(Iterator begin, Iterator middle, Iterator end, CompareType compare = CompareType())
+{
   typedef typename std::iterator_traits<Iterator>::value_type T;
   if (std::distance(begin, middle) <= 0 || std::distance(middle, end) <= 0)
     return;
@@ -109,11 +83,8 @@ void merge(Iterator begin, Iterator middle, Iterator end,
 - 非原地排序，归并时需要额外的空间 $O(n)$
 
 ```
-template <typename Iterator,
-          typename CompareType =
-              std::less<typename std::iterator_traits<Iterator>::value_type>>
-void merge_sort(Iterator begin, Iterator end,
-                CompareType compare = CompareType()) {
+template <typename Iterator, typename CompareType = std::less<typename std::iterator_traits<Iterator>::value_type>> void merge_sort(Iterator begin, Iterator end, CompareType compare = CompareType())
+{
   auto size = std::distance(begin, end);
   if (size > 1) {
     Iterator middle = begin + size / 2;
