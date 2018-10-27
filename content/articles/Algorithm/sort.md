@@ -1,7 +1,7 @@
 Title: 排序算法
 Category: 读书笔记
 Date: 2018-10-26 23:08:38
-Modified: 2018-10-27 21:07:32
+Modified: 2018-10-27 22:28:38
 Tags: 算法
 
 ## 插入排序
@@ -26,7 +26,7 @@ void insertion_sort(int arr[], int len) {
 
 ## 归并排序
 
-归并排序（英语：Merge sort，或 mergesort），是创建在归并操作上的一种有效的排序算法，效率为 $O(n\log n)}$。1945年由约翰·冯·诺伊曼首次提出。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用，且各层分治递归可以同时进行。
+归并排序（英语：Merge sort，或 mergesort），是创建在归并操作上的一种有效的排序算法，效率为 $O(n\log n)$。1945年由约翰·冯·诺伊曼首次提出。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用，且各层分治递归可以同时进行。
 
 ```
 template <typename Iterator>
@@ -70,4 +70,4 @@ template <typename Iterator> void merge_sort(Iterator begin, Iterator end) {
 }
 ```
 
-比较操作的次数介于 $\frac{n\log n}{2}$ 和 $n\log n-n+1$ 之间。 赋值操作的次数是 $2n\log n$。归并算法的空间复杂度为：$\Theta (n)$。
+比较操作的次数介于 $\frac{1}{2}n\log n$ 和 $n\log n-n+1$ 之间。 赋值操作的次数是 $2n\log n$。归并算法的空间复杂度为：$\Theta (n)$。
