@@ -1,7 +1,7 @@
 Title: 最大子数组问题
 Category: 读书笔记
 Date: 2018-10-27 22:26:28
-Modified: 2018-10-27 22:26:28
+Modified: 2018-10-28 13:02:31
 Tags: 算法
 
 寻找数组中和最大的非空连续子数组。
@@ -103,34 +103,33 @@ Kadane 算法时间复杂度为 $O(n)$，空间复杂度为 $O(1)$。
 
 ```
 array_info_message find_max_subarray(int a[], int n) {
-        int i, cur_left, cur_right, max_left, max_right;
-        int cur_max, max;
-        cur_max = max = max_left = max_right = cur_left = cur_right = 0;
-
-        for (i = 0; i < n; ++i) {
-                cur_max += a[i];
-                if (cur_max > 0) {
-                        cur_right = i;
-                        if (max < cur_max) {
-                                max = cur_max;
-                                max_left = cur_left;
-                                max_right = cur_right;
-                        }
-                } else {
-                        cur_max = 0;
-                        cur_left = cur_right = i + 1;
-                }
-        }
-        return std::make_tuple(max_left, max_right, max);
+    void maxSubArray(int a[], int n) {
+    int max = std::numeric_limits<int>::min();
+    int sum = 0;
+    int left = 0, right = 0, max_left = 0, max_right = 0;
+    for (int i = 0; i < n; i++) {
+            if (sum + a[i] > a[i]) {
+                    sum = sum + a[i];
+                    right = i;
+            } else {
+                    sum = a[i];
+                    left = i;
+                    right = i;
+            }
+            if (sum > max) {
+                    max = sum;
+                    max_left = left;
+                    max_right = right;
+            }
+    }
+    return std::make_tuple(max_left, max_right, max);
 }
 ```
-
-注意，对于数组元素全为负的情况，所以 Kadane 算法无法给出正确答案。
 
 若我们只需要求最大和，则有如下简洁解法：
 
 ```
-int maxSubArray(int a[], int n) {
+int find_max_subarray(int a[], int n) {
         int max = std::numeric_limits<int>::min();
         int sum = 0;
         for (int i = 0; i < n; i++) {
