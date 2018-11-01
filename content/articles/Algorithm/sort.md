@@ -1,7 +1,7 @@
 Title: 排序算法
 Category: 读书笔记
 Date: 2018-10-26 23:08:38
-Modified: 2018-11-01 16:47:24
+Modified: 2018-11-01 22:21:00
 Tags: 算法
 
 ## 插入排序
@@ -216,3 +216,225 @@ void rand_quick_sort(T arr[], int begin, int end){
 - 平均时间复杂度：$\Theta (n\log n)$
 - 空间复杂度：$O(\log n)$
 - 不稳定排序
+
+## 计数排序
+
+计数排序（Counting sort）是一种稳定的线性时间排序算法。计数排序使用一个额外的数组 $C$ ，其中第 $i$ 个元素是待排序数组 $A$ 中值等于 $i$ 的元素的个数。然后根据数组 $C$ 来将 $A$ 中的元素排到正确的位置。
+
+当输入的元素是 $n$ 个 $[0,k]$ 之间的整数时，它的运行时间是 $\Theta (n+k)$。计数排序不是比较排序，排序的速度快于任何比较排序算法。
+
+由于用来计数的数组 $C$ 的长度取决于待排序数组中数据的范围（等于待排序数组的最大值与最小值的差加上1），这使得计数排序对于数据范围很大的数组，需要大量时间和内存。例如：计数排序是用来排序0到100之间的数字的最好的算法，但是它不适合按字母顺序排序人名。但是，计数排序可以用在基数排序算法中，能够更有效的排序数据范围很大的数组。
+
+当原数组有重复数据时，为保证稳定排序，最后要反向填充目标数组，以及将每个数字的统计减去1。
+
+### 步骤
+
+- 找出待排序的数组中最大和最小的元素
+- 统计数组中每个值为 $i$ 的元素出现的次数，存入数组 $C$ 的第 $i$ 项
+- 对所有的计数累加（从 $C$ 中的第一个元素开始，每一项和前一项相加）
+- 反向填充目标数组：将每个元素 $i$ 放在新数组的第 $C[i]$ 项，每放一个元素就将 $C[i]$ 减去1
+
+```
+#include <iostream>
+#include <time.h>
+#include <vector>
+using namespace std;
+
+void Counting_sort(int A[], size_t n, int k) {
+        //申请额外空间
+        int *B = new int[n];
+        int *C = new int[k + 1];
+        for (int i = 0; i <= k; ++i) {
+                C[i] = 0; //将 C 指向的数组所有元素置0
+        }
+        //保存数组 A 中每个元素出现的个数
+        for (int j = 0; j < n; ++j) {
+                C[A[j]]++;
+        }
+        //将所有计数次数累加
+        for (int i = 1; i <= k; ++i) {
+                C[i] = C[i] + C[i - 1];
+        }
+        //将元素重新输入
+        for (int i = n - 1; i >= 0; --i) {
+                //次数大小最小为1、数组开始为0
+                B[C[A[i]] - 1] = A[i];
+                C[A[i]]--;
+        }
+
+        for (int j = 0; j < n; ++j) {
+                A[j] = B[j];
+        }
+        //不要忘了释放分配的空间
+        delete[] B;
+        delete[] C;
+}
+
+int main(int argc, char **argv) {
+        int a[10] = {2, 56, 4, 2, 9, 56, 3, 59, 9, 16};
+        int max = a[0];
+        for (int i = 1; i < 10; ++i) {
+                if (a[i] > max) {
+                        max = a[i];
+                }
+        }
+        Counting_sort(a, 10, max);
+        for (int i = 0; i < 10; ++i) {
+                cout << a[i] << " ";
+        }
+        return 0;
+}
+```
+
+- 最坏时间复杂度 $O(n+k)$
+- 最优时间复杂度 $O(n+k)$
+- 平均时间复杂度 $O(n+k)$
+- 最坏空间复杂度 $O(n+k)$
+- 稳定排序
+
+## 基数排序
+
+基数排序（英语：Radix sort）是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。由于整数也可以表达字符串（比如名字或日期）和特定格式的浮点数，所以基数排序也不是只能使用于整数。
+
+它是这样实现的：将所有待比较数值（正整数）统一为同样的数字长度，数字较短的数前面补零。然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后，数列就变成一个有序序列。
+
+基数排序的时间复杂度是 $O(k\cdot n)$，其中 $n$ 是排序元素个数，$k$ 是数字位数。
+
+- 最坏时间复杂度 $O(k\cdot n)$
+- 最坏时间复杂度 $O(n^2)$
+- 最坏空间复杂度 $O(k+n)$
+- 稳定排序
+
+```
+int maxbit(int data[], int n) //辅助函数，求数据的最大位数
+{
+        int maxData = data[0]; ///< 最大数
+        /// 先求出最大数，再求其位数
+        for (int i = 1; i < n; ++i) {
+                if (maxData < data[i])
+                        maxData = data[i];
+        }
+        int d = 1;
+        int p = 10;
+        while (maxData >= p) {
+                maxData /= 10;
+                ++d;
+        }
+        return d;
+}
+void radixsort(int data[], int n) //基数排序
+{
+        int d = maxbit(data, n);
+        int *tmp = new int[n];
+        int *count = new int[10]; //计数器
+        int i, j, k;
+        int radix = 1;
+        for (i = 1; i <= d; i++) //进行 d 次排序
+        {
+                //每一次都是计数排序
+                for (j = 0; j < 10; j++)
+                        count[j] = 0; //每次分配前清空计数器
+                for (j = 0; j < n; j++) {
+                        k = (data[j] / radix) % 10; //统计每个桶中的记录数
+                        count[k]++;
+                }
+                for (j = 1; j < 10; j++)
+                        count[j] = count[j - 1] + count[j]; //将tmp中的位置依次分配给每个桶
+                for (j = n - 1; j >= 0; j--) //将所有桶中记录依次收集到tmp中
+                {
+                        k = (data[j] / radix) % 10;
+                        tmp[count[k] - 1] = data[j];
+                        count[k]--;
+                }
+                for (j = 0; j < n; j++) //将临时数组的内容复制到data中
+                        data[j] = tmp[j];
+                radix = radix * 10;
+        }
+        delete[] tmp;
+        delete[] count;
+}
+```
+
+## 桶排序
+
+桶排序（Bucket sort）或所谓的箱排序，是一个排序算法，工作的原理是将数组分到有限数量的桶里。每个桶再个别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排序）。桶排序是鸽巢排序的一种归纳结果。当要被排序的数组内的数值是均匀分配的时候，桶排序使用线性时间 $\Theta (n)$。桶排序不是比较排序。
+
+### 步骤
+
+- 设置一个定量的数组当作空桶子
+- 寻访序列，并且把项目一个一个放到对应的桶子去
+- 对每个不是空的桶子进行排序
+- 从不是空的桶子里把项目再放回原来的序列中
+
+### 实现
+
+转自：[https://blog.csdn.net/misayaaaaa/article/details/66969486](https://blog.csdn.net/misayaaaaa/article/details/66969486)
+
+```
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void Bucket_sort(double a[], size_t n) {
+        double **p = new double *[10]; // p数组存放十个double指针，分为10个桶
+        for (int i = 0; i < 10; ++i) {
+                p[i] = new double
+                       [100]; //每个指针都指向一块10个double的数组，每个桶都可以包含100个元素
+        }
+
+        int count[10] = {0}; //元素全为0的数组
+        for (int i = 0; i < n; ++i) {
+                double temp = a[i];
+                int flag = (int)(temp * 10); //判断每个元素属于哪个桶
+                p[flag][count[flag]] = temp; //将每个元素放入到对应的桶中，从0开始
+                int j = count[flag]++; //将对应桶的计数加1
+
+                //在本桶之中与之前的元素做比较，比较替换（插入排序）
+                for (; j > 0 && temp < p[flag][j - 1]; --j) {
+                        p[flag][j] = p[flag][j - 1];
+                }
+                p[flag][j] = temp;
+        }
+
+        //元素全部放完之后，需要进行重新链接的过程
+        int k = 0;
+        for (int i = 0; i < 10; ++i) {
+                for (int j = 0; j < count[i]; ++j) //桶中元素的个数count[i]
+                {
+                        a[k++] = p[i][j];
+                }
+        }
+
+        //申请内存的释放
+        for (int i = 0; i < 10; i++) {
+                delete p[i];
+                p[i] = NULL;
+        }
+        delete[] p;
+        p = NULL;
+}
+
+//随机初始化数组[0,1)
+void Initial_array(double a[], size_t n) {
+        for (size_t i = 0; i < n; ++i) {
+                a[i] = rand() / (static_cast<double>(RAND_MAX) + 1);
+        }
+}
+
+int main(int argc, char **argv) {
+        double a[100];
+        Initial_array(a, 100);
+
+        Bucket_sort(a, 100);
+        for (int i = 0; i < 100; ++i) {
+                cout << a[i] << " ";
+        }
+        return 0;
+}
+```
+
+- 时间复杂度为 $O(n)$
+- 空间复杂度为 $O(n+M)$
+- 稳定排序
