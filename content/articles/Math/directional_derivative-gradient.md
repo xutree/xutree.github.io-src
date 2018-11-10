@@ -15,7 +15,7 @@ $$\lim_{\|P_0P\|\to0}\frac{f(P)-f(P_0}{\|\vec{P_0P}\|}$$
 **
 
 **
-定义 1.2（方向余弦）设 $l$ 是一个 $n$ 维非零向量，$l_0=\frac{l}{\|l\|}，即 $l_0$ 是与 $l$ 同向的单位向量。取 $0\leq\alpha_i\leq\pi$，使
+定义 1.2（方向余弦）设 $l$ 是一个 $n$ 维非零向量，$l_0=\frac{l}{\|l\|}$，即 $l_0$ 是与 $l$ 同向的单位向量。取 $0\leq\alpha_i\leq\pi$，使
 $$l_0=(\cos\alpha_1,\cos\alpha_2,\cdots,\cos\alpha_n)$$
 称
 $$\cos\alpha_1,\cos\alpha_2,\cdots,\cos\alpha_n$$
