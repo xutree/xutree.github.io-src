@@ -31,7 +31,7 @@ $$\frac{\partial f}{\partial l}\bigg\rvert_{P_0}=\frac{\partial f}{\partial x_1}
 $$f(P)-f(P_0)=\frac{\partial f}{\partial x_1}\bigg\rvert_{P_0}\Delta x_1+\frac{\partial f}{\partial x_2}\bigg\rvert_{P_0}\Delta x_2+\cdots+\frac{\partial f}{\partial x_n}\bigg\rvert_{P_0}\Delta x_n+o(\|\vec{P_0P}\|)$$
 故
 $$\lim_{\|\vec{P_0P}\|\to0}\frac{f(P)-f(P_0)}{\|\vec{P_0P}\|}=\lim_{\|\vec{P_0P}\|\to0}\left[\frac{\partial f}{\partial x_1}\bigg\rvert_{P_0}\frac{\Delta x_1}{\|\vec{P_0P}\|}+\frac{\partial f}{\partial x_2}\bigg\rvert_{P_0}\frac{\Delta x_2}{\|\vec{P_0P}\|}+\cdots+\frac{\partial f}{\partial x_n}\bigg\rvert_{P_0}\frac{\Delta x_n}{\|\vec{P_0P}\|}+\frac{o(\|\vec{P_0P}\|)}{\|\vec{P_0P}\|}\right] \\
-=\frac{\partial f}{\partial l}\bigg\rvert_{P_0}=\frac{\partial f}{\partial x_1}\bigg\rvert_{P_0}\cos\alpha_1+\frac{\partial f}{\partial x_2}\bigg\rvert_{P_0}\cos\alpha_2+\cdots+\frac{\partial f}{\partial x_n}\bigg\rvert_{P_0}\cos\alpha_n$$
+=\frac{\partial f}{\partial x_1}\bigg\rvert_{P_0}\cos\alpha_1+\frac{\partial f}{\partial x_2}\bigg\rvert_{P_0}\cos\alpha_2+\cdots+\frac{\partial f}{\partial x_n}\bigg\rvert_{P_0}\cos\alpha_n$$
 因为 $\frac{\partial f}{\partial l}\bigg\rvert_{P_0}$ 存在，所以
 $$\frac{\partial f}{\partial l}\bigg\rvert_{P_0}=\frac{\partial f}{\partial x_1}\bigg\rvert_{P_0}\cos\alpha_1+\frac{\partial f}{\partial x_2}\bigg\rvert_{P_0}\cos\alpha_2+\cdots+\frac{\partial f}{\partial x_n}\bigg\rvert_{P_0}\cos\alpha_n$$
 
