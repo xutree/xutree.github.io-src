@@ -1,7 +1,7 @@
 Title: 深度学习 第二章 线性代数
 Category: 读书笔记
 Date: 2018-11-21 14:02:59
-Modified: 2018-11-21 14:31:12
+Modified: 2018-11-21 16:22:11
 Tags: 机器学习, 深度学习
 
 ## 2.1 标量、向量、矩阵和张量
@@ -81,7 +81,7 @@ $$\|{\boldsymbol A}\|_F=\sqrt{\sum_{i,j}A_{i,j}^2}$$
 设方阵 ${\boldsymbol A}$ 的特征值为 $\lambda$，特征向量为 ${\boldsymbol v}$，即
 $$\boldsymbol {Av}=\lambda{\boldsymbol v}$$
 假设矩阵 $\boldsymbol A$ 有 $n$ 个线性无关的特征向量 $\left\{\boldsymbol v^{(1)},\cdots,\boldsymbol v^{(n)}\right\}$，对应和特征值 $\left\{\lambda_1,\cdots,\lambda_n\right\}$。取矩阵 $\boldsymbol V=\left[\boldsymbol v^{(1)},\cdots,\boldsymbol v^{(n)}\right]$，$\boldsymbol\lambda=[\lambda_1,\cdots,\lambda_n]^\text{T}$，则 $\boldsymbol A$ 的特征分解可记作
-$$\boldsymbol A=\boldsymbol V\ \text{diag}(\boldsymbol\lambda){\boldsymbol V}^{\text{-}1}$$
+$$\boldsymbol A=\boldsymbol V\ \text{diag}(\boldsymbol\lambda){\boldsymbol V}^{-1}$$
 
 实对称矩阵都可以分解成实特征值和实特征向量：
 $$\boldsymbol A=\boldsymbol {Q\Lambda}{\boldsymbol Q}^{-1}$$
@@ -156,4 +156,53 @@ $$\|{\boldsymbol A}\|_F=\sqrt{\sum_{i,j}A_{i,j}^2}=\sqrt{\text{Tr}(\boldsymbol {
 
 **问题**：假设在 $\mathbb{R}^n$ 空间中有 $m$ 个点 $\left\{\boldsymbol x^{(1)},\cdots,\boldsymbol x^{(m)}\right\}$，我们希望对这些点进行有损压缩。有损压缩表示我们使用更少的内存，但损失一些精度去存储这些点。我们希望损失的精度尽可能少。
 
-**分析**：编码这些点的一种方式是用低维表示。对于
+**分析**：编码这些点的一种方式是用低维表示。对于每个点 $\boldsymbol x^{(i)}\in\mathbb{R}^n$，会有一个编码向量 $\boldsymbol c^{(i)}\in\mathbb{R}^l$。如果 $l<n$，那么我们便达到目的。
+
+设编码函数是 $f(\boldsymbol x)=\boldsymbol c$，解码函数是 $g(\boldsymbol c)\approx \boldsymbol x$。
+
+PCA 由我们选择的解码函数而定，为了简单，我们使用矩阵乘法将编码映射回 $\mathbb{R}^n$，即 $g(\boldsymbol c)=\boldsymbol{Dc}$，其中 $\boldsymbol D\in\mathbb{R}^{n\times l}$ 是定义解码的矩阵。
+
+为使解码器有唯一解，我们限制 $\boldsymbol D$ 中所有列向量都有单位范数。为了简化问题，进一步限制 $\boldsymbol D$ 中列向量彼此正交。
+
+为求解最佳编码函数，我们计算下面的 $L^2$ 最优化问题：
+$$\begin{eqnarray}
+\boldsymbol c^\ast &=& \arg\max_{\boldsymbol c}\|\boldsymbol x-g(\boldsymbol c)\|_2 \\
+&=& \arg\max_{\boldsymbol c}\|\boldsymbol x-g(\boldsymbol c)\|_2^2 \\
+&=& \arg\max_{\boldsymbol c} \left(\boldsymbol x-g(\boldsymbol c)\right)^\text{T}\left(\boldsymbol x-g(\boldsymbol c)\right) \\
+&=& \arg\max_{\boldsymbol c}\boldsymbol x^\text{T}\boldsymbol x-\boldsymbol x^\text{T}g(\boldsymbol c)-g(\boldsymbol c)^\text{T}\boldsymbol x+g(\boldsymbol c)^\text{T}g(\boldsymbol c) \\
+&=& \arg\max_{\boldsymbol c}\boldsymbol x^\text{T}\boldsymbol x-2\boldsymbol x^\text{T}g(\boldsymbol c)+g(\boldsymbol c)^\text{T}g(\boldsymbol c)\ \ (利用标量 \ \text{Tr}(a)=a) \\
+&=& \arg\max_{\boldsymbol c}-2\boldsymbol x^\text{T}g(\boldsymbol c)+g(\boldsymbol c)^\text{T}g(\boldsymbol c)\ \ (忽略不含\  \boldsymbol c\ 的项) \\
+&=& \arg\max_{\boldsymbol c}-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol D^\text{T}\boldsymbol {Dc}\ \ (带入\  g(\boldsymbol c)\ 的定义) \\
+&=& \arg\max_{\boldsymbol c}-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol I_l\boldsymbol c\ \ (正交性单位性约束) \\
+&=& \arg\max_{\boldsymbol c}-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol c
+\end{eqnarray}$$
+令偏导为 0（参考[矩阵求导]({filename/articles/Math/矩阵求导.md})），得
+$$\nabla_{\boldsymbol c}(-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol c)=0 \\
+-2\boldsymbol D^\text{T}\boldsymbol x+2\boldsymbol c=0 \\
+\boldsymbol c=\boldsymbol D^\text{T}\boldsymbol x$$
+这使得算法很高效，最优编玛 $\boldsymbol x$ 只需要一个矩阵-向量乘法操作，我们获得了编码函数：
+$$f(\boldsymbol x)=\boldsymbol D^\text{T}\boldsymbol x$$
+重构操作：
+$$r(\boldsymbol x)=g(f(\boldsymbol x))=\boldsymbol {DD}^\text{T}\boldsymbol x$$
+
+接下来，确定编码矩阵 $\boldsymbol D$。因为用相同的矩阵 $\boldsymbol D$ 对所有点进行解码，我们不能再孤立的看待每个点。我们必须最小化所有维度和所有点上的误差矩阵的 Frobenius 范数：
+$$D^\ast=\arg\min_{\boldsymbol D}\sqrt{\sum_{i=1,j=1}^{i=m,j=n}\left(\boldsymbol x_j^{(i)}-r(\boldsymbol x^{(i)})_j\right)^2},\ \text{s.t.}\ \boldsymbol D^\text{T}\boldsymbol D=\boldsymbol I_l$$
+
+考虑最简单的情况，$l=1$，此时 $\boldsymbol D$ 退化成 $n\times 1$ 的向量 $\boldsymbol d$：
+$$\begin{eqnarray}
+d^\ast &=& \arg\min_{\boldsymbol d}\sum_{i=1}^m\left\|\boldsymbol x^{(i)}-\boldsymbol {dd}^\text{T}\boldsymbol x^{(i)}\right\|_2^2,\ \text{s.t.}\ \|\boldsymbol d\|_2=1 \\
+&=& \arg\min_{\boldsymbol d}\sum_{i=1}^m\left\|\boldsymbol x^{(i)}-\boldsymbol {d}^\text{T}\boldsymbol x^{(i)}\boldsymbol d\right\|_2^2,\ \text{s.t.}\ \|\boldsymbol d\|_2=1\ \ (标量和向量乘积可交换) \\
+&=& \arg\min_{\boldsymbol d}\sum_{i=1}^m\left\|\boldsymbol x^{(i)}-\boldsymbol x^{(i)\text{T}}\boldsymbol {dd}\right\|_2^2,\ \text{s.t.}\ \|\boldsymbol d\|_2=1\ \ (标量\ a^\text{T}=a) \\
+\end{eqnarray}$$
+令 $\boldsymbol X\in\mathbb{R}^{m\times n}$，其中 $\boldsymbol X_{i,:}=\boldsymbol x^{(i)\text{T}}$，则
+$$\begin{eqnarray}
+d^\ast &=&\arg\min_{\boldsymbol d}\left\|\boldsymbol X-\boldsymbol {Xdd}^\text{T}\right\|_F^2,\ \text{s.t.}\ \boldsymbol d^\text{T}\boldsymbol d=1 \\
+&=& \arg\min_{\boldsymbol d}\text{Tr}\left(\left(\boldsymbol X-\boldsymbol {Xdd}^\text{T}\right)^\text{T}\left(\boldsymbol X-\boldsymbol {Xdd}^\text{T}\right)\right),\ \text{s.t.}\ \boldsymbol d^\text{T}\boldsymbol d=1 \\
+&=& \arg\min_{\boldsymbol d}-2\text{Tr}\left(\boldsymbol X^\text{T}\boldsymbol {Xdd}^\text{T}\right)+\text{Tr}\left(\boldsymbol {dd}^\text{T}\boldsymbol X^\text{T}\boldsymbol {Xdd}^\text{T}\right),\ \text{s.t.}\ \boldsymbol d^\text{T}\boldsymbol d=1 \\
+&=& \arg\min_{\boldsymbol d}-\text{Tr}\left(\boldsymbol X^\text{T}\boldsymbol {Xdd}^\text{T}\right),\ \text{s.t.}\ \boldsymbol d^\text{T}\boldsymbol d=1 \\
+&=& \arg\max_{\boldsymbol d}\text{Tr}\left(\boldsymbol X^\text{T}\boldsymbol {Xdd}^\text{T}\right),\ \text{s.t.}\ \boldsymbol d^\text{T}\boldsymbol d=1 \\
+&=& \arg\max_{\boldsymbol d}\text{Tr}\left(\boldsymbol {d}^\text{T}\boldsymbol X^\text{T}\boldsymbol {Xd}\right),\ \text{s.t.}\ \boldsymbol d^\text{T}\boldsymbol d=1 \\
+\end{eqnarray}$$
+注意到 $\boldsymbol X^\text{T}\boldsymbol X$ 是实对称矩阵，一定可以正交对角化，所以最优的 $\boldsymbol d$ 是 $\boldsymbol X^\text{T}\boldsymbol X$ 最大特征值对应的特征向量。
+
+以上推导特定于 $l=1$ 的情况，仅得到了第一个主成分，更一般的，矩阵 $\boldsymbol D$ 由前 $l$ 个最大的特征值对应的特征向量组成。
