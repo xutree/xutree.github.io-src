@@ -1,7 +1,7 @@
 Title: 深度学习 第二章 线性代数
 Category: 读书笔记
 Date: 2018-11-21 14:02:59
-Modified: 2018-11-21 14:02:59
+Modified: 2018-11-21 14:31:12
 Tags: 机器学习, 深度学习
 
 ## 2.1 标量、向量、矩阵和张量
@@ -57,7 +57,7 @@ $$\|{\boldsymbol x}\|_p=\left(\sum_i|x_i|^p\right)^{\frac{1}{p}}$$
 更严格的，范数是满足下列性质的任意函数：
 
 - $f({\boldsymbol x})=0\Rightarrow{\boldsymbol x}={\boldsymbol 0}$
-- $f({\boldsymbol x}+{\boldsymbol y})\leq f({\boldsymbol x})+f({\boldsymbol y})$（triangle inequality）
+- $f({\boldsymbol x}+{\boldsymbol y})\leq f({\boldsymbol x})+f({\boldsymbol y})$
 - $\forall\alpha\in\mathbb{R},\ f(\alpha{\boldsymbol x})=|\alpha|f({\boldsymbol x})$
 
 当 $p=2$ 时，$L^2$ 范数称为**欧几里得范数**（Euclidean norm），经常简化表示为 $\|\boldsymbol x\|$，略去下标 2。平方 $L^2$ 范数也经常用来衡量向量的大小，可以简单的通过点积 ${\boldsymbol x}^\text{T}{\boldsymbol x}$ 计算。
@@ -81,7 +81,7 @@ $$\|{\boldsymbol A}\|_F=\sqrt{\sum_{i,j}A_{i,j}^2}$$
 设方阵 ${\boldsymbol A}$ 的特征值为 $\lambda$，特征向量为 ${\boldsymbol v}$，即
 $$\boldsymbol {Av}=\lambda{\boldsymbol v}$$
 假设矩阵 $\boldsymbol A$ 有 $n$ 个线性无关的特征向量 $\left\{\boldsymbol v^{(1)},\cdots,\boldsymbol v^{(n)}\right\}$，对应和特征值 $\left\{\lambda_1,\cdots,\lambda_n\right\}$。取矩阵 $\boldsymbol V=\left[\boldsymbol v^{(1)},\cdots,\boldsymbol v^{(n)}\right]$，$\boldsymbol\lambda=[\lambda_1,\cdots,\lambda_n]^\text{T}$，则 $\boldsymbol A$ 的特征分解可记作
-$$\boldsymbol A=\boldsymbol V\ \text{diag}(\boldsymbol\lambda){\boldsymbol V}^{-1}$$
+$$\boldsymbol A=\boldsymbol V\ \text{diag}(\boldsymbol\lambda){\boldsymbol V}^{\text{-}1}$$
 
 实对称矩阵都可以分解成实特征值和实特征向量：
 $$\boldsymbol A=\boldsymbol {Q\Lambda}{\boldsymbol Q}^{-1}$$
@@ -154,4 +154,6 @@ $$\|{\boldsymbol A}\|_F=\sqrt{\sum_{i,j}A_{i,j}^2}=\sqrt{\text{Tr}(\boldsymbol {
 
 **主成分分析**（principal components analysis，PCA）是一个简单的机器学习算法。
 
-**问题**：假设在 $\mathbb{R}^n$ 空间中有 $m$ 个点 $\left\{\boldsymbol x^{(1)},\cdots,\boldsymbol x^{(m)}\right\}$，我们希望对这些点进行有损压缩。有损压缩表示我们使用更少的内存，但损失一些精度去存储这些点。我们希望损失的精度尽可能少。$$
+**问题**：假设在 $\mathbb{R}^n$ 空间中有 $m$ 个点 $\left\{\boldsymbol x^{(1)},\cdots,\boldsymbol x^{(m)}\right\}$，我们希望对这些点进行有损压缩。有损压缩表示我们使用更少的内存，但损失一些精度去存储这些点。我们希望损失的精度尽可能少。
+
+**分析**：编码这些点的一种方式是用低维表示。对于
