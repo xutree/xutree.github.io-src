@@ -176,7 +176,7 @@ $$\begin{eqnarray}
 &=& \arg\max_{\boldsymbol c}-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol I_l\boldsymbol c\ \ (正交性单位性约束) \\
 &=& \arg\max_{\boldsymbol c}-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol c
 \end{eqnarray}$$
-令偏导为 0（参考[矩阵求导]({filename/articles/Math/矩阵求导.md})），得
+令偏导为 0（参考[矩阵求导]({filename}/articles/Math/矩阵求导.md)），得
 $$\nabla_{\boldsymbol c}(-2\boldsymbol x^\text{T}\boldsymbol {Dc}+\boldsymbol c^\text{T}\boldsymbol c)=0 \\
 -2\boldsymbol D^\text{T}\boldsymbol x+2\boldsymbol c=0 \\
 \boldsymbol c=\boldsymbol D^\text{T}\boldsymbol x$$
