@@ -33,7 +33,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 PLUGIN_PATHS = ["/Users/xususu/pelican-plugins"]
-PLUGINS = ['multi_neighbors', 'tipue_search', 'sitemap', 'render_math']
+PLUGINS = ['multi_neighbors', 'tipue_search', 'sitemap']
 
 # DISQUS_SITENAME = "xutree"
 
