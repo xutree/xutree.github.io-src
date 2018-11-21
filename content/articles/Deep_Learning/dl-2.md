@@ -81,10 +81,10 @@ $$\|{\boldsymbol A}\|_F=\sqrt{\sum_{i,j}A_{i,j}^2}$$
 设方阵 ${\boldsymbol A}$ 的特征值为 $\lambda$，特征向量为 ${\boldsymbol v}$，即
 $$\boldsymbol {Av}=\lambda{\boldsymbol v}$$
 假设矩阵 $\boldsymbol A$ 有 $n$ 个线性无关的特征向量 $\left\{\boldsymbol v^{(1)},\cdots,\boldsymbol v^{(n)}\right\}$，对应和特征值 $\left\{\lambda_1,\cdots,\lambda_n\right\}$。取矩阵 $\boldsymbol V=\left[\boldsymbol v^{(1)},\cdots,\boldsymbol v^{(n)}\right]$，$\boldsymbol\lambda=[\lambda_1,\cdots,\lambda_n]^\text{T}$，则 $\boldsymbol A$ 的特征分解可记作
-$$\boldsymbol A=\boldsymbol V\text{diag}(\boldsymbol\lambda)\boldsymbol V^{-1}$$
+$$\boldsymbol A=\boldsymbol V\ \text{diag}(\boldsymbol\lambda){\boldsymbol V}^{-1}$$
 
 实对称矩阵都可以分解成实特征值和实特征向量：
-$$\boldsymbol A=\boldsymbol {Q\Lambda Q}^{-1}$$
+$$\boldsymbol A=\boldsymbol {Q\Lambda}{\boldsymbol Q}^{-1}$$
 其中，$\boldsymbol Q$ 是正交矩阵。
 
 矩阵的特征分解提供了许多有用的信息。例如，矩阵是奇异的，当且仅当含有零特征值。
@@ -109,7 +109,7 @@ $$f(\boldsymbol x)=\boldsymbol x^\text{T}\boldsymbol {Ax}$$
 
 **奇异值分解**（singular value decomposition，SVD）是另一种矩阵分解方法。
 
-$$\boldsymbol A=\boldsymbol {UDV}^\text{T}$$
+$$\boldsymbol A=\boldsymbol {UD}{\boldsymbol V}^\text{T}$$
 其中，$\boldsymbol A$ 是 $m\times n$ 的矩阵，$\boldsymbol U$ 是 $m\times m$ 的正交矩阵，$\boldsymbol V$ 是 $n\times n$ 的正交矩阵，$\boldsymbol D$ 是 $m\times n$ 的对角矩阵。
 
 对角矩阵 $\boldsymbol D$ 对角线上的元素称为矩阵 $\boldsymbol A$ 的奇异值（singular value）。矩阵 $\boldsymbol U$ 的列向量称为左奇异向量（left singular vector），它是 $\boldsymbol {AA}^\text{T}$ 的特征向量。矩阵 $\boldsymbol V$ 的列向量称为右奇异向量（right singular vector），它是 $\boldsymbol A^\text{T}\boldsymbol A$ 的特征向量。$\boldsymbol A$ 的非零奇异值是 $\boldsymbol {AA}^\text{T}$ 和 $\boldsymbol A^\text{T}\boldsymbol A$ 特征值的平方根。
@@ -121,7 +121,7 @@ $$\boldsymbol A=\boldsymbol {UDV}^\text{T}$$
 矩阵 $\boldsymbol A$ 的摩尔－彭若斯伪逆（Moore-Penrose pseudoinverse）定义为：
 $$\boldsymbol A^+=\lim_{\alpha\to0^+}\left(\boldsymbol A^\text{T}\boldsymbol A+\alpha \boldsymbol I\right)^{-1}\boldsymbol A^\text{T}$$
 一般计算使用下面的公式：
-$$\boldsymbol A^+=\boldsymbol {VD}^+\boldsymbol U^\text{T}$$
+$$\boldsymbol A^+=\boldsymbol {V}{\boldsymbol D}^+\boldsymbol U^\text{T}$$
 其中，矩阵 $\boldsymbol U$、$\boldsymbol D$ 和 $\boldsymbol V$ 是矩阵 $\boldsymbol A$ 奇异值分解后得到的矩阵。对角矩阵 $\boldsymbol D$ 的伪逆 $\boldsymbol D^+$ 是其非零元素取倒数之后再转置得到的。
 
 对于线性方程：
@@ -154,4 +154,4 @@ $$\|{\boldsymbol A}\|_F=\sqrt{\sum_{i,j}A_{i,j}^2}=\sqrt{\text{Tr}(\boldsymbol {
 
 **主成分分析**（principal components analysis，PCA）是一个简单的机器学习算法。
 
-**问题**：假设在 $\mathbb{R}^n$ 空间中有 $m$ 个点 $\left\{\boldsymbol x^{(1)},\cdots,\boldsymbol x^{(m)}\right\}$，我们希望对这些点进行有损压缩。有损压缩表示我们使用更少的内存，但损失一些精度去存储这些点。我们希望损失的精度尽可能少。
+**问题**：假设在 $\mathbb{R}^n$ 空间中有 $m$ 个点 $\left\{\boldsymbol x^{(1)},\cdots,\boldsymbol x^{(m)}\right\}$，我们希望对这些点进行有损压缩。有损压缩表示我们使用更少的内存，但损失一些精度去存储这些点。我们希望损失的精度尽可能少。$$
