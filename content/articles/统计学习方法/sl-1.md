@@ -169,7 +169,7 @@ $$r_\text{test}=\frac{1}{N'}\sum_{i=1}^{N'}{\mathbb I}(y_i=\hat{f}(x_i))$$
 
 训练误差与测试误差和模型复杂度关系如下：
 
-![训练误差与测试误差和模型复杂度]({static}/images/statistical_learning_1.3.png)
+![训练误差与测试误差和模型复杂度]({filename}/images/statistical_learning_1.3.png)
 
 ## 1.5 正则化与交叉验证
 
