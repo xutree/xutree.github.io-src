@@ -36,7 +36,7 @@ Tags: X3DOM
 ```
 如果你现在在浏览器中打开这个文件，会像下面这样：
 
-![图1    注意box标签没有颜色，所以无法在图中看到]({filename}/images/fig1.png)
+![图1    注意box标签没有颜色，所以无法在图中看到]({static}/images/fig1.png)
 
 由于 *box* 目前没有颜色，所以无法看到它，为了看到它我们需要声明 *material*，X3DOM 基于 X3D 标准选择了一个白色的 *material*，由于网页的背景也是白色的，所以我们看不到它。为了改变 *material* 的颜色，我们首先需要在 *shape* 中插入 *appearance*。在 *appearance* 里面，我们就可以插入 *material*，利用 *material* 的 *diffuseColor* 我们可以定义 *material* 的颜色，我们现在将它定义为 RGB 颜色的红色：
 ```
@@ -49,13 +49,13 @@ Tags: X3DOM
 ```
 现在，在你的浏览器中，网页将变成：
 
-![图2    现在 *box* 具有红色的 *material*]({filename}/images/fig2.png)
+![图2    现在 *box* 具有红色的 *material*]({static}/images/fig2.png)
 
 现在，你可以利用鼠标进行交互了。按住鼠标左键并移动鼠标，你可以旋转视角，按住鼠标右键并移动鼠标，你可以放大和缩小。
 
 我们继续在这个 *scene* 中添加两个物体：一个蓝色的球体和一个绿色的圆锥。这和我们添加 *box* 类似，但是，在 *sphere* 和 *cone* 节点处，我们需要移动球和圆锥以避免他们相互重叠，因为所有的 3D 物体都默认不进行任何的坐标转换，也就是说它们会重叠在一起。像X3D和其他的图像相关标准(例如，OpenGL)一样，X3DOM 的坐标系统 Y 轴指向上，X 轴指向右，Z 轴指向外：
 
-![图3  X3DOM的坐标系统]({filename}/images/fig3.png)
+![图3  X3DOM的坐标系统]({static}/images/fig3.png)
 
 在添加绿色圆锥之前，我们将坐标往左移动3个单位；在添加蓝色球之前，我们将坐标往右移动3个单位。如下所示：
 ```
@@ -84,6 +84,6 @@ Tags: X3DOM
 ```
 现在，在你的浏览器中，你将看到如下内容：
 
-![图4 三个物体]({filename}/images/fig4.png)
+![图4 三个物体]({static}/images/fig4.png)
 
 如果你在浏览器中看到了上图的结果，恭喜你！你刚刚使用了一系列的 X3D *node* 创建了你的第一个 X3DOM *scene*。

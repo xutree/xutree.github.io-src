@@ -13,41 +13,41 @@ Pelican 根据 **.md** 文件生成网页的时候需要 metadata，所以写个
 UNIX 时间，或称 POSIX 时间是 UNIX 或类 UNIX 系统使用的时间表示方式：从协调世界时1970年1月1日0时0分0秒起至现在的总秒数，不考虑闰秒。在多数 UNIX 系统上 UNIX 时间可以通过`date +%s`指令来检查。
 
 在 Mac 系统是由 UNIX 时间戳转化为普通时间的指令为：
-![UNIX 时间戳转化为普通时间]({filename}/images/fig7.png)
+![UNIX 时间戳转化为普通时间]({static}/images/fig7.png)
 
 所以我们先根据`stat`获得文件的创建时间：
-![根据stat获得文件的创建时间]({filename}/images/fig8.png)
+![根据stat获得文件的创建时间]({static}/images/fig8.png)
 
 然后转化为普通时间：
-![转化为普通时间]({filename}/images/fig9.png)
+![转化为普通时间]({static}/images/fig9.png)
 
 以下为脚本：
 ```
 #! /bin/bash
 
 # 输入：需要修改的文件
-filename=$1
+static=$1
 
 # 提取创建时间
-create_time=$(date  -r$(stat -f "%B" $filename) "+%Y-%m-%d %H:%M:%S")
+create_time=$(date  -r$(stat -f "%B" $static) "+%Y-%m-%d %H:%M:%S")
 # 提取修改时间
-modify_time=$(date  -r$(stat -f "%m" $filename) "+%Y-%m-%d %H:%M:%S")
+modify_time=$(date  -r$(stat -f "%m" $static) "+%Y-%m-%d %H:%M:%S")
 # 查找Date标签的行号
-num1=$(head -5 $filename | grep -n 'Date' | cut -d ":" -f 1)
+num1=$(head -5 $static | grep -n 'Date' | cut -d ":" -f 1)
 # 查找Modified标签的行号
-num2=$(head -5 $filename | grep -n 'Modified'| cut -d ":" -f 1)
+num2=$(head -5 $static | grep -n 'Modified'| cut -d ":" -f 1)
 
 # 如果Date标签行号为空，说明不存在Date标签，则插入Date
 if [ -z "$num1" ]; then
-    sed -i '' -e "2s/^//p; 2s/^.*/Date: $create_time/" $filename   
+    sed -i '' -e "2s/^//p; 2s/^.*/Date: $create_time/" $static   
 fi
 # 如果Modified标签行号为空，插入Modified
 if [ -z "$num2" ]; then
-    sed -i '' -e "3s/^//p; 3s/^.*/Modified: $modify_time/" $filename
+    sed -i '' -e "3s/^//p; 3s/^.*/Modified: $modify_time/" $static
 else
     # 否则，替换Modified标签到最新时间
-    sed -i '' ${num2}d $filename
-    sed -i '' -e "3s/^//p; 3s/^.*/Modified: $modify_time/" $filename
+    sed -i '' ${num2}d $static
+    sed -i '' -e "3s/^//p; 3s/^.*/Modified: $modify_time/" $static
 fi
 ```
 

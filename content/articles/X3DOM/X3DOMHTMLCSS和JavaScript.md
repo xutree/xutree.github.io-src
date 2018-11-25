@@ -62,7 +62,7 @@ h1
 ```
 现在你的网页看起来如下所示：
 
-![图1  默认情况下，X3DOM使用与网页相同的背景]({filename}/images/fig5.png)
+![图1  默认情况下，X3DOM使用与网页相同的背景]({static}/images/fig5.png)
 
 从图中可以看出，X3DOM 使用与网页相同的背景。这是一个很重要的行为：你的 X3DOM *scene* 是在 HTML 之上进行渲染的。让我们设置 *x3d* 元素为半透明背景：
 ```
@@ -74,7 +74,7 @@ x3d
 ```
 现在结果看起来如下所示：
 
-![图2  具有半透明背景的X3DOM]({filename}/images/fig6.png)
+![图2  具有半透明背景的X3DOM]({static}/images/fig6.png)
 
 ## X3DOM, HTML 事件和 JavaScript
 

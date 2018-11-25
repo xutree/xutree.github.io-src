@@ -31,7 +31,7 @@ Tags: C++
 
 关联容器（有序和无序的）都支持如下的普通容器操作：
 
-![普通容器操作]({filename}/images/c++11-1.jpg)
+![普通容器操作]({static}/images/c++11-1.jpg)
 
 关联容器不支持顺序容器位置相关的操作，例如`push_front`或`push_back`，关联容器也不支持构造函数或插入操作这些接受一个元素值和一个数量值的操作。
 
@@ -141,7 +141,7 @@ map<string, int>::mapped_type v5;   //v5 是一个 int
 
 ### 添加元素
 
-![添加元素]({filename}/images/c++11-2.jpg)
+![添加元素]({static}/images/c++11-2.jpg)
 
 返回值：
 
@@ -150,7 +150,7 @@ map<string, int>::mapped_type v5;   //v5 是一个 int
 
 ### 删除元素
 
-![删除元素]({filename}/images/c++11-3.jpg)
+![删除元素]({static}/images/c++11-3.jpg)
 
 ### map 下标操作
 
@@ -167,7 +167,7 @@ map<string, int>::mapped_type v5;   //v5 是一个 int
 
 ### 访问元素
 
-![访问元素]({filename}/images/c++11-4.jpg)
+![访问元素]({static}/images/c++11-4.jpg)
 
 lower_bound 和 upper_bound 不适用于无序容器。
 
@@ -203,8 +203,8 @@ lower_bound 和 upper_bound 不适用于无序容器。
 
 无序容器提供了一组管理桶的函数：
 
-![桶管理操作]({filename}/images/c++11-5.jpg)
+![桶管理操作]({static}/images/c++11-5.jpg)
 
 ### 无序容器对关键字类型的要求
 
-![无序容器]({filename}/images/c++11-6.jpg)
+![无序容器]({static}/images/c++11-6.jpg)

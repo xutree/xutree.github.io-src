@@ -17,7 +17,7 @@ int operator+(int, int);
 
 我们只能重载已存在的运算符，而无权发明新的运算符。重载运算符无法改变优先级和结合律。
 
-![运算符重载表]({filename}/images/c++14-1.jpg)
+![运算符重载表]({static}/images/c++14-1.jpg)
 
 ### 直接调用一个重载的运算符函数
 
@@ -345,7 +345,7 @@ public:
 
 下表所列的类型定义在`functional`头文件中：
 
-![标准库定义的函数对象]({filename}/images/c++14-2.jpg)
+![标准库定义的函数对象]({static}/images/c++14-2.jpg)
 
 #### 在算法中使用标准库函数对象
 
@@ -410,7 +410,7 @@ binops.insert({"%",mod});   //错误，mod 不是一个函数指针
 
 我们可以使用一个名为`function`的新标准库类型解决上述问题，它定义在`functional`头文件中，支持的操作如下：
 
-![标准库function类型]({filename}/images/c++14-3.jpg)
+![标准库function类型]({static}/images/c++14-3.jpg)
 
 ```
 map<string, function<int(int, int)>> binops = {

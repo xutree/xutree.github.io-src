@@ -592,7 +592,7 @@ StrVec::StrVec(StrVec &&s) noexcept	//移动操作不应抛出任何异常
 
 **不抛出异常的移动构造函数和移动赋值运算符必须标记为`noexcept`。**
 
-![为什么指定noexcept]({filename}/images/c++13-1.jpg)
+![为什么指定noexcept]({static}/images/c++13-1.jpg)
 
 #### 移动赋值运算符
 
@@ -638,7 +638,7 @@ StrVec &StrVec::operator=(StrVec &&rhs) noexcept
 
 #### 拷贝并交换赋值运算符和移动操作
 
-![拷贝并交换赋值运算符和移动操作]({filename}/images/c++13-2.jpg)
+![拷贝并交换赋值运算符和移动操作]({static}/images/c++13-2.jpg)
 
 #### 更新的三/五法则
 
@@ -703,7 +703,7 @@ void StrVec::push_back(string &&){
 
 #### 左值和右值引用成员函数
 
-![左值和右值引用成员函数]({filename}/images/c++13-3.jpg)
+![左值和右值引用成员函数]({static}/images/c++13-3.jpg)
 
 #### 重载和引用函数
 

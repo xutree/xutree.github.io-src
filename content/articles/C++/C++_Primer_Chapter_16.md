@@ -580,7 +580,7 @@ auto fcn(It beg, It end) ->
 }
 ```
 
-![标准类型转换模板]({filename}/images/c++16-1.jpg)
+![标准类型转换模板]({static}/images/c++16-1.jpg)
 
 ### 函数指针和实参推断
 
@@ -598,11 +598,11 @@ func(compare<int>);
 
 ### 模板实参推断和引用
 
-![模板实参推断和引用]({filename}/images/c++16-2.jpg)
+![模板实参推断和引用]({static}/images/c++16-2.jpg)
 
-![模板实参推断和引用]({filename}/images/c++16-3.jpg)
+![模板实参推断和引用]({static}/images/c++16-3.jpg)
 
-![模板实参推断和引用]({filename}/images/c++16-4.jpg)
+![模板实参推断和引用]({static}/images/c++16-4.jpg)
 
 
 #### 从左值引用函数参数推断类型
@@ -820,7 +820,7 @@ ostream& print(ostream &os, const T &t, const Args&... rest)
 
 给定 print(cout, i, s, 42)，其调用过程如下：
 
-![编写可变参数函数模板]({filename}/images/c++16-5.jpg)
+![编写可变参数函数模板]({static}/images/c++16-5.jpg)
 
 对于最后一次递归调用 print(cout, 42)，两个 print 版本都是可行的。但是因为非可变参数模板比可变参数模板更特例化，因此编译器选择非可变参数版本。另外，定义可变参数版本的 print 时，非可变参数版本的声明必须在作用域中，否则，可变参数版本会无限递归。
 

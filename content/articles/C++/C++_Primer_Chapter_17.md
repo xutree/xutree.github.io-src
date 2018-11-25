@@ -10,7 +10,7 @@ Tags: C++
 
 支持的操作：
 
-![tuple支持的操作]({filename}/images/c++17-1.jpg)
+![tuple支持的操作]({static}/images/c++17-1.jpg)
 
 要访问一个`tuple`的成员，使用`get`标准库模板。为了使用`get`，我们必须指定一个显式模板参数，它指明我们想要访问第几个成员。这个显式模板参数必须是一个整型常量表达式，从0开始计数，返回指定成员的引用。
 
@@ -37,7 +37,7 @@ tuple_element<1, trans>::type cnt = get<1>(item);
 
 支持的操作：
 
-![bitset支持的操作]({filename}/images/c++17-2.jpg)
+![bitset支持的操作]({static}/images/c++17-2.jpg)
 
 **使用字符串初始化`bitset`时，下标最小的字符对应`bitset`中的高位。**
 
@@ -45,7 +45,7 @@ tuple_element<1, trans>::type cnt = get<1>(item);
 bitset<32> bitvec4("1100");   // 2、3两位为1，剩余位为0
 ```
 
-![bitset支持的操作]({filename}/images/c++17-3.jpg)
+![bitset支持的操作]({static}/images/c++17-3.jpg)
 
 ## 正则表达式
 

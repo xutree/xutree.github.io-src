@@ -24,7 +24,7 @@ f(x) &=& F'(x)=\frac{\text{e}^{-(x-\mu)/\gamma}}{\gamma(1+\text{e}^{-(x-\mu)/\ga
 下图中绘制了对于不用 $\gamma$ 逻辑分布函数和概率密度函数。分布函数是一条 S 形曲线（sigmoid curve）。该曲线以点 $\left(\mu,\frac{1}{2}\right)$ 为中心对称，即满足
 $$F(-x+\mu)+F(x+\mu)=1$$
 
-![逻辑分布]({filename}/images/statistical_learning_6.1.png)
+![逻辑分布]({static}/images/statistical_learning_6.1.png)
 
 曲线在中心附近增长速度较快，在两端增长速度较慢。
 

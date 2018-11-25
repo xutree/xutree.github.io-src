@@ -31,7 +31,7 @@ shared_ptr<list<int>> p2;	//shared_ptr,可以指向 int 的 list
 
 智能指针操作：
 
-![智能指针操作]({filename}/images/c++12-1.jpg)
+![智能指针操作]({static}/images/c++12-1.jpg)
 
 #### make_shared 函数
 
@@ -151,9 +151,9 @@ int *p2 = new (nothrow) int;	//如果分配失败，new 返回一个空指针
 
 如前所述，如果我们不初始化一个智能指针，他就会被初始化为一个空指针。如下表所示，我们还可以用`new`返回的指针来初始化智能指针：
 
-![智能指针其他操作]({filename}/images/c++12-2.jpg)
+![智能指针其他操作]({static}/images/c++12-2.jpg)
 
-![智能指针其他操作]({filename}/images/c++12-3.jpg)
+![智能指针其他操作]({static}/images/c++12-3.jpg)
 
 ```
 shared_ptr<double> p1;	//shared_ptr 可以指向一个 double
@@ -184,11 +184,11 @@ shared_ptr<int> clone(int p){
 
 不要混合使用普通指针和智能指针：
 
-![不要混合使用普通指针和智能指针]({filename}/images/c++12-4.jpg)
+![不要混合使用普通指针和智能指针]({static}/images/c++12-4.jpg)
 
 也不要使用get初始化另一个智能指针或为智能指针赋值：
 
-![不要使用get初始化另一个智能指针或为智能指针赋值]({filename}/images/c++12-5.jpg)
+![不要使用get初始化另一个智能指针或为智能指针赋值]({static}/images/c++12-5.jpg)
 
 ### unique_ptr 指针
 
@@ -212,7 +212,7 @@ p3 = p2;	//错误：unique_ptr 不支持赋值
 
 `unique_ptr`特有的操作：
 
-![unique_ptr特有的操作]({filename}/images/c++12-6.jpg)
+![unique_ptr特有的操作]({static}/images/c++12-6.jpg)
 
 虽然我不能拷贝或赋值`unique_ptr`，但可以通过调用`release`或`reset`将指针的所有权从一个（非`const`）`unique_ptr`转移给另一个`unique`：
 
@@ -274,7 +274,7 @@ void f(destination &d /*其他需要的参数*/)
 
 `weak_ptr`操作：
 
-![weak_ptr操作]({filename}/images/c++12-7.jpg)
+![weak_ptr操作]({static}/images/c++12-7.jpg)
 
 当创建一个`weak_ptr`时，要用一个`shared_ptr`来初始化它：
 

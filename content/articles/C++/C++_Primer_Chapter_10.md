@@ -701,7 +701,7 @@ cout << string(rcomma.base(), line.cend()) << endl;
 
 rcomma 和 rcomma.base() 指向了不同的元素，line.crbegin() 和 line.cend() 也是如此。这些不同保证了元素范围无论是正向处理还是反向出来都是相同的。从技术上讲，普通迭代器与反向迭代器的关系反映了左闭合区间的特征。关键点在于 [line.crbegin(),rcomma) 和 [rcomma.base(),line.cend()) 指向 line 中相同的元素范围。
 
-![反向迭代器和普通迭代器之间的关系]({filename}/images/c++10-1.jpg)
+![反向迭代器和普通迭代器之间的关系]({static}/images/c++10-1.jpg)
 
 ## 泛型算法结构
 
