@@ -23,7 +23,7 @@ FILENAME_METADATA = '(?P<slug>.*)'
 TEMPLATE_PAGES = {"/Users/xususu/pelican-themes/my-elegant/templates/search.html" : "search.html", "/Users/xususu/pelican-themes/my-elegant/templates/404.html" : "404.html"}
 
 THEME = "/Users/xususu/pelican-themes/my-elegant"
-TYPOGRIFY = True
+TYPOGRIFY = False
 STATIC_PATHS = ['images','pdfs']
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
