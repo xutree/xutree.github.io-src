@@ -24,7 +24,11 @@ TEMPLATE_PAGES = {"/Users/xususu/pelican-themes/my-elegant/templates/search.html
 
 THEME = "/Users/xususu/pelican-themes/my-elegant"
 TYPOGRIFY = False
-STATIC_PATHS = ['images','pdfs']
+STATIC_PATHS = ['images','pdfs','extra']
+EXTRA_PATH_METADATA = {
+    'extra/robots.txt': {'path': 'robots.txt'},
+    'extra/favicon.ico': {'path': 'favicon.ico'},      
+}
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
@@ -33,7 +37,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 PLUGIN_PATHS = ["/Users/xususu/pelican-plugins"]
-PLUGINS = ['multi_neighbors', 'tipue_search', 'sitemap', 'render_math']
+PLUGINS = ['multi_neighbors', 'tipue_search', 'sitemap', 'render_math','extract_toc']
 
 # DISQUS_SITENAME = "xutree"
 
@@ -75,6 +79,7 @@ SITEMAP = {
 
 MARKDOWN = {
     'extension_configs': {
+        'markdown.extensions.toc': {},        
         'markdown.extensions.codehilite': {'css_class': 'highlight'},
         'markdown.extensions.extra': {},
         'markdown.extensions.meta': {},

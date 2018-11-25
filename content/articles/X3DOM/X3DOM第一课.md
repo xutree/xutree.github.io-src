@@ -4,19 +4,21 @@ Date: 2018-10-04 11:31
 Modified: 2018-10-06 21:13:34
 Tags: X3DOM
 
+[TOC]
+
 下面的指南可以作为 X3DOM 使用者和开发者的入门资料。本指南包括许多重要的内容，例如怎么配置你的环境去运行 X3DOM 的示例。如果你没有足够的时间阅读这篇入门文章，又或许你已经熟悉一点关于 X3D 的知识，你可以迅速的浏览下第3部分和第4部分的一些内容去设置你的环境，然后根据[tutorials](https://doc.x3dom.org/tutorials/index.html)的指导去完成你的第一个 X3DOM 应用。
 
-## 背景：什么是X3DOM，它可以用来做什么？
+## 1. 背景：什么是X3DOM，它可以用来做什么？
 
-### 无需插件即可在浏览器中显示的3D场景
+### 1.1 无需插件即可在浏览器中显示的3D场景
 
 X3DOM（发音：“X-Freedom”）是一个开源的 JaveScript 框架，用于在网页中创建 declarative 3D 场景。由于它基于标准的浏览器技术，你的浏览器不需要其他任何插件就可以显示 X3DOM 场景。概括地说，declarative 3D 意味着你可以使用结构化的文本表示去创建和显示 3D 场景，而不需要去编写代码。在 X3DOM 中，这种文本表示是表示网页的 HTML 文件的一部分。也就是说，3D 内容成为了网页元素的一部分，就像网页中的文本、链接、图片和视频一样。
 
-### X3DOM = X3D + DOM
+### 1.2 X3DOM = X3D + DOM
 
 X3DOM 这个名字是由两个缩写组合而成。第一个缩写是[X3D](http://www.web3d.org/x3d/what-x3d)（“Extensible 3D Graphics”），指代一个 3D 图形的免版税 ISO 标准。第二个缩写是[DOM](https://www.w3.org/DOM/)（“Document Object Model”），描述与HTML文档的内容相关联的交互概念和分层表示。X3DOM 使用 X3D 的一个专门的子集（所谓的[HTML Profile](https://www.x3dom.org/nodes-2/)）来作为网页内 3D 内容的描述语言。X3D（OM)元素可以通过 DOM 操作，就像其他的 HTML 元素一样。例如，你可以动态地改变一个 3D 物体的颜色通过 JavaScript 调用相应 DOM 元素的 *setAttribute(...)* 函数，这就像你可以动态改变一个普通网页里一个标签的内容一样。
 
-### 使用 X3DOM 的原因
+### 1.3 使用 X3DOM 的原因
 
 使用 X3DOM 而不是其他的基于浏览器的库或者 X3D 播放器是因为 X3DOM 具有以下几个优势：
 
@@ -25,13 +27,13 @@ X3DOM 这个名字是由两个缩写组合而成。第一个缩写是[X3D](http:
 - 从2009年至今，X3DOM 已经具有了很大的使用者和开发者群体
 - 如果你知道怎么创建简单的网页，你就可以利用你现有的关于 HTML 和 DOM 的知识，而不需要学习新的 API
 
-### 怎么做？
+### 1.4 怎么做？
 
 如果你想开发你的第一个 X3DOM 应用，你只需要一个浏览器和一个文本编辑器。当然，你也可以选择功能更多的 HTML 和 JavaScript 开发环境，比如[WebStorm](http://www.jetbrains.com/webstorm/)。
 
-## 一些基本 X3D 概念：Nodes、Components 和 Profiles
+## 2. 一些基本 X3D 概念：Nodes、Components 和 Profiles
 
-### X3D Nodes
+### 2.1 X3D Nodes
 
 X3D 定义每一个 3D 场景都是由一组 node 组成。每一个 node 代表 3D 场景中一个确定的部分：光线、物体、物体表面的材质等等。场景里的所用 node 排列成树结构或者图结构，整体结构被叫做 *scene-graph*。每一个 node 的行为，比如材质的颜色，可以通过node的 *fields* 设置。例如，一个用来设置某物体表面颜色为红色（RGB编码 1 0 0）的node的 XML 描述为：
 
@@ -40,11 +42,11 @@ X3D 定义每一个 3D 场景都是由一组 node 组成。每一个 node 代表
 ```
 你可能已经意识到，描述 X3D node 的 XML 很像常规的 HTML 代码，属性值 *diffuseColor* 的设置也像 HTML 属性的设置一样。事实上，如果你熟悉 HTML，那么就很容易理解 X3DOM 中的 node 了。你可以在[tutorials](https://doc.x3dom.org/tutorials/index.html)中学习怎样使用 node。如果你想了解更多 X3D 中 node 的概念，可以参考[external X3D documentation resources](https://doc.x3dom.org/index.html#X3DExternalDoc)。
 
-### X3D Components
+### 2.2 X3D Components
 
 一组具有相同功能的 node 称为 components。例如定义光线的 node，*PointLight* 和 *SpotLight*，在 *Lighting* component 里。关于 Components 的全部信息可以在[这里](https://doc.x3dom.org/node/Components.html)找到。
 
-### X3D Profiles 和 X3DOM HTML Profile
+### 2.3 X3D Profiles 和 X3DOM HTML Profile
 
 X3D 标准定义了大量的 node，一些特殊用途的 node 对大多说用户来说并不重要。因此，X3D 引入了 profile 的概念，把许多组 node 放在一起成为一个包，每一个包代表一类特殊的应用。例如，*CAD* 包，*Immersive* 包是用于交互环境的。profile 是在 component 之上的一个概念。
 
@@ -52,9 +54,9 @@ X3DOM 使用的 X3D component 经过十分仔细的选择，以提供一个最�
 
 最后，X3DOM 也提供一些不在原始HTML profile 中的 X3D node。这些 node 不在 X3DOM 的标准发行版本中，只在 *X3DOM-Full* 版本中。
 
-## 选择一个 X3DOM 版本
+## 3. 选择一个 X3DOM 版本
 
-### 版本和 Components
+### 3.1 版本和 Components
 
 有许多可供选择的 X3DOM 版本，你可能想知道对特殊的目的哪一个才是最好的。一般来讲，我们推荐最新的 release 版本。但是，如果你需要采用的新特性在 release 版中没有，那么 dev 版本可能更适合你。当你完成了网页应用的主要开发工作进而部署时，你可能需要用来开发的 X3DOM 的版本信息。你也可能，出于某种原因需要老版本的 X3DOM，比如你的网页应用包含了一些试验特性只在老版本出现，而在新版本中被移除了。
 
@@ -89,13 +91,13 @@ X3DOM 使用的 X3D component 经过十分仔细的选择，以提供一个最�
 <link rel="stylesheet" href="http://www.x3dom.org/download/1.3/x3dom.css">
 ```
 
-### Debugging
+### 3.2 Debugging
 
 如果在 debug 你的应用的时候你想看到 X3DOM 的源码，只需将 x3dom.js 替换成 x3dom.debug.js 或者将 x3dom-full.js 替换成 x3dom-full.debug.js。其注意，此特性只适用于版本1.4以后的 X3DOM。相比于常规版本，debug 版本包含缩进和注释，所以比较大。所以，当你最终发布你的 Web 应用时，请不要使用 debug 版本的 js。
 
-## 运行 X3DOM 应用
+## 4. 运行 X3DOM 应用
 
-### 通过简单的 Python 服务器
+### 4.1 通过简单的 Python 服务器
 
 一个简便的方法在服务器上来测试你的 Web 应用是使用 Python 的 HTTP 服务器模块。你只需要安装一个 Python 解释器。你可以在[这里](http://python.org/)下载。你可以用 Python 做许多有趣的事情。首先，打开命令行窗口，定位到 X3DOM 文件夹。如果你的 Python 是2.X版本，你可以使用 *SimpleHTTP* 服务器模块如下所示：
 ```
@@ -115,7 +117,7 @@ http://localhost:8023
 ```
 如果你在启动 Python 服务器的文件夹里放置了 index.html 文件，那么这个文件的内容就会显示在浏览器窗口里。否则，你会看到服务器所在文件夹内的文件列表。
 
-### 在 Web 服务器上运行 X3DOM
+### 4.2 在 Web 服务器上运行 X3DOM
 
 通常，你会在Web服务器上运行你的 X3DOM 应用，本节针对一些普通的 Web 服务器，如 Apache 和 IIS，给出具体的方法。
 

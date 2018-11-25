@@ -4,6 +4,8 @@ Date: 2018-11-17 19:32:10
 Modified: 2018-11-17 19:32:59
 Tags: 统计学习, 机器学习
 
+[TOC]
+
 EM 算法是一种迭代算法，用于含有隐变量（hidden varibale）的概率模型参数的极大似然估计，或极大后验概率估计。EM 算法每次的迭代分两步：E 步，求期望（expectation）；M 步，求极大（maximization）。所以这一算法被称为期望极大算法（expectation maximization）。
 
 ## 9.1 EM 算法的引入

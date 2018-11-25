@@ -4,9 +4,11 @@ Date: 2018-10-05 11:22
 Modified: 2018-10-06 21:02:31
 Tags: X3DOM
 
+[TOC]
+
 本节，你将学习关于 X3DOM, HTML 和 CSS的更多知识，以及怎么利用 HTML 和 CSS 技术构建出强大的 3D 应用。在本节最后，你讲学习怎么在你的应用中使用 JavaScript。我们将继续使用前一节的例子。拷贝 HelloX3DOM.html 文件并重命名为 HTMLEventsCSS.html。
 
-## X3DOM 和 CSS
+## 1. X3DOM 和 CSS
 
 我们首先来看下怎么通过 CSS 操控 X3DOM 元素。你可能已经注意到，在 HelloX3DOM.html 中，3D 内容位于一个被黑色边界包围的白色区域中。X3DOM 有一个单独的 css 文件，自从版本1.3以后，名字一直为 x3dom.css，在这个文件中可以找到关于 X3DOM 元素的所有 css 定义以及 debug 信息。假设你的页面使用灰色和橙色作为主要颜色。你可以通过许多方式改变 X3DOM 默认的 CSS 属性：
 
@@ -76,7 +78,7 @@ x3d
 
 ![图2  具有半透明背景的X3DOM]({filename}/images/fig6.png)
 
-## X3DOM, HTML 事件和 JavaScript
+## 2. X3DOM, HTML 事件和 JavaScript
 
 使用 HTML 和 JavaScript，你可以使用大量有用的回调函数来操纵大多数 DOM 元素。X3DOM 为 *node* 提供了相似的函数。例如，当我们点击红色立方体的时候，可以弹出一个文本信息，在 *shape* 里插入一个 *onclick* 函数就可以实现这个功能：
 ```
@@ -117,6 +119,6 @@ x3d
 <shape onclick="changeColor();">
 ```
 
-## 下一步：自动创建 (X)HTML
+## 3. 下一步：自动创建 (X)HTML
 
 如果你有大量的模型数据，你想把这些数据分配到不同的页面上。那么自动生成实际的页面而不是手动编写代码将更加有趣。你可以使用自动化工具，例如 XSLT，允许你直接将 X3DOM 文件转化为 XHTML 网页。[这里](http://www.web3d.org/x3d/stylesheets/X3dToXhtmlStylesheetExamples.zip)是一个例子。
