@@ -362,9 +362,7 @@ $$\frac{\partial f(w)}{\partial w_i}=\sum_{x,y}\tilde{P}(x)P_w(y|x)f_i(x,y)-\tex
 $$f(w^{(k)}+\lambda_kp_k)=\min_{\lambda\geq0}f(w^{(k)}+\lambda p_k)$$
 (5) 置 $w^{(k+1)}=w^{(k)}+\lambda_k p_k$  
 (6) 计算 $g_{k+1}=g(w^{(k+1)})$，若 $\|g_{k+1}\|<\epsilon$，则停止计算，得 $w^\star=w^{(k+1)}$；否则，按照下式求出 ${\bf B_{k+1}}$
-```
 $${\bf B_{k+1}}={\bf B_k}+\frac{y_ky_k^\text{T}}{y_k^\text{T}\delta_k}-\frac{{\bf B_k}\delta_k\delta_k^\text{T}{\bf B_k}}{\delta_k^\text{T}{\bf B_k}\delta_k}$$
-```
 其中，
 $$y_k=g_{k+1}-g_k,\delta_k=w^{(k+1)}-w^{(k)}$$
 (7) 置 $k=k+1$，转到 (3)
