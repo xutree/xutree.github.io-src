@@ -20,9 +20,9 @@ DEFAULT_LANG = 'zh'
 
 FILENAME_METADATA = '(?P<slug>.*)'
 
-TEMPLATE_PAGES = {"/Users/xususu/pelican-themes/my-elegant/templates/search.html" : "search.html", "/Users/xususu/pelican-themes/my-elegant/templates/404.html" : "404.html"}
+TEMPLATE_PAGES = {"/Users/xususu/Documents/Nutstore/My-Nutstore/xutree.github.io/themes/my-elegant/templates/search.html" : "search.html", "/Users/xususu/Documents/Nutstore/My-Nutstore/xutree.github.io/themes/my-elegant/templates/404.html" : "404.html"}
 
-THEME = "/Users/xususu/pelican-themes/my-elegant"
+THEME = "/Users/xususu/Documents/Nutstore/My-Nutstore/xutree.github.io/themes/my-elegant"
 TYPOGRIFY = False
 STATIC_PATHS = ['images','pdfs','extra']
 EXTRA_PATH_METADATA = {
@@ -36,8 +36,8 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-PLUGIN_PATHS = ["/Users/xususu/pelican-plugins"]
-PLUGINS = ['multi_neighbors', 'tipue_search', 'sitemap', 'render_math','extract_toc']
+PLUGIN_PATHS = ["/Users/xususu/Documents/Nutstore/My-Nutstore/xutree.github.io/plugins"]
+PLUGINS = ['multi_neighbors', 'tipue_search', 'sitemap', 'render_math','extract_toc','related_posts','tag_cloud']
 
 # DISQUS_SITENAME = "xutree"
 
