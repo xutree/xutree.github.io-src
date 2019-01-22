@@ -1,7 +1,7 @@
 Title: 为 Torch 安装特定版本的 libpng
 Category: 教程
 Date: 2019-01-22 14:23:05
-Modified: 2019-01-22 14:23:05
+Modified: 2019-01-22 14:37:18
 
 为了跑别人的程序，遇到了下面的问题
 
@@ -9,7 +9,7 @@ Modified: 2019-01-22 14:23:05
 libpng warning: Application built with libpng-1.4.12 but running with 1.6.35
 ```
 
-利用 ```brew info libpng``` 查询本机安装的版本输出如下
+利用 ```brew info libpng``` 查询本机安装版本，输出如下
 
 ```
 /usr/local/Cellar/libpng/1.6.29 (26 files, 1.2MB)
