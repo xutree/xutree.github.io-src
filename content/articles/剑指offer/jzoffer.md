@@ -1,7 +1,7 @@
 Title: 剑指offer
 Category: 读书笔记
 Date: 2019-02-19 15:32:21
-Modified: 2019-02-20 17:14:54
+Modified: 2019-02-20 23:31:34
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -235,7 +235,7 @@ private:
 
 ## 6. 旋转数组的最小数字
 
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组 {3,4,5,1,2} 为 {1,2,3,4,5} 的一个旋转，该数组的最小值为 1。 NOTE：给出的所有元素都大于 0，若数组大小为 0，请返回 0。
 
 ```
 class Solution {
@@ -310,3 +310,156 @@ private:
 如果 `rotateArray[low] = rotateArray[high]`
 
 测试用例: [2, 3, 4, 2, 2, 2, 2]，此时 `rotateArray[low] rotateArray[mid] rotateArray[high]` 三者相等，无法确定中间元素是属于前面还是后面的递增子数组，只能顺序查找。
+
+## 7. 斐波那契数列
+
+大家都知道斐波那契数列，现在要求输入一个整数 $n$，请你输出斐波那契数列的第 $n$ 项（从 0 开始，第 0 项为 0），$n \leq 39$。
+
+```
+class Solution {
+public:
+    int Fibonacci(int n) {
+        if (n < 2) {
+            return n;
+        }
+        int f1 = 0, f2 = 1, res = 0;
+        for (int i = 2; i <= n; i++) {
+            res = f1 + f2;
+            f1 = f2;
+            f2 = res;
+        }
+        return res;
+    }
+};
+```
+
+**思路**：不可递归，会超时，需展开。
+
+## 8. 跳台阶
+
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 $n$ 级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+
+```
+class Solution {
+public:
+    int jumpFloor(int number) {
+        if (number <= 2) return number;
+        int f1 = 1, f2 = 2, res;
+        for (int i = 3; i <= number; i++) {
+            res = f1 + f2;
+            f1 = f2;
+            f2 = res;
+        }
+        return res;
+    }
+};
+```
+
+**思路**：$f(n)=f(n-1)+f(n-2)$
+
+## 9. 变态跳台阶
+
+一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级...它也可以跳上 $n$ 级。求该青蛙跳上一个 $n$ 级的台阶总共有多少种跳法。
+
+```
+class Solution {
+public:
+    int jumpFloorII(int number) {
+        return pow(2, number - 1);
+    }
+};
+```
+
+**思路**：$f(n)=f(n-1)+f(n-2)+\cdots+f(1)=2f(n-1)$
+$$f(n)=\begin{cases}
+1, & n=0 \\
+1, & n=1 \\
+2f(n-1), & n\geq 2
+\end{cases}$$
+
+## 10. 矩形覆盖
+
+我们可以用 $2\times1$ 的小矩形横着或者竖着去覆盖更大的矩形。请问用 $n$ 个 $2\times1$ 的小矩形无重叠地覆盖一个 $2\times n$ 的大矩形，总共有多少种方法？
+
+```
+class Solution {
+public:
+    int rectCover(int number) {
+        if (number <= 2) return number;
+        int f1 = 1, f2 = 2, res;
+        for (int i = 3; i <= number; i++) {
+            res = f1 + f2;
+            f1 = f2;
+            f2 = res;
+        }
+        return res;
+    }
+};
+```
+
+**思路**：$f(n)=f(n-1)+f(n-2)$
+
+## 11. 二进制中 1 的个数
+
+输入一个整数，输出该数二进制表示中 1 的个数。其中负数用补码表示。
+
+```
+class Solution {
+public:
+     int  NumberOf1(int n) {
+         int count = 0;
+         while (n) {
+             count++;
+             n = n & (n - 1);
+         }
+         return count;
+     }
+};
+```
+
+**逻辑右移与算术右移**：比如一个有符号位的 8 位二进制数 11001101，逻辑右移就不管符号位，如果移一位就变成 01100110。算术右移要管符号位，右移一位变成 10100110。
+
+- 逻辑左移=算数左移，右边统一添 0
+- 逻辑右移，左边统一添 0
+- 算数右移，左边添加的数和符号有关
+
+因此如果输入负数，那么我们的算法简单的判断是不是 0 来终结，岂不是要死循环。
+
+**避免负数移位的死循环**：为了负数时候避免死循环，我们可以不右移数字 $n$，转而去移动测试位。
+
+那么思考我们的循环结束条件，flag 一直左移（乘以 2），当超出表示标识范围的时候，我们就可以终止了，但是这样子的话，最高位的符号位没有测试，因此要单独测试，同时由于会溢出，我们的 flag 需要用 long 来标识。
+
+**整数中有几个 1 就循环几次 --- lowbit 优化**：把一个整数 $n$ 减去 1，再和原来的整数做与运算，会把该整数最右边一个 1 变成 0，那么该整数有多少个 1，就会进行多少次与运算。
+
+## 12. 数值的正数次方
+
+给定一个 `double` 类型的浮点数 `base` 和 `int` 类型的整数 `exponent`。求 `base` 的 `exponent` 次方。
+
+```
+class Solution {
+public:
+    double Power(double base, int exponent) {
+        double res = 1, curr = base;
+        int n;
+        if (exponent > 0) {
+            n = exponent;
+        } else if (exponent < 0) {
+            // 由于精度原因，double 类型的变量不能用等号判断两个数是否相等
+            if (base > -0.000001 && base < 0.000001 ) {
+                // 抛出异常
+                throw new runtime_error("分母不能为0");
+            }
+            n = - exponent;
+        } else {
+            return 1;
+        }
+        while (n != 0) {
+            if ((n & 1) == 1)
+                res *= curr;
+            curr *= curr;
+            n >>= 1;
+        }
+        return exponent >= 0 ? res : (1 / res);
+    }
+};
+```
