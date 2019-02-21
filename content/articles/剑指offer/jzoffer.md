@@ -1,7 +1,7 @@
 Title: 剑指offer
 Category: 读书笔记
 Date: 2019-02-19 15:32:21
-Modified: 2019-02-20 23:31:34
+Modified: 2019-02-21 16:37:04
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -433,7 +433,7 @@ public:
 
 ## 12. 数值的正数次方
 
-给定一个 `double` 类型的浮点数 `base` 和 `int` 类型的整数 `exponent`。求 `base` 的 `exponent` 次方。
+给定一个 `double` 类型的浮点数 `base` 和 `int` 类型的整数 `exponent`。求 `base` 的 `exponent` 次方。
 
 ```
 class Solution {
@@ -463,3 +463,245 @@ public:
     }
 };
 ```
+
+## 13. 调整数组顺序使奇数位于偶数前面
+
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+```
+class Solution {
+public:
+    void reOrderArray(vector<int> &array) {
+        if (array.size() <= 1) return;
+        vector<int> temp;
+        auto ib1 = array.begin();
+        //  删除元素，尾后迭代器失效
+        for (; ib1 != array.end(); ) {
+            if (*ib1 % 2 == 0) {
+                temp.push_back(*ib1);
+                array.erase(ib1);
+            } else {
+                ib1++;
+            }
+        }
+        /*
+        Summary:
+           1. For observing the elements, use the following syntax:
+                 for (const auto& elem : container)    // capture by const reference
+           2. If the objects are cheap to copy (like ints, doubles, etc.),
+           it's possible to use a slightly simplified form:
+                 for (auto elem : container)    // capture by value
+           3. For modifying the elements in place, use:
+                 for (auto& elem : container)    // capture by (non-const) reference
+           4. If the container uses "proxy iterators" (like std::vector<bool>), use:
+                 for (auto&& elem : container)    // capture by &&
+           5. Of course, if there is a need to make a local copy of the element inside the loop body,
+           capturing by value (for (auto elem : container)) is a good choice.
+        */
+        for (auto elem : temp) {
+            array.push_back(elem);
+        }
+    }
+};
+```
+
+## 14. 链表中倒数第 $k$ 个结点
+
+输入一个链表，输出该链表中倒数第 $k$ 个结点。
+
+```
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+        if (pListHead == NULL) return NULL;
+        ListNode* left = pListHead, *right = left;
+        unsigned int i = 0;
+        while (i < k && right != NULL) {
+            right = right->next;
+            i++;
+        }
+        // 注意条件
+        if (i < k && right == NULL) return NULL;
+        // 注意条件
+        while (right != NULL) {
+            right = right->next;
+            left = left->next;
+        }
+        return left;
+    }
+};
+```
+
+**思路**：双指针法
+
+## 15. 反转链表
+
+输入一个链表，反转链表后，输出新链表的表头。
+
+```
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* ReverseList(ListNode* pHead) {
+        if (pHead == NULL) return NULL;
+        ListNode *pPrev = NULL, *pNext = NULL, *pNode = pHead;
+        while (pNode) {
+            pNext = pNode->next;
+            pNode->next = pPrev;
+            pPrev = pNode;
+            pNode = pNext;
+        }
+        return pPrev;
+    }
+};
+```
+
+## 16. 合并两个排序的链表
+
+输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+
+```
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
+    {
+        if (pHead1 == NULL ) {
+            return pHead2;
+        } else if (pHead2 == NULL) {
+            return pHead1;
+        }
+
+        ListNode *phead1 = pHead1;
+        ListNode *phead2 = pHead2;
+        //  先生成头结点
+        ListNode *head = NULL;
+        if(phead1->val < phead2->val) {
+            head = phead1;
+            phead1 = phead1->next;
+        } else {
+            head = phead2;
+            phead2 = phead2->next;
+        }
+        //  遍历两个链表，另用一个指针以保存头指针
+        ListNode *curr = head;
+
+        while (phead1 && phead2) {
+            if (phead1->val > phead2->val) {
+                curr->next = phead2;
+                curr = curr->next;
+                phead2 = phead2->next;
+            } else {
+                curr->next = phead1;
+                curr = curr->next;
+                phead1 = phead1->next;
+            }
+        }
+        // 直接附加上去
+        if (phead1 == NULL) {
+            curr->next = phead2;
+        } else {
+            curr->next = phead1;
+        }
+        return head;
+    }
+};
+```
+
+## 17. 树的子结构
+
+输入两棵二叉树 $A$，$B$，判断 $B$ 是不是 $A$ 的子结构。（ps：我们约定空树不是任意一个树的子结构）。
+
+```
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+    {
+        bool res = false;
+        // 判断非空
+        if (pRoot1 != NULL && pRoot2 != NULL) {
+            if (pRoot1->val == pRoot2->val) {
+                res = DoesTree1HaveTree2(pRoot1, pRoot2);
+            }
+            if (!res) {
+                res = HasSubtree(pRoot1->left, pRoot2);
+            }
+            if (!res) {
+                res = HasSubtree(pRoot1->right, pRoot2);
+            }
+        }
+        return res;
+    }
+
+    bool DoesTree1HaveTree2(TreeNode* pRoot1, TreeNode* pRoot2)
+    {
+        if (pRoot2 == NULL) return true;
+        if (pRoot1 == NULL) return false;
+        if (pRoot1->val != pRoot2->val) return false;
+        return DoesTree1HaveTree2(pRoot1->left, pRoot2->left) &&
+            DoesTree1HaveTree2(pRoot1->right, pRoot2->right);
+    }
+};
+```
+
+## 18. 二叉树的镜像
+
+操作给定的二叉树，将其变换为源二叉树的镜像。
+
+```
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    void Mirror(TreeNode *pRoot) {
+       if(pRoot == NULL) {
+            return;
+        }
+        swap(pRoot->left, pRoot->right);
+        Mirror(pRoot->left);
+        Mirror(pRoot->right);
+    }
+};
+```
+
+## 19. 顺序打印矩阵
+
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10。
