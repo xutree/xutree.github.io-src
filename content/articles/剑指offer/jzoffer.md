@@ -1,7 +1,7 @@
-Title: 剑指offer
+Title: 剑指 offer
 Category: 读书笔记
 Date: 2019-02-19 15:32:21
-Modified: 2019-02-21 16:37:04
+Modified: 2019-02-21 21:07:43
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -705,3 +705,147 @@ public:
 ## 19. 顺序打印矩阵
 
 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10。
+
+```
+class Solution {
+private:
+    int row, col;
+    vector<vector<bool>> flag;
+    bool judge(int i, int j) {
+        return 0 <= i && i < row && 0<= j && j <col && flag[i][j] == true;
+    }
+public:
+    vector<int> printMatrix(vector<vector<int> > matrix) {
+        vector<int> res;
+        if (matrix.size() == 0) return res;
+        row = matrix.size();
+        col = matrix[0].size();
+        flag = vector<vector<bool>> (row, vector<bool> (col, true));
+        const int D[4][2] = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+        int i = 0, j = 0, d = 0, count = row * col;
+        while (count--) {
+            res.push_back(matrix[i][j]);
+            flag[i][j] = false;
+            if (judge(i + D[d][0],j + D[d][1]) == false) {
+                (++d) %= 4;
+            }
+            i += D[d][0];
+            j += D[d][1];
+        }
+        return res;
+    }
+};
+```
+
+## 20. 包含 `min` 函数的栈
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的 `min` 函数（时间复杂度应为 $O(1)$）。
+
+```
+class Solution {
+public:
+    void push(int value) {
+        m_data.push(value);
+        if (m_min.empty()) {
+            m_min.push(value);
+        } else {
+            int temp = value < m_min.top() ? value : m_min.top();
+            m_min.push(temp);
+        }
+    }
+    void pop() {
+        m_data.pop();
+        m_min.pop();
+    }
+    int top() {
+        return m_data.top();
+    }
+    int min() {
+        // 注意空
+        if (m_min.empty()) return 0;
+        return m_min.top();
+    }
+// 自己添加成员变量
+protected:
+    stack<int> m_data;
+    stack<int> m_min;
+};
+```
+
+**思路**：我们维持两个栈
+
+- 数据栈 m_data，存储栈的数据用于常规的栈操作
+- 最小栈 m_min，保存每次 `push` 和 `pop` 时候的最小值，
+
+在 push-data 栈的时候，将当前最小数据压入，在 pop-data 栈的时候，将 min 栈栈顶的最小数据弹出，这样保证 min 栈中存储着当前现场的最小值，并随着数据栈的更新而更新。
+
+## 21. 栈的压入、弹出序列
+
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）。
+
+```
+class Solution {
+public:
+    bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+        if (pushV.empty()) return false;
+        vector<int> stack;
+        for (int i = 0, j = 0; i < pushV.size(); ) {
+            stack.push_back(pushV[i++]);
+            // 注意为 while
+            while (j < popV.size() && stack.back() == popV[j]) {
+                stack.pop_back();
+                j++;
+            }
+        }
+        return stack.empty();
+    }
+};
+```
+
+## 22. 从上往下打印二叉树
+
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+```
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        vector<int> res;
+        if (root == NULL) return res;
+
+        vector<TreeNode*> vec;
+        vec.push_back(root);
+
+        int cur = 0;
+        int end = 1;
+
+        while (cur < vec.size()) {
+            // 新的一行访问开始，重新定位 end 于当前行最后一个节点的下一个位置
+            end = vec.size();
+
+            while (cur < end) {
+                res.push_back(vec[cur]->val);
+                if (vec[cur]->left != NULL) ///  压入左节点
+                {
+                    vec.push_back(vec[cur]->left);
+                }
+                if (vec[cur]->right != NULL)    ///  压入右节点
+                {
+                    vec.push_back(vec[cur]->right);
+                }
+                cur++;
+            }
+        }
+        return res;
+    }
+};
+```
