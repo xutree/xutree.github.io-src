@@ -1,7 +1,7 @@
 Title: 排序算法
 Category: 读书笔记
 Date: 2018-10-26 23:08:38
-Modified: 2018-11-01 22:21:00
+Modified: 2019-02-22 22:22:37
 Tags: 算法
 
 [TOC]
@@ -13,14 +13,12 @@ Tags: 算法
 
 ```
 void insertion_sort(int arr[], int len) {
-        for (int i = 1; i < len; i++) {
-                int key = arr[i];
-                int j;
-                for (j = i - 1; j >= 0 && key < arr[j]; j--) {
-                        arr[j + 1] = arr[j];
-                        arr[j] = key;
-                }
+    int i, j;
+    for (i = 1; i < len; i++) {
+        for (j = i - 1; j >= 0 && a[j] > arr[j + 1]; j--) {
+            std::swap(a[j], a[j + 1]);
         }
+    }
 }
 ```
 
@@ -108,48 +106,45 @@ template <typename Iterator> void merge_sort(Iterator begin, Iterator end) {
 
 ```
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-//最大堆调整，i 为要调整节点，n 为最大堆尺寸
-void max_heapify(int arr[], int n, int i) {
-        int largest = i;
-        int l = 2 * i + 1; //左孩子
-        int r = 2 * i + 2; //右孩子
-        if (l < n && arr[l] > arr[largest])
-                largest = l;
-        if (r < n && arr[r] > arr[largest])
-                largest = r;
-        if (largest != i) {
-                swap(arr[i], arr[largest]);
-                heapify(arr, n, largest);
+void max_heapify(int arr[], int start, int end) {
+    // 建立父節點指標和子節點指標
+    int dad = start;
+    int son = dad * 2 + 1;
+    while (son <= end) { // 若子節點指標在範圍內才做比較
+        if (son + 1 <= end && arr[son] < arr[son + 1]) // 先比較兩個子節點大小，選擇最大的
+            son++;
+        if (arr[dad] > arr[son]) // 如果父節點大於子節點代表調整完畢，直接跳出函數
+            return;
+        else { // 否則交換父子內容再繼續子節點和孫節點比較
+            swap(arr[dad], arr[son]);
+            dad = son;
+            son = dad * 2 + 1;
         }
+    }
 }
 
-//堆排序
-void heapSort(int arr[], int n) {
-        //建堆
-        for (int i = n / 2 - 1; i >= 0; i--)
-                max_heapify(arr, n, i);
-        //排序
-        for (int i = n - 1; i >= 0; i--) {
-                //交换堆顶和尾元素
-                swap(arr[0], arr[i]);
-                max_heapify(arr, i, 0);
-        }
-}
-
-void printArray(int arr[], int n) {
-        for (int i = 0; i < n; ++i)
-                cout << arr[i] << " ";
-        cout << "\n";
+void heap_sort(int arr[], int len) {
+    // 初始化，i從最後一個父節點開始調整
+    for (int i = len / 2 - 1; i >= 0; i--)
+        max_heapify(arr, i, len - 1);
+    // 先將第一個元素和已经排好的元素前一位做交換，再從新調整(刚调整的元素之前的元素)，直到排序完畢
+    for (int i = len - 1; i > 0; i--) {
+        swap(arr[0], arr[i]);
+        max_heapify(arr, 0, i - 1);
+    }
 }
 
 int main() {
-        int arr[] = {12, 11, 13, 5, 6, 7};
-        int n = sizeof(arr) / sizeof(arr[0]);
-        heapSort(arr, n);
-        cout << "Sorted array is \n";
-        printArray(arr, n);
+    int arr[] = { 3, 5, 3, 0, 8, 6, 1, 5, 8, 6, 2, 4, 9, 4, 7, 0, 1, 8, 9, 7, 3, 1, 2, 5, 9, 7, 4, 0, 2, 6 };
+    int len = (int) sizeof(arr) / sizeof(*arr);
+    heap_sort(arr, len);
+    for (int i = 0; i < len; i++)
+        cout << arr[i] << ' ';
+    cout << endl;
+    return 0;
 }
 ```
 
@@ -166,29 +161,19 @@ int main() {
 快速排序是二叉查找树（二叉搜索树）的一个空间最优化版本。不是循序地把数据项插入到一个明确的树中，而是由快速排序组织这些数据项到一个由递归调用所隐含的树中。这两个算法完全地产生相同的比较次数，但是顺序不同。对于排序算法的稳定性指标，原地分割版本的快速排序算法是不稳定的。其他变种是可以通过牺牲性能和空间来维护稳定性的。
 
 ```
-template <typename T>
-void quick_sort_recursive(T arr[], int start, int end) {
-    if (start >= end)
-        return;
-    T mid = arr[end];
-    int left = start, right = end - 1;
-    while (left < right) { //在整个范围内搜寻比枢纽元值小或大的元素，然后将左侧元素与右侧元素交换
-        while (arr[left] < mid && left < right) //试图在左侧找到一个比枢纽元更大的元素
-            left++;
-        while (arr[right] >= mid && left < right) //试图在右侧找到一个比枢纽元更小的元素
-            right--;
-        std::swap(arr[left], arr[right]); //交换元素
+void quick_sort(int a[], int start, int end) {
+    if (start < end) {
+        int i = start, j = end, X = a[i];
+        while (i < j) {
+            while (i < j && a[j] >= X) j--;
+            if (i < j) a[i++] = a[j];
+            while (i < j && a[i] < X) i++;
+            if (i < j) a[j--] = a[i];
+        }
+        a[i] = X;
+        quick_sort(a, start, i - 1);
+        quick_sort(a, i + 1, end);
     }
-    if (arr[left] >= arr[end])
-        std::swap(arr[left], arr[end]);
-    else
-        left++;
-    quick_sort_recursive(arr, start, left - 1);
-    quick_sort_recursive(arr, left + 1, end);
-}
-template <typename T> //整数或浮点数皆可使用,若要使用类时必須定义"小于"(<)、"大于"(>)、"不小于"(>=)操作
-void quick_sort(T arr[], int len) {
-    quick_sort_recursive(arr, 0, len - 1);
 }
 ```
 
@@ -440,3 +425,17 @@ int main(int argc, char **argv) {
 - 时间复杂度为 $O(n)$
 - 空间复杂度为 $O(n+M)$
 - 稳定排序
+
+## 8. 希尔排序
+
+```
+void shellsort3(int a[], int n)
+{
+	int i, j, gap;
+
+	for (gap = n / 2; gap > 0; gap /= 2)
+		for (i = gap; i < n; i++)
+			for (j = i - gap; j >= 0 && a[j] > a[j + gap]; j -= gap)
+				Swap(a[j], a[j + gap]);
+}
+```

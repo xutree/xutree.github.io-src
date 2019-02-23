@@ -1,7 +1,7 @@
 Title: 剑指 offer
 Category: 读书笔记
 Date: 2019-02-19 15:32:21
-Modified: 2019-02-21 21:07:43
+Modified: 2019-02-23 18:33:31
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -846,6 +846,352 @@ public:
             }
         }
         return res;
+    }
+};
+```
+
+## 23. 二叉搜索树的后序遍历序列
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+```
+class Solution {
+public:
+    bool VerifySquenceOfBST(vector<int> sequence) {
+        if (sequence.empty()) return false;
+        return judge(sequence, 0, sequence.size() - 1);
+    }
+    bool judge(vector<int> &sequence, int left, int right) {
+        if(left >= right) return true;
+        /// 后一半的元素都比根元素大
+        int mid = right - 1;
+        while (sequence[mid] > sequence[right]) mid--;
+        /// 那么前面的元素都应该比根小
+        int i = left;
+        while (i < mid && sequence[i] < sequence[right]) i++;
+        if (i < mid) return false;
+        return judge(sequence, left, mid) && judge(sequence, mid + 1, right - 1);
+    }
+};
+```
+
+**思路**：如果按照后序遍历，先左后右最后自己的顺序来遍历树，数组的最后一个元素肯定是自己（父节点），然后剩余的部分分成两个部分，第一部分都比自己小（左子树部分），第二部分都比自己大（右子树部分），因此套用这个关系就可以循环检验出是否是二叉搜索树的后序遍历了。
+
+## 24. 二叉树中和为某一值的路径
+
+输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的 list 中，数组长度大的数组靠前)。
+
+```
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+    // 自己添加
+private:
+    vector<vector<int> >allRes;
+    vector<int> tmp;
+    void dfsFind(TreeNode * node , int expectNumber){
+        tmp.push_back(node->val);
+        if(expectNumber == node->val && node->left == NULL && node->right == NULL)
+            allRes.push_back(tmp);
+        else {
+            if(node->left) dfsFind(node->left, expectNumber - node->val);
+            if(node->right) dfsFind(node->right, expectNumber - node->val);
+        }
+        tmp.pop_back(); 
+    }
+public:
+    vector<vector<int> > FindPath(TreeNode* root,int expectNumber) {
+        if(root) dfsFind(root, expectNumber);
+        return allRes;
+    }
+};
+```
+
+## 25. 复杂链表的复制
+
+输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+
+```
+/*
+struct RandomListNode {
+    int label;
+    struct RandomListNode *next, *random;
+    RandomListNode(int x) :
+            label(x), next(NULL), random(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    RandomListNode* Clone(RandomListNode* pHead)
+    {
+        if (pHead == NULL) return NULL;
+        RandomListNode *currNode = pHead;
+        RandomListNode *newHead = NULL, *newNode = NULL;
+        // 复制常规节点
+        while (currNode != NULL) {
+            if ((newNode = new RandomListNode(currNode->label)) == NULL) {
+                // cstdio 用来将上一个函数发生错误的原因输出到标准设备(stderr)
+                perror("new error: ");
+                // cstdlib 退出当前运行的程序，并将参数返回给主调进程
+                exit(-1);
+            }
+
+            newNode->next = currNode->next;
+            currNode->next = newNode;
+            currNode = newNode->next;
+        }
+        // 随机指针
+        currNode = pHead;
+        newNode = pHead->next;
+
+        while (currNode != NULL) {
+            RandomListNode *randNode = currNode->random;
+            RandomListNode *newNode = currNode->next;
+            if (randNode != NULL) {
+                newNode->random = randNode->next;
+            } else{
+                newNode->random = NULL;
+            }
+            currNode = newNode->next;
+        }
+        // 断开
+        currNode = pHead;
+        newNode = newHead = pHead->next;
+        while (currNode != NULL) {
+            currNode->next = newNode->next;
+            if (newNode->next != NULL) {
+                newNode->next = newNode->next->next;
+            } else {
+                newNode->next = NULL;
+            }
+            currNode = currNode->next;
+            newNode = newNode->next;
+        }
+        return newHead;
+    }
+};
+```
+
+**思路**：用 next 指针域关联新旧结点。将新节点直接插入到原结点的后面。
+
+## 26. 二叉搜索树与双向链表
+
+输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+
+```
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    TreeNode* Convert(TreeNode* pRootOfTree)
+    {
+        if (pRootOfTree == NULL) return NULL;
+        TreeNode *pLastNode = NULL;
+        ConvertRecursion(pRootOfTree, &pLastNode);
+
+        // 当递归结束后,*pLastNode 指向了双向链表的尾结点
+        TreeNode *node = pLastNode;
+        while(node != NULL && node->left != NULL) {
+           node = node->left;
+        }
+        return node;
+    }
+    void ConvertRecursion(TreeNode* root, TreeNode** pLastNode)
+    {
+        if (root == NULL) return;
+        TreeNode *currNode = root;
+        if (currNode->left != NULL) {
+            ConvertRecursion(currNode->left, pLastNode);
+        }
+        currNode->left = *pLastNode;
+        // 注意两层指针解引用
+        if (*pLastNode != NULL) (*pLastNode)->right = currNode;
+        *pLastNode = currNode;
+        if (currNode->right != NULL) {
+            ConvertRecursion(currNode->right, pLastNode);
+        }
+    }
+};
+```
+
+## 27. 字符串的排列
+
+输入一个字符串，按字典序打印出该字符串中字符的所有排列。例如输入字符串 abc，则打印出由字符 a、b、c 所能排列出来的所有字符串 abc、acb、bac、bca、cab 和 cba。
+
+```
+class Solution {
+// 自己添加
+protected:
+    vector<string> m_res;
+public:
+    vector<string> Permutation(string str) {
+        m_res.clear();
+
+        if(str.empty() == true)
+        {
+            return m_res;
+        }
+        PermutationRecursion(str, 0);
+
+        sort(m_res.begin(), m_res.end());
+        return m_res;
+    }
+    void PermutationRecursion(string str, int begin)
+    {
+        if(str[begin] == '\0')
+        {
+            m_res.push_back(str);
+        }
+        else
+        {
+            for(int i = begin; str[i] != '\0'; i++)
+            {
+                if(!HasDuplicate(str, begin, i))
+                {
+                    swap(str[i], str[begin]);
+                    PermutationRecursion(str, begin + 1);
+                    swap(str[i], str[begin]);
+                }
+            }
+        }
+    }
+private:
+    //find duplicate of str[i] in str[k,i)
+    bool HasDuplicate(string& str, int k, int i) const {
+		for (int p = k; p < i; p++)
+			if (str[p] == str[i]) return true;
+		return false;
+	}
+};
+```
+
+**思路**：全排列中去掉重复的规则： 去重的全排列就是从第一个数字起，每个数分别与它后面非重复出现的数字交换。
+
+## 28. 数组中出现次数超过一半的数字
+
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为 9 的数组 {1，2，3，2，2，2，5，4，2}。由于数字 2 在数组中出现了 5 次，超过数组长度的一半，因此输出 2。如果不存在则输出 0。
+
+```
+class Solution {
+public:
+    int MoreThanHalfNum_Solution(vector<int> numbers) {
+        int len = numbers.size();
+        if (len == 0) return 0;
+        if (len == 1) return numbers[0];
+        int k_val = FindKth(numbers, 0, len - 1, len / 2);
+        int count = 0;
+        for (auto &ele : numbers) {
+            if (ele == k_val) count++;
+        }
+        return count > len / 2 ? k_val : 0;
+    }
+    int Partition(vector<int> &numbers, int low, int high) {
+        if (low < high) {
+            int i = low, j = high, x = numbers[i];
+            while (i < j) {
+                while (i < j && numbers[j] >= x) j--;
+                numbers[i++] = numbers[j];
+                while (i < j && numbers[i] < x) i++;
+                numbers[j--] = numbers[i];
+            }
+            numbers[i] = x;
+            return i;
+        }
+        return low;
+    }
+    int FindKth(vector<int> &numbers, int low, int high, int k) {
+        if (low == high) return numbers[low];
+        int index;
+        index = Partition(numbers, low, high);
+        // 递归 FindKth
+        if (index < k)
+            return FindKth(numbers, index + 1, high, k);
+        else if (index > k)
+            return FindKth(numbers, low, index - 1, k);
+        else
+            return numbers[index];
+    }
+};
+```
+
+## 29. 最小的 $K$ 个数
+
+输入 $n$ 个整数，找出其中最小的 $K$ 个数。例如输入 4，5，6，2，7，3，8 这 8 个数字，则最小的 4 个数字是 1，2，3，4。
+
+```
+class Solution {
+public:
+    vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+        vector<int> res;
+        if (input.size() == 0 || input.size() < k) return res;
+        // 快排
+        // quick_sort(input, 0, input.size() - 1);
+
+        // 最大堆
+        // make_maxheap(input, k);
+        //for (int i = k; i < input.size(); i++) {
+        //    if (input[0] > input[i]) {
+        //        swap(input[0], input[i]);
+        //        make_maxheap(input, k);
+        //    }
+        //}
+
+        for (int i = 0; i < k; i++)
+            res.push_back(input[i]);
+        return res;
+    }
+    // 快排
+    void quick_sort(vector<int> &input, int low, int high) {
+        if (low < high) {
+            int i = low, j = high, x = input[i];
+            while (i < j) {
+                while (i < j && input[j] >= x) j--;
+                if (i < j) input[i++] = input[j];
+                while (i < j && input[i] < x) i++;
+                if (i < j) input[j--] = input[i];
+            }
+            input[i] = x;
+            quick_sort(input, low, i - 1);
+            quick_sort(input,i + 1, high);
+        }
+    }
+    // 最大堆
+    void make_maxheap(vector<int> &input, int k) {
+        int dad = 0, son = 2 * dad + 1;
+        while (son < k) {
+            if (son + 1 < k && input[son + 1] > input[son])
+                son++;
+            if (input[son] <= input[dad])
+                return;
+            else {
+                swap(input[son], input[dad]);
+                dad = son;
+                son = 2 * dad + 1;
+            }
+        }
+    }
+
+    void swap(int &a, int &b) {
+        if (a != b) {
+            a ^= b;
+            b ^= a;
+            a ^= b;
+        }
     }
 };
 ```
