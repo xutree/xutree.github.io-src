@@ -1,7 +1,7 @@
 Title: 剑指 offer (2)
 Category: 读书笔记
 Date: 2019-02-23 19:37:12
-Modified: 2019-02-26 10:58:29
+Modified: 2019-02-26 22:42:52
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -1017,7 +1017,7 @@ public:
 1) 我们每次都判断当前结点的值与下一个节点的值是否重复
 2) 如果重复就循环寻找下一个不重复的节点，将他们链接新新链表的尾部（其实就是删除重复的节点）
 
-### 27. 二叉树的下一个结点
+## 27. 二叉树的下一个结点
 
 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
 
@@ -1270,5 +1270,331 @@ public:
             return res;
         }
 
+};
+```
+
+## 31. 序列化二叉树
+
+请实现两个函数，分别用来序列化和反序列化二叉树。
+
+
+```
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    /*  序列化二叉树  */
+    char* Serialize(TreeNode *root){
+        if(root == NULL){
+            char *serial = new char[3];
+            strcpy(serial, "#,");
+            return serial;
+        }
+        string str;
+        Serialize(root, str);
+        const char  *c_str = str.c_str();
+        char *serial = new char[str.length() + 1];
+        strcpy(serial, c_str);
+        return serial;
+    }
+
+    TreeNode* Deserialize(char *str) {
+        if(str == NULL|| *str == '\0')
+            return NULL;
+        int index = 0;
+        return Deserialize(str, index);
+    }
+private:
+    void Serialize(TreeNode *root, string &str) {
+        if(root == NULL) {
+            str += "#,";
+            return;
+        }
+        /*  先序遍历的方式, 序列化二叉树  */
+        str += (toString(root->val) + ",");
+        Serialize(root->left, str);
+        Serialize(root->right, str);
+    }
+    /*  反序列化二叉树
+     *  将一个序列化的字符串转换成二叉树  */
+    TreeNode* Deserialize(char *str, int &index) {
+        if(str[index] == '#') {
+            index += 2;
+            return NULL;
+        }
+        /*  获取到节点的数字权值  */
+        int num = 0;
+        while(str[index] != ',' && str[index] != '\0'){
+            num = num * 10 + (str[index] - '0');
+            index++;
+        }
+        index++;
+        TreeNode *root = new TreeNode(num);
+        root->left = Deserialize(str, index);
+        root->right = Deserialize(str, index);
+        return root;
+    }
+
+    string toString(int num) {
+        stringstream ss;
+        ss << num;
+        return ss.str();
+    }
+};
+```
+
+## 32. 二叉搜索树的第 $k$ 个结点
+
+给定一棵二叉搜索树，请找出其中的第 $k$ 小的结点。例如，（5，3，7，2，4，6，8） 中，按结点数值大小顺序第三小结点的值为 4。
+
+```
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+private:
+    unsigned int count = 0;
+public:
+    TreeNode* KthNode(TreeNode* pRoot, int k)
+    {
+        if(pRoot == NULL)
+            return NULL;
+        TreeNode *ret = NULL;
+        if((ret = KthNode(pRoot->left, k)) != NULL)
+            return ret;
+        ++count;
+        if(count == k)
+            return pRoot;
+        if((ret = KthNode(pRoot->right, k)) != NULL)
+            return ret;
+        return NULL;
+    }  
+};
+```
+
+## 33. 数据流中的中位数
+
+如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用 Insert() 方法读取数据流，使用 GetMedian() 方法获取当前读取数据的中位数。
+
+```
+class Solution {
+private:
+    vector<int> m_min; // 后半部分数据
+    vector<int> m_max; // 前半部分数据
+protected:
+    void MakeHeapify(vector<int> &a, int start, int end, int flag) {
+        int dad = start;
+        int son = 2 * dad + 1;
+        // 最大堆
+        if (flag == 1) {
+            while (son <= end) {
+                if (son + 1 <= end && a[son + 1] > a[son])
+                    son++;
+                if (a[dad] >= a[son]) return;
+                else {
+                    swap(a[dad], a[son]);
+                    dad = son;
+                    son = dad * 2 + 1;
+                }
+            }
+        } // 最小堆
+        if (flag == 0) {
+            while (son <= end) {
+                if (son + 1 <= end && a[son + 1] < a[son])
+                    son++;
+                if (a[dad] < a[son]) return;
+                else {
+                    swap(a[dad], a[son]);
+                    dad = son;
+                    son = dad * 2 + 1;
+                }
+            }
+        }
+    }
+    void swap(int &a, int &b) {
+        if (a != b) {
+            a ^= b;
+            b ^= a;
+            a ^= b;
+        }
+    }
+public:
+    void Insert(int num) {
+        int temp = num;
+        // 偶数时，假设最大堆比最小堆少1 关系 > 逐位运算
+        if (((m_min.size() + m_max.size()) & 1) == 0) {
+            if (m_max.size() > 0 && num < m_max[0]) {
+                swap(m_max[0], temp);
+                MakeHeapify(m_max, 0, m_max.size() - 1, 1);
+            }
+            m_min.push_back(temp);
+            MakeHeapify(m_min, 0, m_min.size() - 1, 0);
+        } else {
+            if (m_min.size() > 0 && num > m_min[0]) {
+                swap(m_min[0], temp);
+                MakeHeapify(m_min, 0, m_min.size() - 1, 0);
+            }
+            m_max.push_back(temp);
+            MakeHeapify(m_max, 0, m_max.size() - 1, 1);
+        }
+    }
+
+    double GetMedian() {
+        int size = m_min.size() + m_max.size();
+        if (size == 0) return -1;
+        double median = 0;
+        if((size & 1) != 0)
+            median = (double) m_min[0];
+        else
+            median = (double) (m_max[0] + m_min[0]) / 2;
+        return median;
+    }
+};
+```
+
+## 34. 滑动窗口的最大值
+
+给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
+
+```
+class Solution {
+public:
+    vector<int> maxInWindows(const vector<int>& num, unsigned int size)
+    {
+        vector<int> res;
+        deque<int> index;
+        for(unsigned int i = 0; i < num.size(); i++) {
+            /*  从后面依次弹出队列中比当前num值小的元素，
+             *  同时也能保证队列首元素为当前窗口最大值下标  */
+            while(index.size() != 0 && num[index.back()] <= num[i])
+                index.pop_back();
+            /*  当前窗口移出队首元素所在的位置
+                即队首元素坐标对应的num不在窗口中，需要弹出  */
+            while(index.size() && i - index.front() + 1 > size)
+                index.pop_front( );
+            /*  把每次滑动的num下标加入队列  */
+            index.push_back(i);
+            /*  当滑动窗口首地址i大于等于size时才开始写入窗口最大值  */
+            if(size != 0 && i + 1 >= size)
+                res.push_back(num[index.front()]);
+        }
+        return res;
+    }
+};
+```
+
+## 35. 矩阵中的路径
+
+请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则之后不能再次进入这个格子。 例如 a b c e s f c s a d e e 这样的3 X 4 矩阵中包含一条字符串"bcced"的路径，但是矩阵中不包含"abcb"路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。
+
+```
+class Solution {
+public:
+    bool hasPath(char* matrix, int rows, int cols, char* str) {
+        if (matrix == NULL || rows < 1 || cols < 1 || str == NULL)
+			return false;
+		//定义一个辅助矩阵，用来标记路径是否已经进入了每个格子
+        bool* visited = new bool[rows * cols];
+		memset(visited, 0, rows * cols);
+		int pathLength = 0;
+        //该循环是为了实现从任何一个位置出发，寻找路径
+		for (int row = 0; row < rows; ++row) {
+			for (int col = 0; col < cols; ++col) {
+				if (hasPathCore(matrix, rows, cols, row,
+                                col, str, pathLength, visited))
+					return true;
+			}
+		}
+		delete[] visited;
+		return false;
+    }
+    /*此函数用来判断在当前路径满足条件下，相邻格子中是否存在一个格子满足条件*/
+	bool hasPathCore(char* matrix, int rows, int cols, int row,
+                     int col, char* str, int& pathLength, bool* visited) {
+		if (str[pathLength] == '\0')
+			return true;
+		bool hasPath = false;
+		if (row >= 0 && row < rows && col >= 0 && col < cols
+            && matrix[row * cols + col] == str[pathLength]
+            && !visited[row * cols + col]) {
+			++pathLength;
+			visited[row * cols + col] = true;
+			/*如果矩阵格子(row,col)与路径字符串中下标为pathLength的字符一样时，
+			从它的4个相邻格子中寻找与路径字符串下标为pathLength+1的字符相等的格子*/
+			hasPath = hasPathCore(matrix, rows, cols, row, col - 1, str, pathLength, visited) ||
+				hasPathCore(matrix, rows, cols, row - 1, col, str, pathLength, visited) ||
+				hasPathCore(matrix, rows, cols, row, col + 1, str, pathLength, visited) ||
+				hasPathCore(matrix, rows, cols, row + 1, col, str, pathLength, visited);
+			if (!hasPath) {
+                //如果没找到，则说明当前第pathLength个字符定位不正确，返回上一个位置重新定位
+				--pathLength;
+				visited[row * cols + col] = false;
+			}
+		}
+		return hasPath;
+	}
+};
+```
+
+## 37. 机器人的运动范围
+
+地上有一个 $m$ 行和 $n$ 列的方格。一个机器人从坐标 (0,0) 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 $k$ 的格子。 例如，当 $k$ 为 18 时，机器人能够进入方格（35,37），因为 3+5+3+7 = 18。但是，它不能进入方格（35,38），因为 3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+
+```
+class Solution {
+public:
+    int movingCount(int threshold, int rows, int cols) {
+        bool* visited = new bool[rows * cols];
+		memset(visited, 0, rows * cols);
+		int count = movingCountCore(threshold, rows, cols, 0, 0, visited);
+		delete[] visited;
+		return count;
+    }
+    int movingCountCore(int threshold, int rows, int cols,
+                        int row, int col, bool* visited) {
+		int count = 0;
+		if (check(threshold, rows, cols, row, col, visited)) {
+			visited[row * cols + col] = true;
+			count = 1 +
+                movingCountCore(threshold, rows, cols, row, col - 1, visited) +
+				movingCountCore(threshold, rows, cols, row - 1, col, visited) +
+				movingCountCore(threshold, rows, cols, row, col + 1, visited) +
+				movingCountCore(threshold, rows, cols, row + 1, col, visited);
+		}
+		return count;
+	}
+	/*该函数检查坐标为(row,col)的方格能够进入*/
+	bool check(int threshold, int rows, int cols, int row, int col, bool*visited) {
+		if (row >= 0 && row < rows && col >= 0 && col < cols
+			&& getDigitSum(row) + getDigitSum(col) <= threshold
+			&& !visited[row*cols + col])
+			return true;
+		return false;
+	}
+	/*计算一个数的所有位数之和*/
+	int getDigitSum(int number) {
+		int sum = 0;
+		while (number > 0)
+		{
+			sum += number % 10;
+			number = number / 10;
+		}
+		return sum;
+	}
 };
 ```
