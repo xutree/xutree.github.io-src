@@ -1,7 +1,7 @@
 Title: 剑指 offer (2)
 Category: 读书笔记
 Date: 2019-02-23 19:37:12
-Modified: 2019-02-25 15:53:17
+Modified: 2019-02-26 10:58:29
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -1174,3 +1174,101 @@ public:
 ## 29. 按照之字形打印二叉树
 
 请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+
+```
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    vector<vector<int> > Print(TreeNode* pRoot) {
+        vector<vector<int>> ret;
+        if(pRoot == NULL) return ret;
+        vector<int> curr;
+        deque<TreeNode*> deq;
+        deq.push_back(NULL);//层分隔符
+        deq.push_back(pRoot);
+        bool leftToRight = true;
+        while (deq.size() != 1){
+            TreeNode* node = deq.front();
+            deq.pop_front();
+            if(node == NULL)    //  到达每层分隔符
+            {
+                if (leftToRight == true)    //  从前完后遍历
+                {
+                    deque<TreeNode*>::iterator iter;
+                    for(iter = deq.begin(); iter != deq.end(); iter++)
+                        curr.push_back((*iter)->val);
+                } else                        //  从后往前遍历
+                {
+                    deque<TreeNode*>::reverse_iterator riter;
+                    for(riter = deq.rbegin(); riter < deq.rend(); riter++)
+                        curr.push_back((*riter)->val);
+                }
+                leftToRight = !leftToRight;
+                ret.push_back(curr);
+                curr.clear();
+                deq.push_back(NULL);//添加层分隔符
+                continue;//一定要continue
+            }
+            if (node->left != NULL)
+                deq.push_back(node->left);
+            if (node->right != NULL)
+                deq.push_back(node->right);
+        }
+        return ret;
+    }
+};
+```
+
+## 30. 把二叉树打印出多行
+
+从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+
+```
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+        vector<vector<int> > Print(TreeNode* pRoot) {
+            vector<vector<int>> res;
+            if (pRoot == NULL) return res;
+            vector<int> temp;
+            TreeNode* curr;
+            queue<TreeNode*> node;
+            node.push(pRoot);
+            node.push(NULL);
+            while (node.empty() != true) {
+                curr = node.front();
+                node.pop();
+                if (curr != NULL) {
+                    temp.push_back(curr->val);
+                    if (curr->left != NULL) node.push(curr->left);
+                    if (curr->right != NULL) node.push(curr->right);
+                } else if (node.empty() != true) {
+                    res.push_back(temp);
+                    temp.clear();
+                    node.push(NULL);
+                }
+            }
+            if (temp.size() != 0) res.push_back(temp);
+            return res;
+        }
+
+};
+```
