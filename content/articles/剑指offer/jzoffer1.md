@@ -1,7 +1,7 @@
 Title: 剑指 offer (1)
 Category: 读书笔记
 Date: 2019-02-19 15:32:21
-Modified: 2019-02-23 19:36:44
+Modified: 2019-03-01 19:56:59
 Tags: 剑指offer, 面试, 算法
 
 [TOC]
@@ -439,7 +439,9 @@ public:
 class Solution {
 public:
     double Power(double base, int exponent) {
+        // 注意不可声明为int
         double res = 1, curr = base;
+        // 只有正数支持位运算
         int n;
         if (exponent > 0) {
             n = exponent;
@@ -454,6 +456,7 @@ public:
             return 1;
         }
         while (n != 0) {
+            // 不确定的地方加括号
             if ((n & 1) == 1)
                 res *= curr;
             curr *= curr;
@@ -850,6 +853,42 @@ public:
 };
 ```
 
+```
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        vector<int> res;
+        if (root == NULL) return res;
+        queue<TreeNode*> node;
+        node.push(root);
+        node.push(NULL);
+        TreeNode *curr = root;
+        while (node.size() != 0) {
+            // front 函数记住
+            curr = node.front();
+            node.pop();
+            if (curr) {
+                res.push_back(curr->val);
+                if (curr->left) node.push(curr->left);
+                if (curr->right) node.push(curr->right);
+            } else if (node.size() != 0) {
+                node.push(NULL);
+            }
+        }
+        return res;
+    }
+};
+```
+
 ## 23. 二叉搜索树的后序遍历序列
 
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
@@ -865,7 +904,8 @@ public:
         if(left >= right) return true;
         /// 后一半的元素都比根元素大
         int mid = right - 1;
-        while (sequence[mid] > sequence[right]) mid--;
+        // mid >= left
+        while (mid >= left && sequence[mid] > sequence[right]) mid--;
         /// 那么前面的元素都应该比根小
         int i = left;
         while (i < mid && sequence[i] < sequence[right]) i++;
