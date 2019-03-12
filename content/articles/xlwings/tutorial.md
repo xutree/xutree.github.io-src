@@ -2,7 +2,7 @@ Title: xlwings 教程
 Category: 教程
 Date: 2019-03-12 13:13:45
 Modified: 2019-03-12 13:13:45
-Tags: xlwings, excel, python
+Tags: xlwings, Excel, python
 
 xlwings 是一个 python 包用来和 Excel 进行交互，它包含四个层次：App $\rightarrow$ Book $\rightarrow$ Sheet $\rightarrow$ Range。
 
@@ -74,14 +74,23 @@ xlwings 是一个 python 包用来和 Excel 进行交互，它包含四个层次
 - 索引单个单元格 `sht2.range('B3')` 或 `sht2.range((3,2))` 指明是第三行第二列单元格
 - 索引区域 `sht2.range('B3:F6')` 或 `sht2.range((3,2),(6,6))`
 
-### 4.2 获得单元格属性
+### 4.2 操作单元格
 
-下面的方法将返回 range 索引区域内单元格的属性
-
+- `sht2.range('B3:F6').add_hyperlink(address, text_to_display=None, screen_tip=None)` 为区域内单元格添加超链接
+- `sht2.range('B3:F6').autofit()` 自动调整区域内单元格的宽度和高度
+- `sht2.range('B3:F6').columns.autofit()` 自动调整区域内单元格的宽度
+- `sht2.range('B3:F6').rows.autofit()` 自动调整区域内单元格的高度
+- `sht2.range('B3:F6').clear()` 清除区域内单元格的内容和格式
+- `sht2.range('B3:F6').clear_contents()` 清除区域内单元格的内容，保留格式
 - `sht2.range('B3:F6').address` 将返回字符串 `$B$3:$F$6'`
 - `sht2.range('B3:F6').color` 将返回区域内单元格的颜色，若区域内单元格颜色不一致，返回 (0,0,0)，若无颜色，返回空
+- `sht2.range('B3:F6').color = (255, 0, 0)` 设置区域内单元格的颜色
 - `sht2.range('B3:F6').column` 将返回区域内单元格第一列的索引（整数），本例返回 2
 - `sht2.range('B3:F6').column_width` 将返回区域内单元格的列宽（浮点数），如果列宽不一致，返回 `None`
+- `sht2.range('B3:F6').column_width = 23` 设置区域内单元格的列宽，列宽范围必须为 [0,255]
 - `sht2.range('B3:F6').columns` 将返回一个 `RangeColumns` 对象，代表区域里的列，本例返回 `RangeColumns(<Range [test.xlsx]Sheet2!$B$3:$F$6>)`
 - `sht2.range('B3:F6').count` 返回单元格的数量
 - `sht2.range('B3:F6').current_region` 返回一个 `Range` 对象，代表去除区域空白边界的范围，本类返回 `<Range [test.xlsx]Sheet2!$A$1:$C$3>`
+- `sht2.range('B3:F6').end(args)` 参数 `args` 可为 left、right、up、down，该函数返回 `Range` 对象，表示指定区域近邻的边界单元格，如近邻的单元格无内容，则继续查找下一个近邻
+- `sht2.range('B3:F6').expand(args)` `args` 可为 table、down、right，该函数根据参数扩展当前区域范围，并范围 `Range` 对象，table 为向右向下扩展，若扩展方向下一个单元格内容为空，则停止扩展；若扩展后的区域仍为空，则返回 `None`（例如，从空的单元格往右扩展，但是右边一个单元格也是空的情况）
+- `sht2.range('B3:F6').get_address(row_absolute=True, column_absolute=True, include_sheetname=False, external=False)` 返回字符串，代表区域单元的地址，根据参数的不同可以用不同返回形式，具体参考[这里](https://docs.xlwings.org/en/stable/api.html)
