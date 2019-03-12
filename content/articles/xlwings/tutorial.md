@@ -1,7 +1,7 @@
 Title: xlwings 教程
 Category: 教程
 Date: 2019-03-12 13:13:45
-Modified: 2019-03-12 13:13:45
+Modified: 2019-03-12 15:43:58
 Tags: xlwings, Excel, python
 
 [TOC]
@@ -123,11 +123,13 @@ xlwings 是一个 python 包用来和 Excel 进行交互，它包含四个层次
 - `sht2.range('B3:F6').row` 将返回区域内单元格第一行的索引（整数），本例返回 3
 - `sht2.range('B3:F6').last_cell` 返回一个 `Range` 对象，表示区域内最右下单元格的位置
 
-- `sht2.range('B3:F6').row` 返回一个浮点数，表示从 行 1 的上边界到此区域上边界的距离，单位是 point
+- `sht2.range('B3:F6').top` 返回一个浮点数，表示从 行 1 的上边界到此区域上边界的距离，单位是 point
 - `sht2.range('B3:F6').left` 返回一个浮点数，表示从 A 栏的左边界到此区域左边界的距离，单位是 point
 
 - `sht2.range('B3:F6').columns` 将返回一个 `RangeColumns` 对象，代表区域里的列，本例返回 `RangeColumns(<Range [test.xlsx]Sheet2!$B$3:$F$6>)`
 - `sht2.range('B3:F6').rows` 将返回一个 `RangeRows` 对象，代表区域里的行，本例返回 `RangeRows(<Range [test.xlsx]Sheet2!$B$3:$F$6>)`
+
+上面这两个对象都有一个 `count` 数据成员，可以很方便的得到总行数和列数。
 
 - `sht2.range('B3:F6').current_region` 返回一个 `Range` 对象，代表去除区域空白边界的范围，本类返回 `<Range [test.xlsx]Sheet2!$A$1:$C$3>`
 - `sht2.range('B3:F6').end(args)` 参数 `args` 可为 left、right、up、down，该函数返回 `Range` 对象，表示指定区域近邻的边界单元格，如近邻的单元格无内容，则继续查找下一个近邻
@@ -151,3 +153,136 @@ xlwings 是一个 python 包用来和 Excel 进行交互，它包含四个层次
 
 - `sht2.range('B3:F6').raw_value` 直接加载数据，不经过 xlwings 转换，对速度要求高的应用可以考虑这个选项
 - `sht2.range('B3:F6').sheet` 返回区域属于的表单
+
+## 5. 操作表单中的形状
+
+### 5.1 获取形状数量
+
+```
+[In 1]: sht2.shapes
+[Out 1]: Shapes([<Shape 'Isosceles Triangle 1' in <Sheet [test.xlsx]Sheet2>>])
+[In 2]: sht2.shapes.count
+[Out 2]: 1
+```
+
+### 5.2 索引形状
+
+有四种索引方法，例如我们需要索引 *Isosceles Triangle 1*：
+
+- `shp = sht2.shapes[0]`，这种索引方法是 Python 的索引，形状的编号从 0 开始
+- `shp = sht2.shapes(1)`，这种索引方法是 Excel 的索引，形状编号从 1 开始
+- `shp = sht2.shapes['Isosceles Triangle 1']`，这种索引方法是直接利用形状名字索引的
+- `shp = sht2.shapes['Isosceles Triangle 1')`，这种索引方法也是直接利用形状名字索引的
+
+### 5.3 操作形状
+
+- `shp.activate()` 激活形状
+- `shp.delete()` 删除形状
+- `shp.height` 返回或设置形状的高度，单位是 point
+- `shp.width` 返回或设置形状的宽度，单位是 point
+- `shp.top` 返回或设置形状的水平位置，单位是 point
+- `shp.left` 返回或设置形状的竖直位置，单位是 point
+- `shp.name` 返回或设置形状的名字
+- `shp.parent` 返回形状的前驱
+- `shp.type`返回形状的类型
+
+## 6. 操作表单中的表格
+
+### 6.1 获取表格数量
+
+```
+[In 1]: sht2.charts
+[Out 1]: Charts([<Chart 'Chart 2' in <Sheet [test.xlsx]Sheet2>>])
+[In 2]: sht2.charts.count
+[Out 2]: 1
+```
+
+### 6.2 添加表格
+
+利用 `add(left=0, top=0, width=355, height=211)` 函数：
+
+```
+[In 1]: import xlwings as xw
+
+[In 2]: sht = xw.Book().sheets[0]
+[In 3]: sht.range('A1').value = [['Foo1', 'Foo2'], [1, 2]]
+[In 4]: chart = sht2.charts.add()
+[In 5]: chart.set_source_data(sht.range('A1').expand())
+[In 6]: chart.chart_type = 'line'
+[In 7]: chart.name
+[Out 7]: 'Chart1'
+```
+
+### 6.3 索引表格
+
+有四种索引方法，例如我们需要索引 *Chart 2*：
+
+- `cha = sht2.charts[0]`，这种索引方法是 Python 的索引，表格的编号从 0 开始
+- `cha = sht2.charts(1)`，这种索引方法是 Excel 的索引，表格编号从 1 开始
+- `cha = sht2.charts['Chart 2']`，这种索引方法是直接利用表格名字索引的
+- `cha = sht2.charts['Chart 2')`，这种索引方法也是直接利用表格名字索引的
+
+
+### 6.4 操作表格
+
+- `cha.delete()` 删除表格
+- `cha.height` 返回或设置表格的高度，单位是 point
+- `cha.width` 返回或设置表格的宽度，单位是 point
+- `cha.top` 返回或设置表格的水平位置，单位是 point
+- `cha.left` 返回或设置表格的竖直位置，单位是 point
+- `cha.name` 返回或设置表格的名字
+- `cha.parent` 返回表格的前驱
+- `cha.chart_type`返回表格的类型
+- `cha.set_source_data(args)`  设置表格的数据来源，`args` 为 `Range` 对象
+
+## 7. 操作表单中的图像
+
+### 7.1 获取图像数量
+
+```
+[In 1]: sht2.pictures
+[Out 1]: Charts([<Chart 'Chart 2' in <Sheet [test.xlsx]Sheet2>>])
+[In 2]: sht2.pictures.count
+[Out 2]: 1
+```
+
+### 7.2 添加图像
+
+利用 `add(image, link_to_file=False, save_with_document=True, left=0, top=0, width=None, height=None, name=None, update=False)` 函数，第一参数可以是计算机中图像的路径（字符串）或者是 `Matplotlib` 对象：
+
+```
+[In 1]: import xlwings as xw
+
+[In 2]: sht = xw.Book().sheets[0]
+[In 3]: sht.pictures.add('path//to//file')
+```
+
+或者
+
+```
+[In 1]: import matplotlib.pyplot as plt
+[In 2]: fig = plt.figure()
+[In 3]: plt.plot([1, 2, 3, 4, 5])
+[In 4]: sht.pictures.add(fig, name='MyPlot', update=True)
+```
+
+### 7.3 索引图像
+
+有四种索引方法，例如我们需要索引 *Picture 1*：
+
+- `pic = sht2.pictures[0]`，这种索引方法是 Python 的索引，图像的编号从 0 开始
+- `pic = sht2.pictures(1)`，这种索引方法是 Excel 的索引，图像编号从 1 开始
+- `pic = sht2.pictures['Picture 1']`，这种索引方法是直接利用图像名字索引的
+- `pic = sht2.pictures['Picture 1')`，这种索引方法也是直接利用图像名字索引的
+
+
+### 7.4 操作图像
+
+- `pic.delete()` 删除图像
+- `pic.height` 返回或设置图像的高度，单位是 point
+- `pic.width` 返回或设置图像的宽度，单位是 point
+- `pic.top` 返回或设置图像的水平位置，单位是 point
+- `pic.left` 返回或设置图像的竖直位置，单位是 point
+- `pic.name` 返回或设置图像的名字
+- `pic.parent` 返回图像的前驱
+- `pic.update(image)` 用新的图像替换当前图像，图像属性不变
