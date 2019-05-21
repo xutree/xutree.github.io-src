@@ -312,7 +312,7 @@ $$g(t)=\frac{C(t)-C(T_t)}{|T_t|-1}$$
 输入：CART 算法生成的决策树 $T_0$  
 输出：最优决策树 $T_\alpha$  
 (1) 设 $k=0,T=T_0$  
-(2) 设 $\alpha=+\infty$
+(2) 设 $\alpha=+\infty$  
 (3) 自下而上的对各个内部节点 $t$ 计算 $C(T_t)$，$|T_t|$ 以及
 $$\begin{eqnarray}
 g(t) &=& \frac{C(t)-C(T_t)}{|T_t|-1} \\
