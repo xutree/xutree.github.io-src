@@ -6,3 +6,9 @@ Tags: 计算机基础
 
 - GC ➡️  Garbage Collection
 - GIL ➡️  Global Interpreter Lock
+- IP ➡️  Internet Protocol
+- LAN ➡️  Local Area Network
+- NAT ➡️  Network Address Translation
+- TCP ➡️  Transmission Control Protocol
+- HTTP ➡️  Hyper-Text Transfer Protocol
+- URL ➡️  Uniform Resource Locator
