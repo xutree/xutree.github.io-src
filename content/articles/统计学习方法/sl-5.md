@@ -187,13 +187,13 @@ $$D=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}$$
 $$f(x)=\sum_{m=1}^Mc_m\mathbb{I}(x\in R_m)$$
 当输入空间的划分确定时，可以用平方误差
 $$\sum_{x_i\in R_m}\left(y_i-f(x_i)\right)^2$$
-来表示回归树对于训练数据集的预测误差，用平方误差最下的准则求解每个单元上的最优输出值。
+来表示回归树对于训练数据集的预测误差，用平方误差最小的准则求解每个单元上的最优输出值。
 
 易知，单元 $R_m$ 上的 $c_m$ 的最优值 $\hat{c}_m$ 是 $R_m$ 上所有输入实例 $x_i$ 对于的输出 $y_i$ 的均值，即
 $$\hat{c}_m=\text{ave}(y_i|x_i\in R_m)$$
 问题是怎么对输入空间进行划分。
 
-这里采用启发式的方法，选择第 $j$ 个特征 $x^{(i)}$ 和它的取值 $s$，作为切分变量（splitting variable）和切分点（splitting point），并定义两个区域
+这里采用启发式的方法，选择第 $j$ 个特征 $x^{(j)}$ 和它的取值 $s$，作为切分变量（splitting variable）和切分点（splitting point），并定义两个区域
 $$\begin{eqnarray}
 R_1(j,s) &=& \{x|x^{(j)}\leq s\} \\
 R_2(j,s) &=& \{x|x^{(j)}>s\}
@@ -241,6 +241,7 @@ $$\text{Gini}(D)=1-\sum_{k=1}^K\left(\frac{|C_k|}{|D|}\right)^2$$
 则在特征 A 的条件下，集合 D 的基尼指数定义为
 $$\text{Gini}(D,A)=\frac{|D_1|}{|D|}\text{Gini}(D_1)+\frac{|D_2|}{|D|}\text{Gini}(D_2)$$
 基尼指数 $\text{Gini}(D)$ 表示集合 $D$ 的不确定性，基尼指数 $\text{Gini}(D,A)$ 表示经 $A=a$ 分割后集合 $D$ 的不确定性。基尼指数数值越大，样本集合的不确定性也就越大，这一点与熵类似。
+
 
 **
 算法 5.6 （CART 生成算法）  
