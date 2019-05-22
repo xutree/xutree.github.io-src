@@ -37,7 +37,7 @@ $$\theta^{(i+1)}=\arg\max_{\theta}Q\left(\theta,\theta^{(i)}\right)$$
 $Q$ 函数是 EM 算法的核心。
 
 **
-定义 9.1（$Q$ 函数）玩去数据的对数似然函数 $\log P(Y,Z|\theta)$ 关于在给定观测数据 $Y$ 的当前参数 $\theta^{(i)}$ 下对未观测数据 $Z$ 的条件概率分布 $P\left(Z|Y,\theta^{(i)}\right)$ 的期望称为 $Q$ 函数，即
+定义 9.1（$Q$ 函数）完全数据的对数似然函数 $\log P(Y,Z|\theta)$ 关于在给定观测数据 $Y$ 的当前参数 $\theta^{(i)}$ 下对未观测数据 $Z$ 的条件概率分布 $P\left(Z|Y,\theta^{(i)}\right)$ 的期望称为 $Q$ 函数，即
 $$Q\left(\theta,\theta^{(i)}\right)=\text{E}_Z\left[\log P(Y,Z|\theta)|Y,\theta^{(i)}\right]$$
 **
 
