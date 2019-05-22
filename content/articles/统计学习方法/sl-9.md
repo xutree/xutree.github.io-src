@@ -1,7 +1,7 @@
 Title: 统计学习方法 第九章 EM 算法及其推广
 Category: 读书笔记
 Date: 2018-11-17 19:32:10
-Modified: 2018-11-17 19:32:59
+Modified: 2019-05-22 16:02:34
 Tags: 统计学习, 机器学习
 
 [TOC]
@@ -14,7 +14,7 @@ EM 算法是一种迭代算法，用于含有隐变量（hidden varibale）的�
 
 ### 9.1.1 EM 算法
 
-一般的，用 $Y$ 表示观测随机变量的数据，$Z$ 表示隐随机变量的数据。$Y$ 和 $Z$ 连在一起称为完全数据（complete-data），观测数据 $Y$ 又称为不完全数据（incomplete-data）。假设给定观测数据 $Y$，其概率分布是 $P(Y|\theta)$，其中 $\Theta$ 是需要估计的模型参数，那么不完全数据了 $Y$ 的似然函数是 $P(Y|\theta)$，对数似然函数是 $L(\theta)=\log P(Y|\theta)$；假设 $Y$ 和 $Z$ 的联合概率分布是 $P(Y,Z|\theta)$，那么完全数据的对数似然函数是 $\log P(Y,Z|\theta)$。
+一般的，用 $Y$ 表示观测随机变量的数据，$Z$ 表示隐随机变量的数据。$Y$ 和 $Z$ 连在一起称为完全数据（complete-data），观测数据 $Y$ 又称为不完全数据（incomplete-data）。假设给定观测数据 $Y$，其概率分布是 $P(Y|\theta)$，其中 $\theta$ 是需要估计的模型参数，那么不完全数据了 $Y$ 的似然函数是 $P(Y|\theta)$，对数似然函数是 $L(\theta)=\log P(Y|\theta)$；假设 $Y$ 和 $Z$ 的联合概率分布是 $P(Y,Z|\theta)$，那么完全数据的对数似然函数是 $\log P(Y,Z|\theta)$。
 
 EM 算法通过迭代求 $L(\theta)=\log P(Y|\theta)$ 的极大似然估计。
 
