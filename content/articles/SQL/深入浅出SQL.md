@@ -24,12 +24,18 @@ Tags: SQL
     ```
 - 数据类型
     - char(character) 事先设定好的长度
-    - int(integer) 整数
+    - tinyint 有/无符号
+    - smallint 有/无符号
+    - mediumint 有/无符号
+    - int(integer) 无符号整数 0~4294967295
+    - int(signed) 有符号整数 -2147483648~2147483647
+    - bigint 有/无符号
     - dec(decimal) 实数
-    - date 日期
-    - time、timestamp、datetime 时间
+    - date 日期 YYYY-MM-DD
+    - time（HH:MM:SS）、timestamp（YYYYMMDDHHMMSS）、datetime （YYYY-MM-DD HH:MM:SS）时间
     - varchar 可变长度文本，最长255
     - blob 大量文本数据
+    - boolean 0 和 1
 - 检查创建的表 `DESC table_name;` （describe）
 - 删除表 `DROP table_name;`
 - 插入行
@@ -467,3 +473,26 @@ CREATE VIEW view_name AS
 ```
     GRANT SELECT ON tabel TO user IDENTIFIED BY 'password';
 ```
+
+## 14. 其他
+
+- [http://localhost/phpMyAdmin](http://localhost/phpMyAdmin)
+- `> ALL`, `< ANY`
+- `SELECT DATE_FORMAT(a_data, '%M %Y') FROM some_dates;`
+- 临时表（MySQL）：
+    - `CREATE TEMPORARY TABLE table_name AS ...;`
+    - `CREATE TEMPORARY TABLE table_name();`
+- 类型转换 `CAST(your_column, TYPE)`
+- 显示日期时间用户：`SELECT CURRENT_USER(DATE, TIME);`
+- 数字函数：
+    - `abs, ceil, floor, round, sign`
+    - `sin, cos, tan, cot, asin, acos, atan`
+    - `exp, ln, log, mod, power, sqrt`
+    - `format, radians, pi, rand, truncate`
+- 索引能加快速度，为列添加索引：`ALTER TABLE table_name ADD INDEX (field);`
+
+![常用操作]({filename}/images/深入浅出sql1.jpg)
+![常用操作]({filename}/images/深入浅出sql2.jpg)
+![常用操作]({filename}/images/深入浅出sql3.jpg)
+![常用操作]({filename}/images/深入浅出sql4.jpg)
+![常用操作]({filename}/images/深入浅出sql5.jpg)
