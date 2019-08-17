@@ -1,7 +1,7 @@
 Title: 深入浅出 SQL
 Category: 读书笔记
 Date: 2019-08-16 18:37:44
-Modified: 2019-08-16 18:37:44
+Modified: 2019-08-17 14:27:46
 Tags: SQL
 
 [TOC]
@@ -22,6 +22,7 @@ Tags: SQL
         field2 TYPE2(length2)
     );
     ```
+
 - 数据类型
     - char(character) 事先设定好的长度
     - tinyint 有/无符号
@@ -32,7 +33,9 @@ Tags: SQL
     - bigint 有/无符号
     - dec(decimal) 实数
     - date 日期 YYYY-MM-DD
-    - time（HH:MM:SS）、timestamp（YYYYMMDDHHMMSS）、datetime （YYYY-MM-DD HH:MM:SS）时间
+    - time（HH:MM:SS）
+    - timestamp（YYYYMMDDHHMMSS）
+    - datetime （YYYY-MM-DD HH:MM:SS）时间
     - varchar 可变长度文本，最长255
     - blob 大量文本数据
     - boolean 0 和 1
@@ -69,7 +72,12 @@ Tags: SQL
 ## 4. UPDATE 语句
 
 - `UPDATE table_name SET fiel1=value1,...,fieldN=valueN WHERE conditions;`
-- 可以使用基础数学运算和函数，如 `UPDATE table_name SET fiel1=f(fiel1),...,fieldN=valueN WHERE conditions;`
+- 可以使用基础数学运算和函数，如
+
+```
+    UPDATE table_name SET fiel1=f(fiel1)
+    WHERE conditions;
+```
 
 ## 5. 规范化
 
