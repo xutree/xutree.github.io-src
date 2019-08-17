@@ -12,6 +12,7 @@ Tags: SQL
 - **表**由行（或记录 record）和列（或字段 field）组成。**行**包含某个对象的所有信息，**列**表示各个分类
 - 创建数据库 `CREATE DATABASE database_name;`
 - 使用数据库 `USE database_name;`
+- 显示数据库中的表格 `SHOW TABLES;`
 - 创建表格
 
     ```
@@ -32,7 +33,7 @@ Tags: SQL
 - 检查创建的表 `DESC table_name;` （describe）
 - 删除表 `DROP table_name;`
 - 插入行
-    - `INSERT INFO table_name (fiel1,..., fieldN) VALUE (value1,...,valueN);`
+    - `INSERT INTO table_name (fiel1,..., fieldN) VALUES (value1,...,valueN);`
     - 可以改变field的顺序，但是相应的value也要改变
     - 可以省略所有field，但是此时value要填入所有数据，并且顺序要正确
     - 可以省略部分field
@@ -401,3 +402,68 @@ CREATE VIEW view_name AS
     - 视图把复杂查询简化为一个命令
     - 即使一直改变数据库的结构，也不会破坏依赖表的应用程序
     - 创建视图可以隐藏读者无须看到的信息
+- `CHECK OPTION` 检查每个进行 `INSERT` 或 `DELETE` 的查询，它根据视图中的 `WHERE` 子句判断这些查询是否可以执行
+- MySQL 可以利用 `CHECK OPTION` 模仿 `CHECK CONSTRAINT` 的功能
+- 可更新视图包括引用表里所有为 `NOT NULL` 的列
+- 除了使用 `CHECK OPTION`，一般直接操作表执行插入、更新和删除操作
+- 使用完毕：`DROP VIRW view_name;`
+- 当数据库的使用不止一人时，`CHECK CONSTRAINT` 和视图均有助于维护控制权
+
+### 12.3 事务 transaction
+
+- 事务是一群可完成一组工作的 SQL 语句
+- 在事务过程中，如果所有步骤无法不受干扰的完成，则不完成任一单一步骤
+- ACID 原则：
+    - 原子性（atomicity）：要么完成要么不完成，不可分割
+    - 一致性（consistency）：事务完成后应该维持数据库的一致性
+    - 隔离性（isolation）：每次事务都会看到具有一致性的数据库
+    - 持久性（durability）：事务完成，数据库需要正确的存储数据并保护数据免受断电和其他威胁的伤害
+- 事务用法：
+```
+    START TRANSACTION;
+    some operations here;
+    COMMIT or ROLLBACK;
+```
+- 存储引擎必须是 BDB 或者 InnoDB 才支持事务
+- 改变引擎 `ALTER TABLE table_name TYPE=InnoDB;`
+
+## 13. 安全性
+
+- 设置账号密码（MySQL 方式）
+
+```
+    SET PASSWORD FOR 'root'@'localhost'=PASSWORD('password');
+```
+
+- 增加用户
+
+```
+    CREATE USER newuser IDENTIFIED BY 'newpassword';
+```
+
+- 控制权
+
+```
+    GRANT command1(aim),command2(aim) ON table_name TO user1, user2 WITH GRANT OPTION;
+    GRANT ALL ON table_name TO user1, user2 WITH GRANT OPTION;
+    GRANT ALL ON database_name.* TO user1, user2 WITH GRANT OPTION;
+```
+
+- 撤回权限 `REVOKE ... FROM ...` 撤销具有传递性
+    - `CASCADE;` 连锁撤销
+    - `RESTRICT;` 有别的受影响则返回错误，并且不执行
+- 角色（ no MySQL）
+
+```
+    CREATE ROLE role_name;
+    GRANT command1(aim),command2(aim) ON table_name TO  role_name;
+    GRANT role_name TO user;
+    DROP ROLE role_name;
+```
+
+- `WITH ADMIN OPTION` 让具有该角色的每名用户都能把角色授予他人。撤销角色和上面一样。
+- 创建账号的同时设置权限
+
+```
+    GRANT SELECT ON tabel TO user IDENTIFIED BY 'password';
+```
