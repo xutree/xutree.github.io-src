@@ -1,7 +1,7 @@
 Title: Head first Java 笔记
 Category: 读书笔记
 Date: 2019-09-16 22:30:04
-Modified: 2019-09-16 22:50:33
+Modified: 2019-09-17 00:06:37
 Tags: Java
 
 [TOC]
@@ -202,4 +202,77 @@ Tags: Java
 
 ### 13. swing
 
-- 布局管理器：`border`、`flow`、`box`
+- 布局管理器：
+    - `Borderlayout` 五个区域，框架默认
+    - `Flowlayout` 书写顺序，面板默认
+    - `Boxlayout` 垂直排列
+
+### 14. 序列化和文件的输入输出
+
+- 将序列化对象写入文件
+```
+    FileOutputStream fileStream = new FileOutputStream("filename");
+    ObjectOutputStream os = new ObjectOutputStream(fileStream)
+    os.writeObject(obj);
+    os.close();
+```
+- 解序列化
+```
+    FileInputStream fileStream = new FileInputStream("filename");
+    ObjectInputStream os = new ObjectInputStream(fileStream);
+    Object obj = os.readObject();
+    os.close();
+```
+- 当对象呗序列化时，该对象的实例变量也会被序列化，且所有被引用的对象也被序列化
+- 如果想让类能够被序列化，就实现 `Serializable`，这是一个 tag 标记接口，没有任何方法需要实现，唯一的目的就是声明他的类是可以被序列化的
+- 如果某实例变量是不能或不应该被序列化的，就把他标为 `transient`
+- 解序列化时，新的对象会被放在堆上，但构造函数不会执行
+- 如果对象在继承树上有个不可序列化的祖先类，则该类和之上类的构造函数就会执行
+- 对象的实例变量会被还原成序列化时点的状态值，`transient` 变量会被赋值 `null` 的对象引用或主数据的默认值
+- 静态变量属于类，不会被序列化
+- 将字符串写入文本
+```
+    try {
+        FileWriter writer = new FileWriter("filename");
+        writer.write("hello world");
+        writer.close();
+    } catch(IOException ex) {
+        ex.printStackTrace();
+    }
+```
+- 读取文本文件
+```
+    try {
+        File myFile = new File("filename");
+        FileReader fileReader = new FileReader(myFile);
+        BufferedReader reader = new BufferedReader(fileReader);
+        String line = null;
+        line = reader.readLine();
+        reader.close();
+    } catch(Exception ex) {
+        ex.printStackTrace();
+    }
+```
+- `java.io.File` 类代表磁盘上的文件
+- 创建代表存盘文件的对象
+```
+    File f = new File("filename");
+```
+- 建立新目录
+```
+    File dir = new File("dirname");
+    dir.mkdir();
+```
+- 列出目录下的内容
+```
+    if (dir.isDirectory()) {
+        String[] dirContents = dir.list();
+        for (Sting file : dirContents) {
+            System.out.println(file);
+        }
+    }
+```
+- 每当对象被序列化时，该对象都会有一个版本 ID，可自己在类中定义
+```
+    static final long serialVersionUID = -7526832723882L;
+```
