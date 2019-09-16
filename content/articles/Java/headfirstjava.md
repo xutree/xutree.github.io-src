@@ -145,24 +145,57 @@ Tags: Java
 - 静态的 `final` 变量是常数
 - 常数变量的名称应该都大写
 - 静态初始化程序是一段在加载类时会执行的程序代码，它会在其他程序可以使用该类之前就执行，所以很适合放静态 `final` 变量的初始程序
-- 静态 `final` 变量的初始化
-    - 声明的时候
-    ```
-    public class Foo { public static final int FOO_X = 25;}
-    ```
-    - 在静态初始化程序中
-    ```
-    public class Bar {
-        public static final double BAR_SIGN;
-
-        static {
-            BAR_SIGN = (double) Math.random();
-        }
-    }
-    ```
+- 静态 `final` 变量的初始化：声明的时候、在静态初始化程序中
 - `Math` 的方法
     - `Math.random()`：0.0~1.0 之间的双精度浮点数
     - `Math.abs()`：有重载的版本，传入整数会返回整数，双精度会返回双精度
     - `Math.round()`：有重载的版本，根据传入是浮点还是双精度，四舍五入返回整型或长整型
     - `Math.min()`：有 `int`、`long`、`float` 和 `double` 重载的版本
     - `Math.max()`：有 `int`、`long`、`float` 和 `double` 重载的版本
+- 包装类
+    - `Boolean`
+    - `Character`
+    - `Byte`
+    - `Short`
+    - `Integer`
+    - `Long`
+    - `Float`
+    - `Double`
+- + 是 `Java` 唯一重载过得运算符，`String str = "" + 12;`
+- 数字格式化 `String.format()`
+- `%[参数][标记][宽度][.精度]type`，标记比如数字逗号分隔或正负号，参数是指哪一个
+- 完整的日期和时间 `String.format("%tc", new Date());`
+- 只有时间 `String.format("%tr", new Date());`
+- 周，月，日 `String.format("%tA, %<tB, %<td", new Date());`
+- 用 `java.util.Calendar` 操作日期，是抽象类
+- `Calendar cal = Calendar.getInstance();` 一般会返回一个 `java.util.GregorianCalendar` 实例
+- 可以静态导入，类似于 C++ 的命名空间
+
+### 11. 异常处理
+
+- 异常是一种 `Exception` 类型的对象
+- 除了 `RuntimeExceptions` 之外，编译器保证：如果你有抛出异常，一定要使用 `throw` 来声明这件事；如果你调用会抛出异常的方法，你必须的确认你知道异常的可能性（try catch 或者继续抛出）
+- `finally` 块是用来存放不管有没有异常都得执行的程序，即使前面有 `return` 也要执行
+- 有多个 `catch` 块时要从小到大排列
+
+### 12. 图形用户接口
+
+- GUI 从创建窗口开始 `JFrame frame = new JFrame();`
+- 加入组件 `frame.getContenPane().add(button);`
+- `JFrame` 与其他组件不同，不能直接加上组件，要用他的 content pane
+- 显示窗口 `frame.setSize(300, 300); frame.setVisible(true);`
+- 监听 GUI 事件才知道用户对接口做了什么事情
+- 你必须要对事件源注册所要监听的时间。事件源是一种会根据用户操作而触发的机制
+- 事件注册 add<EventType>Listener `button.addActionListener(this);`
+- 内部类可以使用外部所有的方法与变量
+- 内部类的实例一定会绑定外部类的实例上
+- 你也可以从外部类以外的程序代码来初始化内部实例
+
+    ```
+    class Foo {
+        public static void main (String[] args) {
+            MyOuter outerObj = new MyOuter();
+            MyOuter.MyInner innerObj = outerObj.new MyInner();
+        }
+    }
+    ```
