@@ -190,12 +190,16 @@ Tags: Java
 - 内部类可以使用外部所有的方法与变量
 - 内部类的实例一定会绑定外部类的实例上
 - 你也可以从外部类以外的程序代码来初始化内部实例
-
-    ```
+```
     class Foo {
         public static void main (String[] args) {
             MyOuter outerObj = new MyOuter();
             MyOuter.MyInner innerObj = outerObj.new MyInner();
         }
     }
-    ```
+```
+- 内部类提供了在一个类中实现同一接口的多次机会
+
+### 13. swing
+
+- 布局管理器：`border`、`flow`、`box`
