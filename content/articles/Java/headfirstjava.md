@@ -1,7 +1,7 @@
 Title: Head first Java 笔记
 Category: 读书笔记
 Date: 2019-09-16 22:30:04
-Modified: 2019-09-18 13:42:09
+Modified: 2019-09-18 20:07:48
 Tags: Java
 
 [TOC]
@@ -362,6 +362,10 @@ Tags: Java
 ```
     public <T extends Animal> void takeThing(ArrayList<T> list)
     public void takeThing(ArrayList<? extends Animal> list)
+```
+- 关于 `sort` 方法
+```
+public static <T extends Comparable<? super T>> void sort(List<T> list)
 ```
 
 ### 17. 包、jar 存档文件和部署
