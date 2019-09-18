@@ -1,7 +1,7 @@
 Title: Head first Java 笔记
 Category: 读书笔记
 Date: 2019-09-16 22:30:04
-Modified: 2019-09-18 11:10:13
+Modified: 2019-09-18 13:42:09
 Tags: Java
 
 [TOC]
@@ -223,7 +223,7 @@ Tags: Java
     Object obj = os.readObject();
     os.close();
 ```
-- 当对象呗序列化时，该对象的实例变量也会被序列化，且所有被引用的对象也被序列化
+- 当对象被序列化时，该对象的实例变量也会被序列化，且所有被引用的对象也被序列化
 - 如果想让类能够被序列化，就实现 `Serializable`，这是一个 tag 标记接口，没有任何方法需要实现，唯一的目的就是声明他的类是可以被序列化的
 - 如果某实例变量是不能或不应该被序列化的，就把他标为 `transient`
 - 解序列化时，新的对象会被放在堆上，但构造函数不会执行
@@ -390,12 +390,12 @@ Tags: Java
 ```
 - -d 选项会要求编译器将结果根据包的结构来建立目录并输出，如果目录还没有建好，编译器会自动处理这些工作
 - 从包创建可执行的 JAR
-    - 包的第一层目录必须是 JAR 的第一层目录
-    - 在 manifest 文件中加入完整的类名称 Main-Class: com.headfirstjava.PackageExercise
-    - 执行 jar 工具，只要从 com 开始就行
+- 包的第一层目录必须是 JAR 的第一层目录
+- 在 manifest 文件中加入完整的类名称 Main-Class: com.headfirstjava.PackageExercise
+- 执行 jar 工具，只要从 com 开始就行
 ```
-        % cd MyProject/classes
-        % jar -cvmf manifest.txt packEx,jar com
+    % cd MyProject/classes
+    % jar -cvmf manifest.txt packEx,jar com
 ```
 - 解压
 ```
@@ -404,7 +404,103 @@ Tags: Java
     % jar -xf packEx.jar
 ```
 - **Java Web Start** 工作方式
-    - 客户点击某个网页上 JWS 应用程序的链接（.jnlp 文件）
+- 客户点击某个网页上 JWS 应用程序的链接（.jnlp 文件）
 ```
-        <a href="MyApp.jnlp">Click</a>
+    <a href="MyApp.jnlp">Click</a>
+```
+- Web 服务器收到请求发出 .jnlp 文件给客户端的浏览器
+- 浏览器启动 JWS，JWS 的 helper app 读取 .jnlp 文件，然后想服务器请求 MyApp.jar
+- Web 服务器发送 .jar 文件
+- JWS 取得 JAR 并调用指定的 main() 来启动应用程序
+- .jnlp：Java Network Lanuch Protocol 是一个 XML 文件，里面包含许多设置
+- 创建和部署 JWS 的步骤
+- 将程序制作成可执行 JAR
+- 编写 .jnlp 文件
+- 把 .jnlp 和 JAR 文件放到 Web 服务器
+- 对 Web 服务器设定新的 mime 类型 `application/x-java-jnlp-file` 确保浏览器知道所接受的文件是什么
+- 设定网页链接到 .jnlp 文件
+
+### 18. 远程部署的 RMI
+
+- 远程程序调用 Remote Method Invocation
+- 使用 RMI 时，你必须要决定协议，JRMP 是 RMI 原生的协议，它是为 `Java` 对 `Java` 之间的远程调用设计的；另外，IIOP 是为了 CORBA （Common Object Request Broker Architecture）而产生的，它让你可以调用 `Java` 对象或者其他类型的远程方法，比较复杂，因为若两端不全是 `Java` 的话，就会发生一系列的转译和交谈操作
+- 在 RMI 中，客户端的辅助设施称为 **stub**，而服务端的辅助设施称为 **skeleton**
+- 创建远程服务
+    - **创建 Remote 接口**。远程的接口定义了客户端可以远程调用的方法。它是个作为服务的多态化类，stub 和服务都会实现此接口
+    - **实现 Remote**。这是真正执行的类，他实现出定义在该接口上的方法，它是客户端会调用的对象
+    - **用 rmic 产生 stub 和 skeleton**（可以省略）
+    - **启动 RMI registry**。rimiregistry 就像是电话簿。用户会从此处取得代理（客户端的 stub/helper 对象）
+    - 启动远程服务并注册
+- 创建远程接口。继承 `Remote` 接口（标记接口），抛出 `RemoteException` 异常，返回 `primitive` 或 `Serializable` 类型
+```
+    public interface MyRemote extends Remote {
+        public String sayHello() throws RemoteException;
+    }
+```
+- 实现远程接口
+```
+    public class MyRemoteImpl extends UnicastRemoteObject implements MyRemote {
+        public String sayHello() {
+            return "Server says, 'Hey'";
+        }
+    }
+    // 处理 UnicastRemoteObject 抛出的异常
+    public MyRemoteImpl() throws RemoteException {}
+    // 注册
+    try {
+        MyRemote service = new MyRemoteImpl();
+        Name.rebind("Remote Hello", service);
+    } catch (Exception ex) { ... }
+```
+- 产生 stub 和 skeleton。对实现处的类（不是 remote 类）执行 rmic
+- 执行 rimiregistry。注意要从可以存取到该类的目录来启动
+- 启动服务。调用另一个命令行来启动服务
+- 客户端取得 stub 对象
+```
+    MyRemote service = (MyRemote) Naming.lookup("rmi://127.0.0.1/Remote Hello");
+```
+- 注意：在启动远程服务之前先要 rimiregistry；参数和返回类型必须是可序列化的；将 stub 类交给客户端
+- servlet
+    - servlet 是完全在 HTTP 服务器上运行的 Java 程序
+    - 用来处理与用户交互的网页程序
+    - 需要相关包才能编译，不是标准库里的
+    - 要有支持 servlet 的服务器
+    - servlet 要放在特定位置
+    - servlet 一般继承自 HttpServlet 并覆盖 doGet() 和 doPost()
+    - servlet 要输出带有完整标识的 HTML 网页
+- EJB：Enterprise JavaBeans
+- EJB 服务具有一组光靠 RMI 不会有的服务，比如交易管理、安全性、并发性、数据库和网络功能等，EJB 服务器作用于 RMI 调用和服务层之间
+- jini
+
+### 19. 其他
+
+- 右移 >>，左边补 1，正负号不变
+```
+int x = -11; // 11110101
+int y = x >> 2; // 11111101
+```
+- 无符号右移，>>>，左边补 0，正负号可能会改变
+```
+int x = -11; // 11110101
+int y = x >>> 2; // 00111101
+```
+- 左移，<<，右边补 0，正负号可能改变
+```
+int x = -11; // 11110101
+int y = x << 2; // 11010100
+```
+- 为了安全性和节省空间，`String` 是不变的，创建新的 `String` 时，JVM 会把它放到 `String Pool` 的特殊存储区域，不受 GC 管理
+- 断言 `assert`，带有断言的编译和执行
+```
+% javac TestDriveGame.java
+% java -ea TestDriveGame
+```
+- 枚举
+```
+public enum Members {JERRY, BOBBY, PHIL};
+public Members selectBandMember;
+
+if (selectBandMember == Members.JERRY) {
+    //
+}
 ```
