@@ -1,7 +1,7 @@
 Title: Head first Java 笔记
 Category: 读书笔记
 Date: 2019-09-16 22:30:04
-Modified: 2019-09-17 00:06:37
+Modified: 2019-09-18 11:10:13
 Tags: Java
 
 [TOC]
@@ -276,3 +276,135 @@ Tags: Java
 ```
     static final long serialVersionUID = -7526832723882L;
 ```
+
+### 15. 网络联机
+
+- 读取数据
+```
+    Socket chatSocket = new Socket("196.164.1.103", 5000)`;
+    InputStreamReader stream = new InputStreamReader(chatSocket.getInputStream());
+    BufferedReader reader = new BufferedReader(stream);
+    String message = reader.readLine();
+```
+- 写数据
+```
+    Socket chatSocket = new Socket("196.164.1.103", 5000)`;
+    PrintWriter writer = new PrintWriter(chatSocket.getOutputStream());
+    writer.println("message to send");
+    writer.print("another message");
+```
+- TCP 端口是一个 16 位宽，用来识别服务器上特定程序的数字
+- HTTP：80、Telnet：23、POP3：110、SMTP：25、FTP：20、HTTPS：443、Time：37
+- 0~1023 的 TCP 端口号是留给已知的特定服务的
+- 我们可以使用 1024~65535 之间的端口
+- 通信
+```
+    ServerSocket serverSock = new ServerSocket(4242);
+    Socket chatSocket = new Socket("196.164.1.103", 4242)`;
+    Socket sock = serverSock.accept();
+```
+- 服务器可以使用 `ServerSocket` 来等待用户对特定端口的请求，当接受到请求后，他会做一个 `Socket` 连接来接受客户端的请求
+- 启动新的线程
+```
+    Runnable threadJob = new MyRunnable();
+    Thread myThread = new Thread(threadJob);
+    myThread.start();
+```
+- `Runnable` 这个接口只有一个 `run()` 方法
+- 线程的 `sleep()` 这个方法能够保证一件事，在指定的沉睡时间之前，昏睡的线程一定不会被唤醒
+- `Java` 中每个线程都有独立的执行空间
+- 要把 `Runnable` 传给 `Thread` 的构造函数才能启动新的线程
+- `start()` 之前，线程处于新建立的状态
+- 使用 `synchronized` 关键字来修饰方法使他每次只能被单一的线程存取
+- `synchronized` 关键字代表线程需要一把钥匙来存取被同步化过的线程
+- 要保护数据，就把作用在数据上的方法给同步化
+- 锁是配在对象上的，锁住的是存取数据的方法
+- 同步化一部分
+```
+    public void go() {
+        doStuff();
+
+        synchronized(this) {
+            criticalStuff();
+            moreCriticalStuff();
+        }
+    }
+```
+- `Java` 没有处理死锁的机制，他甚至不会知道死锁的发生
+- `sleep()` 方法可能抛出 `InterruptedRxception` 异常，所以要包在 `try/cathc` 里或者把他声明出来
+- 可以用 `setName()` 方法给线程命名
+- 类本身也有锁，保护静态变量
+
+### 16. 集合与泛型
+
+- `TreeSet`、`LinkedHashList`、`HashSet`
+- `ArrayList`、`LinkedList`、`Vector`
+- `TreeMap`、`HashMap`、`LinkedHashMap`、`Hashtable`
+- `Collections.sort(List list);`
+- `TreeSet` 自动排序
+- 在泛型中，`extend` 代表 `extend` 或 `implement`
+- `sort()` 可以提供第二个比较器参数
+- `List` 存储对象的引用，可重复引用相同对象
+- `SET` 不允许重复
+- `MAP` 键不可重复，值可重复
+- `HashSet` 用 `hashCode()` 和 `equals()` 检查重复
+- 数组的类型是在运行期检查的，集合的类型是在编译期检查的
+- 万用字符
+```
+    public void takeAnimals(Array<? entends Animal> animals) {
+        for (Animal a : animals) {
+            a.eat();
+        }
+    }
+```
+- 在方法参数中使用万用字符时，编译器会阻止任何可能破坏引用参数所指集合的行为
+- 下面的声明都对
+```
+    public <T extends Animal> void takeThing(ArrayList<T> list)
+    public void takeThing(ArrayList<? extends Animal> list)
+```
+
+### 17. 包、jar 存档文件和部署
+
+- 将源代码与类文件分离，一般建立 **source** 和 **classes** 目录，将源代码存储在 source 下，编译时加 **-d** 编译选项把类文件输出到 classes 目录
+- 把程序包进 jar（Java Archive），这种文件是个 **pkzip** 格式文件，可执行的 JAR 代表用户不需要吧文件抽出来就能运行，方法是建立 **manifest** 文件，它会带有 JAR 的信息，告诉 JVM 哪个类含有 `main()` 方法
+- manifest.txt 文件包括：`Main-Class: MyApp` 在此行要有换行，此文件放在 **classes** 目录下
+```
+    % cd MiniProject/classes
+    % jar -cvmf manifest.txt app1.jar *.class
+    // 或
+    % jar -cvmf manifest.txt app1.jar MyApp.class
+```
+- 执行，直接双击 jar 文件或者 `% jave -jar app1.jar`
+- 用包防止类名称冲突
+- 反向域名.工程名.类名
+- 你必须把类放在与包层级结构相同的目录下
+- 把类加入到包中 `package 反向域名.工程名;`，一般让类位于完整名称的目录下
+- 编译和执行包
+```
+    % javac -d ../classes com/headfirstjava/PackageExercise.java
+    // 或编译包里的所有文件
+    % javac -d ../classes com/headfirstjava/*.java
+    // 执行
+    % java ../classes/com.headfirstjava.PackageExercise
+```
+- -d 选项会要求编译器将结果根据包的结构来建立目录并输出，如果目录还没有建好，编译器会自动处理这些工作
+- 从包创建可执行的 JAR
+    - 包的第一层目录必须是 JAR 的第一层目录
+    - 在 manifest 文件中加入完整的类名称 Main-Class: com.headfirstjava.PackageExercise
+    - 执行 jar 工具，只要从 com 开始就行
+    ```
+        % cd MyProject/classes
+        % jar -cvmf manifest.txt packEx,jar com
+    ```
+- 解压
+```
+    % jar -tf packEx.jar
+    // 或
+    % jar -xf packEx.jar
+```
+- **Java Web Start** 工作方式
+    - 客户点击某个网页上 JWS 应用程序的链接（.jnlp 文件）
+    ```
+        <a href="MyApp.jnlp">Click</a>
+    ```
