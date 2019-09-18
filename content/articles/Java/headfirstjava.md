@@ -393,10 +393,10 @@ Tags: Java
     - 包的第一层目录必须是 JAR 的第一层目录
     - 在 manifest 文件中加入完整的类名称 Main-Class: com.headfirstjava.PackageExercise
     - 执行 jar 工具，只要从 com 开始就行
-    ```
-    % cd MyProject/classes
-    % jar -cvmf manifest.txt packEx,jar com
-    ```
+```
+        % cd MyProject/classes
+        % jar -cvmf manifest.txt packEx,jar com
+```
 - 解压
 ```
     % jar -tf packEx.jar
@@ -405,6 +405,6 @@ Tags: Java
 ```
 - **Java Web Start** 工作方式
     - 客户点击某个网页上 JWS 应用程序的链接（.jnlp 文件）
-    ```
-    <a href="MyApp.jnlp">Click</a>
-    ```
+```
+        <a href="MyApp.jnlp">Click</a>
+```
