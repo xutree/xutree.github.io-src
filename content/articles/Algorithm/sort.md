@@ -201,7 +201,7 @@ void rand_quick_sort(T arr[], int begin, int end){
 - 最坏时间复杂度：$\Theta(n^2)$
 - 最优时间复杂度：$\Theta(n\log n)$
 - 平均时间复杂度：$\Theta (n\log n)$
-- 空间复杂度：$O(\log n)$
+- 空间复杂度：$O(\log n)~O(n)$
 - 不稳定排序
 
 ## 5. 计数排序
