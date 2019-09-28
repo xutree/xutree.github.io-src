@@ -2,7 +2,7 @@ Title: 为 Torch 安装特定版本的 libpng
 Category: 机器学习
 Date: 2019-01-22 14:23:05
 Modified: 2019-01-22 14:37:18
-Tag: 深度学习, Torch
+Tags: 深度学习, Torch
 
 为了跑别人的程序，遇到了下面的问题
 
