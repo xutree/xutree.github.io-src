@@ -1,5 +1,5 @@
 Title: C++ Primer 第二章 变量和基本类型
-Category: 读书笔记
+Category: C++
 Date: 2018-10-06 22:02:54
 Modified: 2018-10-07 10:48:38
 Tags: C++

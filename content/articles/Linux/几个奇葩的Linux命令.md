@@ -1,5 +1,5 @@
-Title: 几个奇葩的 Linux 命令
-Category: 趣闻
+Title: 几个有趣的 Linux 命令
+Category: Linux
 Date: 2018-10-08 22:58:12
 Modified: 2018-10-09 11:39:49
 Tags: Linux

@@ -1,5 +1,5 @@
 Title: PyTroch 之 torch 包
-Category: 教程
+Category: 机器学习
 Date: 2018-10-12 11:27:17
 Modified: 2018-10-12 12:36:32
 Tags: PyTroch, 机器学习, 深度学习

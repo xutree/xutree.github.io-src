@@ -1,5 +1,5 @@
 Title: Atom 快捷键
-Category: 教程
+Category: 其他
 Date: 2018-10-16 14:47:35
 Modified: 2018-10-16 15:55:00
 Tags: Atom, Mac

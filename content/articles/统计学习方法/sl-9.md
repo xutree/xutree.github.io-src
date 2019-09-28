@@ -1,5 +1,5 @@
 Title: 统计学习方法 第九章 EM 算法及其推广
-Category: 读书笔记
+Category: 机器学习
 Date: 2019-04-04 19:32:10
 Modified: 2019-05-22 16:02:34
 Tags: 统计学习, 机器学习

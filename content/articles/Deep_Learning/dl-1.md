@@ -1,5 +1,5 @@
 Title: 深度学习 第一章 引言
-Category: 读书笔记
+Category: 机器学习
 Date: 2018-11-21 08:25:14
 Modified: 2018-11-21 08:25:14
 Tags: 机器学习, 深度学习

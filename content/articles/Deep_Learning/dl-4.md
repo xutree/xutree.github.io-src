@@ -1,5 +1,5 @@
 Title: 深度学习 第四章 数值计算
-Category: 读书笔记
+Category: 机器学习
 Date: 2018-11-24 21:02:36
 Modified: 2018-11-25 16:08:25
 Tags: 机器学习, 深度学习

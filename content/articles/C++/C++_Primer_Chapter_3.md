@@ -1,5 +1,5 @@
 Title: C++ Primer 第三章 字符串、向量和数组
-Category: 读书笔记
+Category: C++
 Date: 2018-10-06 22:31:16
 Modified: 2018-10-07 10:48:54
 Tags: C++

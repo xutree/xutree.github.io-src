@@ -1,5 +1,5 @@
 Title: 深入浅出 SQL
-Category: 读书笔记
+Category: 数据库
 Date: 2019-08-16 18:37:44
 Modified: 2019-08-17 14:27:46
 Tags: SQL

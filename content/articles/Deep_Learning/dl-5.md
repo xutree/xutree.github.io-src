@@ -1,5 +1,5 @@
 Title: 深度学习 第五章 机器学习基础
-Category: 读书笔记
+Category: 机器学习
 Tags: 机器学习, 深度学习
 
 [TOC]

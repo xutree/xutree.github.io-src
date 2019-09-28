@@ -1,5 +1,5 @@
 Title: 最大子数组问题
-Category: 读书笔记
+Category: 算法
 Date: 2018-10-27 22:26:28
 Modified: 2018-10-28 13:02:31
 Tags: 算法

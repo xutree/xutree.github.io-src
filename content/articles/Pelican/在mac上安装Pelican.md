@@ -1,5 +1,5 @@
 Title: 安装 Pelican
-Category: 教程
+Category: 其他
 Date: 2018-10-04 10:20
 Modified: 2018-10-06 21:15:21
 Tags: Pelican

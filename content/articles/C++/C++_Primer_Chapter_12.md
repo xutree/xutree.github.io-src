@@ -1,5 +1,5 @@
 Title: C++ Primer 第十二章 动态内存
-Category: 读书笔记
+Category: C++
 Date: 2018-10-17 22:25:02
 Modified: 2018-10-20 14:50:55
 Tags: C++

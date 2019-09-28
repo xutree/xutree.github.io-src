@@ -1,5 +1,5 @@
 Title: 统计学习方法 第三章 k 近邻法
-Category: 读书笔记
+Category: 机器学习
 Date: 2019-01-20 23:11:36
 Modified: 2019-02-05 18:32:21
 Tags: 统计学习, 机器学习

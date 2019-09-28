@@ -1,5 +1,5 @@
 Title: 似然函数
-Category: 基础知识
+Category: 数学
 Date: 2018-11-16 18:52:37
 Modified: 2018-11-16 18:52:37
 Tags: 概率, 数学

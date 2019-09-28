@@ -1,5 +1,5 @@
 Title: 拉格朗日对偶性
-Category: 基础知识
+Category: 数学
 Date: 2018-11-10 13:41:43
 Modified: 2018-11-10 14:16:04
 Tags: 数学

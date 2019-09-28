@@ -1,5 +1,5 @@
 Title: C++ Primer 第十三章 拷贝控制
-Category: 读书笔记
+Category: C++
 Date: 2018-10-20 16:41:10
 Modified: 2018-10-20 19:14:52
 Tags: C++

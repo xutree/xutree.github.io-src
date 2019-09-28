@@ -1,5 +1,5 @@
 Title: 利用 Mac stat 添加文件创建时间、最后修改时间
-Category: 教程
+Category: Linux
 Date: 2018-10-06 19:07:36
 Modified: 2018-10-07 10:38:50
 Tags: Mac

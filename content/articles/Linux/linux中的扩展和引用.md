@@ -1,5 +1,5 @@
 Title: Linux 中的扩展和引用
-Category: 教程
+Category: Linux
 Date: 2018-10-08 16:25:59
 Modified: 2018-10-09 13:22:26
 Tags: Linux

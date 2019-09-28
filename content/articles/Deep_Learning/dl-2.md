@@ -1,5 +1,5 @@
 Title: 深度学习 第二章 线性代数
-Category: 读书笔记
+Category: 机器学习
 Date: 2018-11-21 14:02:59
 Modified: 2018-11-21 16:22:11
 Tags: 机器学习, 深度学习

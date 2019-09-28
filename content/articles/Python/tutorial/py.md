@@ -1,5 +1,5 @@
 Title: Python 教程
-Category: 教程
+Category: Python
 Date: 2018-10-05 21:05:33
 Modified: 2018-10-05 23:15:21
 Tags: Python

@@ -1,8 +1,8 @@
 Title: 剑指 offer (1)
-Category: 读书笔记
+Category: 算法
 Date: 2018-10-07 15:32:21
 Modified: 2018-11-26 19:56:59
-Tags: 剑指offer, 面试, 算法
+Tags: 剑指offer, 算法
 
 [TOC]
 

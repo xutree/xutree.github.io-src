@@ -1,5 +1,5 @@
 Title: 贝叶斯定理
-Category: 基础知识
+Category: 数学
 Date: 2018-11-05 19:25:38
 Modified: 2018-11-07 12:47:06
 Tags: 概率, 数学

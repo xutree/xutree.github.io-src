@@ -1,5 +1,5 @@
 Title: 方向导数和梯度
-Category: 基础知识
+Category: 数学
 Date: 2018-11-10 15:44:43
 Modified: 2018-11-10 15:44:43
 Tags: 数学
